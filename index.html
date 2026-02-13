@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ankit Mahadani - AI Developer & Engineer</title>
+    <meta name="description"
+        content="Portfolio of Ankit Mahadani - Computer Science student specializing in AI, Machine Learning, and Full-Stack Development">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+
+<body>
+    <!-- DINO GAME INTRO OVERLAY -->
+    <div id="intro-overlay" class="intro-overlay">
+        <!-- Error Screen -->
+        <div id="error-screen" class="error-screen">
+            <div class="error-content">
+                <div class="error-code">ERROR 404</div>
+                <div class="error-title">PORTFOLIO NOT FOUND</div>
+                <div class="game-over-text">GAME IS NOT OVER...</div>
+                <div class="press-space">
+                    <span class="blink-fast">▶</span> PRESS <span class="space-key">SPACE</span> TO CONTINUE
+                </div>
+            </div>
+        </div>
+
+        <!-- Dino Game Canvas -->
+        <canvas id="dino-canvas" class="dino-canvas"></canvas>
+
+        <!-- Speed Lines Effect -->
+        <div id="speed-lines" class="speed-lines"></div>
+
+        <!-- Glitch Overlay -->
+        <div id="glitch-overlay" class="glitch-overlay"></div>
+    </div>
+
+    <!-- 3D Canvas Background -->
+    <div id="three-container"></div>
+
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+        <div class="progress-cat-icon">🐱</div>
+    </div>
+
+    <!-- Scanline Effect -->
+    <div class="scanlines"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">
+                <span class="blink">▶</span> ANKIT.DEV
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home">HOME</a></li>
+                <li><a href="#about">ABOUT</a></li>
+                <li><a href="#skills">SKILLS</a></li>
+                <li><a href="#projects">PROJECTS</a></li>
+                <li><a href="#experience">EXPERIENCE</a></li>
+                <li><a href="#contact">CONTACT</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="glitch-text" data-text="ANKIT MAHADANI">ANKIT MAHADANI</div>
+                <h2 class="subtitle">
+                    <span class="typing-text">AI DEVELOPER • AUTOMATION EXPERT • FULL-STACK ENGINEER</span>
+                </h2>
+                <p class="hero-description">Building intelligent solutions with AI & Machine Learning</p>
+                <div class="cta-buttons">
+                    <a href="#projects" class="btn btn-primary">VIEW PROJECTS</a>
+                    <a href="#contact" class="btn btn-secondary">GET IN TOUCH</a>
+                </div>
+                <div class="hint-box">
+                    <span class="blink">💡</span> Move your mouse to interact with the 3D shapes!
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-icon">👨💻</span> ABOUT_ME
+            </h2>
+            <div class="about-content">
+                <div class="terminal-box">
+                    <div class="terminal-header">
+                        <span class="terminal-btn red"></span>
+                        <span class="terminal-btn yellow"></span>
+                        <span class="terminal-btn green"></span>
+                        <span class="terminal-title">about.txt</span>
+                    </div>
+                    <div class="terminal-body">
+                        <p><span class="prompt">$</span> cat about.txt</p>
+                        <p class="terminal-text">
+                            I'm Ankit Mahadani, a Computer Science and Engineering student at VIT Bhopal with a strong
+                            interest in building intelligent, real-world technology solutions. I currently maintain a
+                            CGPA of 8.25 and actively work in the domains of Artificial Intelligence, Automation, and
+                            Full-Stack Development.
+                        </p>
+                        <p class="terminal-text">
+                            My expertise lies in Machine Learning, Deep Learning, NLP, AI Agents, and Workflow
+                            Automation. I enjoy solving complex problems and have practiced 500+ Data Structures &
+                            Algorithms questions to strengthen my problem-solving skills.
+                        </p>
+                        <p class="terminal-text">
+                            Currently building AI agent solutions through my startup AgentXpertt, focusing on CRM
+                            automation and intelligent workflow systems.
+                        </p>
+                        <p><span class="prompt">$</span> <span class="blink">_</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section section-dark">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-icon">🛠️</span> SKILLS_TREE
+            </h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3 class="category-title">💻 PROGRAMMING</h3>
+                    <div class="skill-items">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">C++</span>
+                        <span class="skill-tag">Java</span>
+                        <span class="skill-tag">JavaScript</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3 class="category-title">🤖 AI / ML</h3>
+                    <div class="skill-items">
+                        <span class="skill-tag">Machine Learning</span>
+                        <span class="skill-tag">Deep Learning</span>
+                        <span class="skill-tag">NLP</span>
+                        <span class="skill-tag">Computer Vision</span>
+                        <span class="skill-tag">OpenCV</span>
+                        <span class="skill-tag">LLM Applications</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3 class="category-title">⚙️ TOOLS & TECH</h3>
+                    <div class="skill-items">
+                        <span class="skill-tag">React.js</span>
+                        <span class="skill-tag">n8n Automation</span>
+                        <span class="skill-tag">Git & GitHub</span>
+                        <span class="skill-tag">Firebase</span>
+                        <span class="skill-tag">REST APIs</span>
+                        <span class="skill-tag">Linux</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3 class="category-title">🧠 CORE CS</h3>
+                    <div class="skill-items">
+                        <span class="skill-tag">Data Structures</span>
+                        <span class="skill-tag">Algorithms</span>
+                        <span class="skill-tag">OOP</span>
+                        <span class="skill-tag">System Design</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-icon">🚀</span> PROJECTS_LOG
+            </h2>
+            <div class="projects-grid">
+                <!-- Project 1 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-level">LVL 5</span>
+                        <span class="project-status">COMPLETED</span>
+                    </div>
+                    <h3 class="project-title">🏥 AI Health Symptom Intelligence System</h3>
+                    <p class="project-description">
+                        Built an AI system that analyzes user symptoms or medical images to predict possible diseases.
+                        Integrated real-time location tracking to connect users with nearby hospitals.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-badge">Flutter/React</span>
+                        <span class="tech-badge">Python ML</span>
+                        <span class="tech-badge">Firebase</span>
+                        <span class="tech-badge">GPS APIs</span>
+                    </div>
+                    <div class="project-achievements">
+                        ✓ Emergency alert features<br>
+                        ✓ AI-based risk severity detection<br>
+                        ✓ VIT-JHU Health Hackathon project
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-level">LVL 5</span>
+                        <span class="project-status">ACTIVE</span>
+                    </div>
+                    <h3 class="project-title">🤖 AI CRM Automation Agents</h3>
+                    <p class="project-description">
+                        Developed AI agents that automate CRM tasks like lead qualification, follow-ups, and workflow
+                        management. Designed solutions for businesses to reduce manual work.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-badge">LLMs</span>
+                        <span class="tech-badge">n8n</span>
+                        <span class="tech-badge">APIs</span>
+                        <span class="tech-badge">Automation</span>
+                    </div>
+                    <div class="project-achievements">
+                        ✓ Scalable AI automation pipelines<br>
+                        ✓ Lead qualification system<br>
+                        ✓ Business productivity boost
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-level">LVL 4</span>
+                        <span class="project-status">COMPLETED</span>
+                    </div>
+                    <h3 class="project-title">🎤 Voice AI Bot Workflow System</h3>
+                    <p class="project-description">
+                        Created an end-to-end voice bot system for automated reminders. Implemented multilingual support
+                        and AI conversation logic with speech-to-text and text-to-speech pipelines.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-badge">n8n</span>
+                        <span class="tech-badge">Whisper</span>
+                        <span class="tech-badge">Google TTS</span>
+                        <span class="tech-badge">Claude</span>
+                    </div>
+                    <div class="project-achievements">
+                        ✓ Multilingual support<br>
+                        ✓ AI conversation logic<br>
+                        ✓ Automated reminder system
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-level">LVL 4</span>
+                        <span class="project-status">COMPLETED</span>
+                    </div>
+                    <h3 class="project-title">🧬 Cancer Detection using Deep Learning</h3>
+                    <p class="project-description">
+                        Built a deep learning model for detecting lung and pancreas cancer. Used image preprocessing
+                        techniques like Gaussian blur and augmentation to improve model accuracy.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-badge">Python</span>
+                        <span class="tech-badge">OpenCV</span>
+                        <span class="tech-badge">CNN</span>
+                        <span class="tech-badge">Deep Learning</span>
+                    </div>
+                    <div class="project-achievements">
+                        ✓ Multiple dataset integration<br>
+                        ✓ Image preprocessing pipeline<br>
+                        ✓ High accuracy detection
+                    </div>
+                </div>
+
+                <!-- Project 5 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-level">LVL 3</span>
+                        <span class="project-status">COMPLETED</span>
+                    </div>
+                    <h3 class="project-title">📝 Handwriting Improvement Note-Making App</h3>
+                    <p class="project-description">
+                        Developed a smart note-making app that improves handwriting using AI feedback. Provides
+                        real-time writing suggestions to enhance handwriting quality.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-badge">React</span>
+                        <span class="tech-badge">AI Models</span>
+                        <span class="tech-badge">Real-time Processing</span>
+                    </div>
+                    <div class="project-achievements">
+                        ✓ Real-time AI feedback<br>
+                        ✓ Writing improvement tracking<br>
+                        ✓ Interactive note interface
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="section section-dark">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-icon">💼</span> EXPERIENCE_TIMELINE
+            </h2>
+            <div class="experience-timeline">
+                <div class="experience-item">
+                    <div class="experience-badge">🤖</div>
+                    <div class="experience-content">
+                        <h3 class="experience-title">AI Agent Developer Intern</h3>
+                        <p class="experience-description">
+                            Developed automation workflows using AI agents. Built chatbot and CRM automation solutions.
+                            Worked with LLM APIs and real-time integrations.
+                        </p>
+                        <div class="experience-skills">
+                            <span class="exp-tag">AI Agents</span>
+                            <span class="exp-tag">LLM APIs</span>
+                            <span class="exp-tag">Automation</span>
+                            <span class="exp-tag">CRM</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-badge">🚀</div>
+                    <div class="experience-content">
+                        <h3 class="experience-title">Founder — AgentXpertt (Startup)</h3>
+                        <p class="experience-description">
+                            Building AI agent solutions for businesses. Designing SaaS-based automation products.
+                            Working on CRM AI workflow optimization.
+                        </p>
+                        <div class="experience-skills">
+                            <span class="exp-tag">Startup</span>
+                            <span class="exp-tag">SaaS</span>
+                            <span class="exp-tag">AI Solutions</span>
+                            <span class="exp-tag">Business Dev</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section id="achievements" class="section">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-icon">🏆</span> ACHIEVEMENTS_UNLOCKED
+            </h2>
+            <div class="achievements-grid">
+                <div class="achievement-card">
+                    <div class="achievement-icon">🥇</div>
+                    <h3>Microsoft Club Hackathon</h3>
+                    <p>Winner</p>
+                </div>
+                <div class="achievement-card">
+                    <div class="achievement-icon">👨💻</div>
+                    <h3>DSA Problems Solved</h3>
+                    <p class="counter" data-target="500">0</p>
+                </div>
+                <div class="achievement-card">
+                    <div class="achievement-icon">🚀</div>
+                    <h3>AI Internship Projects</h3>
+                    <p>Completed Successfully</p>
+                </div>
+                <div class="achievement-card">
+                    <div class="achievement-icon">📊</div>
+                    <h3>ML/DL Bootcamp Topics</h3>
+                    <p class="counter" data-target="23">0</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="section section-dark">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-icon">🎓</span> EDUCATION_DATA
+            </h2>
+            <div class="education-card">
+                <div class="education-header">
+                    <h3>B.Tech — Computer Science & Engineering</h3>
+                    <span class="education-badge">CGPA: 8.25</span>
+                </div>
+                <p class="education-institution">VIT Bhopal University</p>
+                <div class="education-highlights">
+                    <span class="highlight-tag">AI & ML Focus</span>
+                    <span class="highlight-tag">Full-Stack Development</span>
+                    <span class="highlight-tag">Problem Solving</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-icon">📬</span> CONTACT_INTERFACE
+            </h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span class="contact-icon">📧</span>
+                        <div>
+                            <h4>Email</h4>
+                            <a href="mailto:your-email@gmail.com">your-email@gmail.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">💻</span>
+                        <div>
+                            <h4>GitHub</h4>
+                            <a href="https://github.com/Ankit-Mahadani" target="_blank">github.com/Ankit-Mahadani</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">🔗</span>
+                        <div>
+                            <h4>LinkedIn</h4>
+                            <a href="https://linkedin.com/in/your-linkedin" target="_blank">your-linkedin</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="interests-box">
+                    <h3>🎯 INTERESTS</h3>
+                    <div class="interests-tags">
+                        <span class="interest-tag">Artificial Intelligence</span>
+                        <span class="interest-tag">Startup Building</span>
+                        <span class="interest-tag">Automation Systems</span>
+                        <span class="interest-tag">Hackathons</span>
+                        <span class="interest-tag">Problem Solving</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Ankit Mahadani. Built with <span class="heart">❤️</span> and retro vibes</p>
+            <p class="footer-hint">Powered by Three.js 3D Graphics</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
