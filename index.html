@@ -42,6 +42,53 @@
     <!-- 3D Canvas Background -->
     <div id="three-container"></div>
 
+    <!-- Particle Cursor Trail -->
+    <canvas id="cursor-canvas"></canvas>
+
+    <!-- Theme Switcher -->
+    <div class="theme-switcher">
+        <button class="theme-btn" data-theme="retro" title="Retro Theme">🎮</button>
+        <button class="theme-btn" data-theme="cyberpunk" title="Cyberpunk Theme">🌃</button>
+        <button class="theme-btn" data-theme="vaporwave" title="Vaporwave Theme">🌸</button>
+        <button class="theme-btn" data-theme="matrix" title="Matrix Theme">💚</button>
+        <button class="theme-btn" data-theme="gameboy" title="Gameboy Theme">🎯</button>
+    </div>
+
+    <!-- Sound Toggle -->
+    <button class="sound-toggle" id="soundToggle" title="Toggle Sound Effects">
+        <span class="sound-on">🔊</span>
+        <span class="sound-off" style="display:none;">🔇</span>
+    </button>
+
+    <!-- Achievement Notifications -->
+    <div id="achievement-container"></div>
+
+    <!-- Interactive Terminal Modal -->
+    <div id="terminal-modal" class="terminal-modal">
+        <div class="terminal-modal-content">
+            <div class="terminal-modal-header">
+                <span class="terminal-btn red" id="closeTerminal"></span>
+                <span class="terminal-btn yellow"></span>
+                <span class="terminal-btn green"></span>
+                <span class="terminal-title">interactive_terminal.sh</span>
+            </div>
+            <div class="terminal-modal-body" id="terminalOutput">
+                <p><span class="prompt">$</span> Welcome to Ankit's Interactive Terminal!</p>
+                <p>Type 'help' for available commands.</p>
+            </div>
+            <div class="terminal-input-container">
+                <span class="prompt">$</span>
+                <input type="text" id="terminalInput" class="terminal-input" placeholder="Type a command..."
+                    autocomplete="off">
+            </div>
+        </div>
+    </div>
+
+    <!-- Terminal Trigger Button -->
+    <button class="terminal-trigger" id="terminalTrigger" title="Open Terminal (Ctrl+`)">
+        &gt;_
+    </button>
+
     <!-- Progress Bar -->
     <div class="progress-container">
         <div class="progress-bar" id="progressBar"></div>
@@ -381,6 +428,64 @@
         </div>
     </section>
 
+    <!-- Coding Stats Section -->
+    <section id="coding-stats" class="section section-dark">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-icon">📊</span> LIVE_CODING_STATS
+                <button class="refresh-stats-btn" id="refreshStatsBtn" title="Refresh Stats">
+                    <span class="refresh-icon">🔄</span>
+                </button>
+            </h2>
+            <div class="stats-grid">
+                <!-- LeetCode Stats -->
+                <div class="stats-platform-card" id="leetcode-card">
+                    <div class="platform-header">
+                        <span class="platform-icon">⚡</span>
+                        <h3>LeetCode</h3>
+                    </div>
+                    <div class="stats-content" id="leetcode-stats">
+                        <div class="stats-loading">
+                            <div class="loading-spinner"></div>
+                            <p>Loading stats...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Codeforces Stats -->
+                <div class="stats-platform-card" id="codeforces-card">
+                    <div class="platform-header">
+                        <span class="platform-icon">🏆</span>
+                        <h3>Codeforces</h3>
+                    </div>
+                    <div class="stats-content" id="codeforces-stats">
+                        <div class="stats-loading">
+                            <div class="loading-spinner"></div>
+                            <p>Loading stats...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GitHub Stats -->
+                <div class="stats-platform-card" id="github-card">
+                    <div class="platform-header">
+                        <span class="platform-icon">💻</span>
+                        <h3>GitHub</h3>
+                    </div>
+                    <div class="stats-content" id="github-stats">
+                        <div class="stats-loading">
+                            <div class="loading-spinner"></div>
+                            <p>Loading stats...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="stats-footer">
+                <p class="stats-update-time" id="statsUpdateTime">Last updated: Never</p>
+            </div>
+        </div>
+    </section>
+
     <!-- Education Section -->
     <section id="education" class="section section-dark">
         <div class="container">
@@ -390,7 +495,6 @@
             <div class="education-card">
                 <div class="education-header">
                     <h3>B.Tech — Computer Science & Engineering</h3>
-                    <span class="education-badge">CGPA: 8.25</span>
                 </div>
                 <p class="education-institution">VIT Bhopal University</p>
                 <div class="education-highlights">
@@ -429,6 +533,29 @@
                         <div>
                             <h4>LinkedIn</h4>
                             <a href="https://linkedin.com/in/your-linkedin" target="_blank">your-linkedin</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">⚡</span>
+                        <div>
+                            <h4>LeetCode</h4>
+                            <a href="https://leetcode.com/u/AnkitMAHADANI/" target="_blank">AnkitMAHADANI</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">🎯</span>
+                        <div>
+                            <h4>GeeksforGeeks</h4>
+                            <a href="https://www.geeksforgeeks.org/profile/ankitmahadani"
+                                target="_blank">ankitmahadani</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">🏆</span>
+                        <div>
+                            <h4>Codeforces</h4>
+                            <a href="https://codeforces.com/profile/ankitmahadani181"
+                                target="_blank">ankitmahadani181</a>
                         </div>
                     </div>
                 </div>
