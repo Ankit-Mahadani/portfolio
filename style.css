@@ -28,6 +28,10 @@
     --font-mono: 'VT323', monospace;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: var(--font-mono);
     background-color: var(--bg-dark);
@@ -35,6 +39,28 @@ body {
     line-height: 1.6;
     overflow-x: hidden;
     font-size: 18px;
+}
+
+/* Smooth transitions for all interactive elements */
+a,
+button,
+.skill-tag,
+.tech-badge,
+.cert-tag,
+.exp-tag,
+.interest-tag {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Improved card transitions */
+.project-card,
+.cert-card,
+.achievement-card,
+.experience-item,
+.skill-category {
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        border-color 0.3s ease;
 }
 
 /* ===========================
@@ -1991,4 +2017,279 @@ kbd {
     .cert-title {
         font-size: 16px;
     }
+}
+
+/* ===========================
+   ENHANCED ANIMATIONS & TRANSITIONS
+   =========================== */
+
+/* Fade-in animation for sections */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Apply fade-in to sections */
+.section {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+/* Stagger animation for grid items */
+.project-card {
+    animation: fadeInUp 0.6s ease-out backwards;
+}
+
+.project-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.project-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.project-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.project-card:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.project-card:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+.project-card:nth-child(6) {
+    animation-delay: 0.6s;
+}
+
+.cert-card {
+    animation: fadeInUp 0.6s ease-out backwards;
+}
+
+.cert-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.cert-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.cert-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.achievement-card {
+    animation: fadeInUp 0.6s ease-out backwards;
+}
+
+.achievement-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.achievement-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.achievement-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.achievement-card:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+/* Enhanced hover effects */
+.skill-tag:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 5px 15px var(--shadow);
+}
+
+.tech-badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--shadow);
+}
+
+.cert-tag:hover {
+    transform: translateY(-2px) scale(1.08);
+}
+
+.exp-tag:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px var(--shadow);
+}
+
+.interest-tag:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+}
+
+/* Smooth button transitions */
+.btn {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px var(--shadow);
+}
+
+/* Nav menu smooth transitions */
+.nav-menu a {
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.nav-menu a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary);
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-menu a:hover::after {
+    width: 100%;
+}
+
+/* Card glow effect on hover */
+.project-card:hover,
+.cert-card:hover,
+.achievement-card:hover {
+    box-shadow: 0 15px 40px var(--shadow),
+        0 0 20px rgba(0, 255, 159, 0.2);
+}
+
+/* Smooth scale for icons */
+.achievement-icon,
+.cert-badge,
+.experience-badge {
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.achievement-card:hover .achievement-icon,
+.cert-card:hover .cert-badge,
+.experience-item:hover .experience-badge {
+    transform: scale(1.15) rotate(5deg);
+}
+
+/* Terminal box smooth appearance */
+.terminal-box {
+    animation: fadeInUp 0.8s ease-out 0.2s backwards;
+}
+
+/* Section title animation */
+.section-title {
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* Skill category stagger */
+.skill-category {
+    animation: fadeInUp 0.6s ease-out backwards;
+}
+
+.skill-category:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.skill-category:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.skill-category:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.skill-category:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.skill-category:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+.skill-category:nth-child(6) {
+    animation-delay: 0.6s;
+}
+
+/* Experience timeline smooth reveal */
+.experience-item {
+    animation: fadeInUp 0.7s ease-out backwards;
+}
+
+.experience-item:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.experience-item:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+/* Contact items animation */
+.contact-item {
+    animation: fadeInUp 0.6s ease-out backwards;
+}
+
+.contact-item:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.contact-item:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.contact-item:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.contact-item:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.contact-item:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+.contact-item:nth-child(6) {
+    animation-delay: 0.6s;
 }
