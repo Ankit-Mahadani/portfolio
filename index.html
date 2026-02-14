@@ -10,8 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
-    <link rel="icon"
-        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🎮</text></svg>">
+    <link rel="icon" href="assets/icons/gamepad.svg">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
@@ -26,7 +25,8 @@
                 <div class="error-title">PORTFOLIO NOT FOUND</div>
                 <div class="game-over-text">GAME IS NOT OVER...</div>
                 <div class="press-space">
-                    <span class="blink-fast">▶</span> PRESS <span class="space-key">SPACE</span> TO CONTINUE
+                    <img src="assets/icons/play.svg" class="emoji-icon blink-fast" alt="play"> PRESS <span
+                        class="space-key">SPACE</span> TO CONTINUE
                 </div>
             </div>
         </div>
@@ -49,17 +49,23 @@
 
     <!-- Theme Switcher -->
     <div class="theme-switcher">
-        <button class="theme-btn" data-theme="retro" title="Retro Theme">🎮</button>
-        <button class="theme-btn" data-theme="cyberpunk" title="Cyberpunk Theme">🌃</button>
-        <button class="theme-btn" data-theme="vaporwave" title="Vaporwave Theme">🌸</button>
-        <button class="theme-btn" data-theme="matrix" title="Matrix Theme">💚</button>
-        <button class="theme-btn" data-theme="gameboy" title="Gameboy Theme">🎯</button>
+        <button class="theme-btn" data-theme="retro" title="Retro Theme"><img src="assets/icons/gamepad.svg"
+                class="emoji-icon" alt="retro"></button>
+        <button class="theme-btn" data-theme="cyberpunk" title="Cyberpunk Theme"><img src="assets/icons/city-night.svg"
+                class="emoji-icon" alt="cyberpunk"></button>
+        <button class="theme-btn" data-theme="vaporwave" title="Vaporwave Theme"><img src="assets/icons/flower.svg"
+                class="emoji-icon" alt="vaporwave"></button>
+        <button class="theme-btn" data-theme="matrix" title="Matrix Theme"><img src="assets/icons/heart-green.svg"
+                class="emoji-icon" alt="matrix"></button>
+        <button class="theme-btn" data-theme="gameboy" title="Gameboy Theme"><img src="assets/icons/target.svg"
+                class="emoji-icon" alt="gameboy"></button>
     </div>
 
     <!-- Sound Toggle -->
     <button class="sound-toggle" id="soundToggle" title="Toggle Sound Effects">
-        <span class="sound-on">🔊</span>
-        <span class="sound-off" style="display:none;">🔇</span>
+        <span class="sound-on"><img src="assets/icons/sound-on.svg" class="emoji-icon" alt="sound on"></span>
+        <span class="sound-off" style="display:none;"><img src="assets/icons/sound-off.svg" class="emoji-icon"
+                alt="sound off"></span>
     </button>
 
     <!-- Achievement Notifications -->
@@ -94,7 +100,7 @@
     <!-- Progress Bar -->
     <div class="progress-container">
         <div class="progress-bar" id="progressBar"></div>
-        <div class="progress-cat-icon">🐱</div>
+        <div class="progress-cat-icon"><img src="assets/icons/cat.svg" class="emoji-icon" alt="cat"></div>
     </div>
 
     <!-- Scanline Effect -->
@@ -104,7 +110,7 @@
     <header class="header">
         <nav class="nav">
             <div class="logo">
-                <span class="blink">▶</span> ANKIT.DEV
+                <img src="assets/icons/play.svg" class="emoji-icon blink" alt="play"> ANKIT.DEV
             </div>
             <ul class="nav-menu">
                 <li><a href="#home">HOME</a></li>
@@ -133,7 +139,8 @@
                     <a href="#contact" class="btn btn-secondary">GET IN TOUCH</a>
                 </div>
                 <div class="hint-box">
-                    <span class="blink">💡</span> Move your mouse to interact with the 3D shapes!
+                    <img src="assets/icons/bulb.svg" class="emoji-icon blink" alt="hint"> Move your mouse to interact
+                    with the 3D shapes!
                 </div>
             </div>
         </div>
@@ -143,7 +150,8 @@
     <section id="about" class="section">
         <div class="container">
             <h2 class="section-title">
-                <span class="title-icon">👨💻</span> ABOUT_ME
+                <span class="title-icon"><img src="assets/icons/coder.svg" class="emoji-icon" alt="about"></span>
+                ABOUT_ME
             </h2>
             <div class="about-content">
                 <div class="terminal-box">
@@ -188,11 +196,13 @@
     <section id="skills" class="section section-dark">
         <div class="container">
             <h2 class="section-title">
-                <span class="title-icon">🛠️</span> SKILLS_TREE
+                <span class="title-icon"><img src="assets/icons/tools.svg" class="emoji-icon" alt="skills"></span>
+                SKILLS_TREE
             </h2>
             <div class="skills-grid">
                 <div class="skill-category">
-                    <h3 class="category-title">💻 PROGRAMMING LANGUAGES</h3>
+                    <h3 class="category-title"><img src="assets/icons/laptop.svg" class="emoji-icon" alt="code">
+                        PROGRAMMING LANGUAGES</h3>
                     <div class="skill-items">
                         <span class="skill-tag">Python</span>
                         <span class="skill-tag">MATLAB</span>
@@ -203,7 +213,8 @@
                     </div>
                 </div>
                 <div class="skill-category">
-                    <h3 class="category-title">📊 DATA SCIENCE & ML</h3>
+                    <h3 class="category-title"><img src="assets/icons/chart.svg" class="emoji-icon" alt="data"> DATA
+                        SCIENCE & ML</h3>
                     <div class="skill-items">
                         <span class="skill-tag">Machine Learning</span>
                         <span class="skill-tag">Deep Learning</span>
@@ -214,7 +225,8 @@
                     </div>
                 </div>
                 <div class="skill-category">
-                    <h3 class="category-title">🧠 ML/DL FRAMEWORKS</h3>
+                    <h3 class="category-title"><img src="assets/icons/brain.svg" class="emoji-icon" alt="frameworks">
+                        ML/DL FRAMEWORKS</h3>
                     <div class="skill-items">
                         <span class="skill-tag">TensorFlow</span>
                         <span class="skill-tag">PyTorch</span>
@@ -225,7 +237,8 @@
                     </div>
                 </div>
                 <div class="skill-category">
-                    <h3 class="category-title">🤖 AI SPECIALIZATIONS</h3>
+                    <h3 class="category-title"><img src="assets/icons/robot.svg" class="emoji-icon" alt="ai"> AI
+                        SPECIALIZATIONS</h3>
                     <div class="skill-items">
                         <span class="skill-tag">NLP</span>
                         <span class="skill-tag">Computer Vision</span>
@@ -236,7 +249,8 @@
                     </div>
                 </div>
                 <div class="skill-category">
-                    <h3 class="category-title">⚙️ TOOLS & PLATFORMS</h3>
+                    <h3 class="category-title"><img src="assets/icons/gear.svg" class="emoji-icon" alt="tools"> TOOLS &
+                        PLATFORMS</h3>
                     <div class="skill-items">
                         <span class="skill-tag">Git & GitHub</span>
                         <span class="skill-tag">Jupyter Notebook</span>
@@ -247,7 +261,8 @@
                     </div>
                 </div>
                 <div class="skill-category">
-                    <h3 class="category-title">🧠 CORE FUNDAMENTALS</h3>
+                    <h3 class="category-title"><img src="assets/icons/brain.svg" class="emoji-icon" alt="core"> CORE
+                        FUNDAMENTALS</h3>
                     <div class="skill-items">
                         <span class="skill-tag">Data Structures</span>
                         <span class="skill-tag">Algorithms</span>
@@ -264,7 +279,8 @@
     <section id="projects" class="section">
         <div class="container">
             <h2 class="section-title">
-                <span class="title-icon">🚀</span> PROJECTS_LOG
+                <span class="title-icon"><img src="assets/icons/rocket.svg" class="emoji-icon" alt="projects"></span>
+                PROJECTS_LOG
             </h2>
             <div class="projects-grid">
                 <!-- Project 1 -->
@@ -273,7 +289,8 @@
                         <span class="project-level">LVL 5</span>
                         <span class="project-status">COMPLETED</span>
                     </div>
-                    <h3 class="project-title">🏥 AI Health Symptom Intelligence System</h3>
+                    <h3 class="project-title"><img src="assets/icons/hospital.svg" class="emoji-icon" alt="hospital"> AI
+                        Health Symptom Intelligence System</h3>
                     <p class="project-description">
                         Developed an intelligent health diagnostics system that analyzes symptoms and medical images
                         using
@@ -302,7 +319,8 @@
                         <span class="project-level">LVL 5</span>
                         <span class="project-status">ACTIVE</span>
                     </div>
-                    <h3 class="project-title">🤖 AI CRM Automation Agents</h3>
+                    <h3 class="project-title"><img src="assets/icons/robot.svg" class="emoji-icon" alt="bot"> AI CRM
+                        Automation Agents</h3>
                     <p class="project-description">
                         Built intelligent AI agents using LLMs to automate CRM workflows including lead qualification,
                         automated follow-ups, and task management. Implemented scalable automation pipelines that
@@ -328,7 +346,8 @@
                         <span class="project-level">LVL 4</span>
                         <span class="project-status">COMPLETED</span>
                     </div>
-                    <h3 class="project-title">🎤 Voice AI Bot Workflow System</h3>
+                    <h3 class="project-title"><img src="assets/icons/mic.svg" class="emoji-icon" alt="voice"> Voice AI
+                        Bot Workflow System</h3>
                     <p class="project-description">
                         Engineered an end-to-end voice AI system with multilingual support for automated reminders and
                         customer interactions. Integrated Whisper for speech-to-text, Google TTS for voice synthesis,
@@ -354,7 +373,8 @@
                         <span class="project-level">LVL 4</span>
                         <span class="project-status">COMPLETED</span>
                     </div>
-                    <h3 class="project-title">🧬 Cancer Detection using Deep Learning</h3>
+                    <h3 class="project-title"><img src="assets/icons/dna.svg" class="emoji-icon" alt="cells"> Cancer
+                        Detection using Deep Learning</h3>
                     <p class="project-description">
                         Built a deep learning model for detecting lung and pancreas cancer. Used image preprocessing
                         techniques like Gaussian blur and augmentation to improve model accuracy.
@@ -380,7 +400,8 @@
                         <span class="project-level">LVL 3</span>
                         <span class="project-status">COMPLETED</span>
                     </div>
-                    <h3 class="project-title">📝 Handwriting Improvement Note-Making App</h3>
+                    <h3 class="project-title"><img src="assets/icons/memo.svg" class="emoji-icon" alt="note">
+                        Handwriting Improvement Note-Making App</h3>
                     <p class="project-description">
                         Developed a smart note-making app that improves handwriting using AI feedback. Provides
                         real-time writing suggestions to enhance handwriting quality.
@@ -405,7 +426,8 @@
                         <span class="project-level">LVL 4</span>
                         <span class="project-status">COMPLETED</span>
                     </div>
-                    <h3 class="project-title">📈 Stock Price Prediction & Forecasting</h3>
+                    <h3 class="project-title"><img src="assets/icons/graph.svg" class="emoji-icon" alt="stocks"> Stock
+                        Price Prediction & Forecasting</h3>
                     <p class="project-description">
                         Built an LSTM neural network to forecast Motilal Oswal Midcap stock prices. Implemented
                         data preprocessing, model training, and future price prediction using time-series deep learning
@@ -433,11 +455,12 @@
     <section id="experience" class="section section-dark">
         <div class="container">
             <h2 class="section-title">
-                <span class="title-icon">💼</span> EXPERIENCE_TIMELINE
+                <span class="title-icon"><img src="assets/icons/briefcase.svg" class="emoji-icon"
+                        alt="experience"></span> EXPERIENCE_TIMELINE
             </h2>
             <div class="experience-timeline">
                 <div class="experience-item">
-                    <div class="experience-badge">🤖</div>
+                    <div class="experience-badge"><img src="assets/icons/robot.svg" class="emoji-icon" alt="bot"></div>
                     <div class="experience-content">
                         <h3 class="experience-title">AI Agent Developer — CrowdWisdom Trading</h3>
                         <p class="experience-company">April 2025 - Current</p>
@@ -459,7 +482,8 @@
                 </div>
 
                 <div class="experience-item">
-                    <div class="experience-badge">📊</div>
+                    <div class="experience-badge"><img src="assets/icons/chart.svg" class="emoji-icon" alt="stats">
+                    </div>
                     <div class="experience-content">
                         <h3 class="experience-title">Technical Co-Lead — Stats-O-Locked Club</h3>
                         <p class="experience-company">February 2026 - Current</p>
@@ -487,26 +511,30 @@
     <section id="achievements" class="section">
         <div class="container">
             <h2 class="section-title">
-                <span class="title-icon">🏆</span> ACHIEVEMENTS_UNLOCKED
+                <span class="title-icon"><img src="assets/icons/trophy.svg" class="emoji-icon"
+                        alt="achievements"></span> ACHIEVEMENTS_UNLOCKED
             </h2>
             <div class="achievements-grid">
                 <div class="achievement-card">
-                    <div class="achievement-icon">🥇</div>
+                    <div class="achievement-icon"><img src="assets/icons/medal.svg" class="emoji-icon"
+                            alt="first place"></div>
                     <h3>Microsoft Club Hackathon</h3>
                     <p>Winner</p>
                 </div>
                 <div class="achievement-card">
-                    <div class="achievement-icon">👨💻</div>
+                    <div class="achievement-icon"><img src="assets/icons/coder.svg" class="emoji-icon" alt="dsa"></div>
                     <h3>DSA Problems Solved</h3>
                     <p class="counter" data-target="300">0</p>
                 </div>
                 <div class="achievement-card">
-                    <div class="achievement-icon">🚀</div>
+                    <div class="achievement-icon"><img src="assets/icons/rocket.svg" class="emoji-icon"
+                            alt="internship"></div>
                     <h3>AI Internship Projects</h3>
                     <p>Completed Successfully</p>
                 </div>
                 <div class="achievement-card">
-                    <div class="achievement-icon">📊</div>
+                    <div class="achievement-icon"><img src="assets/icons/chart.svg" class="emoji-icon"
+                            alt="ml projects"></div>
                     <h3>AI/ML Projects Completed</h3>
                     <p class="counter" data-target="6">0</p>
                 </div>
@@ -518,7 +546,8 @@
     <section id="coding-stats" class="section section-dark">
         <div class="container">
             <h2 class="section-title">
-                <span class="title-icon">📊</span> CODING_STATS
+                <span class="title-icon"><img src="assets/icons/chart.svg" class="emoji-icon" alt="stats"></span>
+                CODING_STATS
             </h2>
             <!-- GFG Stats Container -->
             <div id="gfg-stats"></div>
@@ -529,7 +558,8 @@
     <section id="education" class="section section-dark">
         <div class="container">
             <h2 class="section-title">
-                <span class="title-icon">🎓</span> EDUCATION_DATA
+                <span class="title-icon"><img src="assets/icons/grad-cap.svg" class="emoji-icon" alt="education"></span>
+                EDUCATION_DATA
             </h2>
             <div class="education-card">
                 <div class="education-header">
@@ -549,12 +579,13 @@
     <section id="certifications" class="section">
         <div class="container">
             <h2 class="section-title">
-                <span class="title-icon">📜</span> CERTIFICATIONS_EARNED
+                <span class="title-icon"><img src="assets/icons/scroll.svg" class="emoji-icon" alt="certs"></span>
+                CERTIFICATIONS_EARNED
             </h2>
             <div class="certifications-grid">
                 <!-- Certification 1 -->
                 <div class="cert-card">
-                    <div class="cert-badge">🔧</div>
+                    <div class="cert-badge"><img src="assets/icons/wrench.svg" class="emoji-icon" alt="python"></div>
                     <h3 class="cert-title">Google IT Automation with Python</h3>
                     <p class="cert-issuer">Google (Coursera)</p>
                     <p class="cert-description">
@@ -572,7 +603,7 @@
 
                 <!-- Certification 2 -->
                 <div class="cert-card">
-                    <div class="cert-badge">💻</div>
+                    <div class="cert-badge"><img src="assets/icons/laptop.svg" class="emoji-icon" alt="gfg"></div>
                     <h3 class="cert-title">GFG 160 DSA Certificate</h3>
                     <p class="cert-issuer">GeeksforGeeks</p>
                     <p class="cert-description">
@@ -588,7 +619,7 @@
 
                 <!-- Certification 3 -->
                 <div class="cert-card">
-                    <div class="cert-badge">🤖</div>
+                    <div class="cert-badge"><img src="assets/icons/robot.svg" class="emoji-icon" alt="ai"></div>
                     <h3 class="cert-title">Darzi: AI Resume Tailor Suite</h3>
                     <p class="cert-issuer">VIT Bhopal AI Innovators Hub</p>
                     <p class="cert-description">
@@ -607,7 +638,7 @@
 
                 <!-- Certification 4 -->
                 <div class="cert-card">
-                    <div class="cert-badge">📐</div>
+                    <div class="cert-badge"><img src="assets/icons/ruler.svg" class="emoji-icon" alt="matlab"></div>
                     <h3 class="cert-title">MATLAB Onramp</h3>
                     <p class="cert-issuer">MathWorks Training Services</p>
                     <p class="cert-description">
@@ -631,40 +662,46 @@
     <section id="contact" class="section">
         <div class="container">
             <h2 class="section-title">
-                <span class="title-icon">📬</span> CONTACT_INTERFACE
+                <span class="title-icon"><img src="assets/icons/mailbox.svg" class="emoji-icon" alt="contact"></span>
+                CONTACT_INTERFACE
             </h2>
             <div class="contact-content">
                 <div class="contact-info">
                     <div class="contact-item">
-                        <span class="contact-icon">📧</span>
+                        <span class="contact-icon"><img src="assets/icons/email.svg" class="emoji-icon"
+                                alt="email"></span>
                         <div>
                             <h4>Email</h4>
                             <a href="mailto:ankitmahadani181@gmail.com">ankitmahadani181@gmail.com</a>
                         </div>
                     </div>
                     <div class="contact-item">
-                        <span class="contact-icon">💻</span>
+                        <span class="contact-icon"><img src="assets/icons/laptop.svg" class="emoji-icon"
+                                alt="github"></span>
                         <div>
                             <h4>GitHub</h4>
                             <a href="https://github.com/Ankit-Mahadani" target="_blank">Ankit-Mahadani</a>
                         </div>
                     </div>
                     <div class="contact-item">
-                        <span class="contact-icon">🔗</span>
+                        <span class="contact-icon"><img src="assets/icons/link.svg" class="emoji-icon"
+                                alt="linkedin"></span>
                         <div>
                             <h4>LinkedIn</h4>
                             <a href="https://www.linkedin.com/in/ankitmahadani/" target="_blank">ankitmahadani</a>
                         </div>
                     </div>
                     <div class="contact-item">
-                        <span class="contact-icon">⚡</span>
+                        <span class="contact-icon"><img src="assets/icons/lightning.svg" class="emoji-icon"
+                                alt="leetcode"></span>
                         <div>
                             <h4>LeetCode</h4>
                             <a href="https://leetcode.com/u/AnkitMAHADANI/" target="_blank">AnkitMAHADANI</a>
                         </div>
                     </div>
                     <div class="contact-item">
-                        <span class="contact-icon">🎯</span>
+                        <span class="contact-icon"><img src="assets/icons/target.svg" class="emoji-icon"
+                                alt="geeksforgeeks"></span>
                         <div>
                             <h4>GeeksforGeeks</h4>
                             <a href="https://www.geeksforgeeks.org/profile/ankitmahadani"
@@ -672,7 +709,8 @@
                         </div>
                     </div>
                     <div class="contact-item">
-                        <span class="contact-icon">🏆</span>
+                        <span class="contact-icon"><img src="assets/icons/trophy.svg" class="emoji-icon"
+                                alt="codeforces"></span>
                         <div>
                             <h4>Codeforces</h4>
                             <a href="https://codeforces.com/profile/ankitmahadani181"
@@ -681,7 +719,7 @@
                     </div>
                 </div>
                 <div class="interests-box">
-                    <h3>🎯 INTERESTS</h3>
+                    <h3><img src="assets/icons/target.svg" class="emoji-icon" alt="interests"> INTERESTS</h3>
                     <div class="interests-tags">
                         <span class="interest-tag">Data Science</span>
                         <span class="interest-tag">Machine Learning</span>
@@ -697,7 +735,8 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2026 Ankit Mahadani. Built with <span class="heart">❤️</span> and retro vibes</p>
+            <p>&copy; 2026 Ankit Mahadani. Built with <span class="heart"><img src="assets/icons/heart.svg"
+                        class="emoji-icon" alt="love"></span> and retro vibes</p>
         </div>
     </footer>
 

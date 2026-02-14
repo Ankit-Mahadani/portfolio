@@ -59,13 +59,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 });
 
-                // After 5 seconds, speed up dramatically
+                // After 2.5 seconds, speed up dramatically
                 setTimeout(() => {
                     dinoGame.speedUp();
                     speedLines.classList.add('active');
                     createSpeedLines(speedLines);
 
-                    // After 3 more seconds, glitch and transition
+                    // After 1.5 more seconds, glitch and transition
                     setTimeout(() => {
                         glitchOverlay.classList.add('active');
 
@@ -80,9 +80,9 @@ document.addEventListener('DOMContentLoaded', function () {
                             setTimeout(() => {
                                 introOverlay.remove();
                             }, 500);
-                        }, 2000);
-                    }, 3000);
-                }, 5000);
+                        }, 1000);
+                    }, 1500);
+                }, 2500);
             }, 500);
         }
 
@@ -760,7 +760,7 @@ document.addEventListener('DOMContentLoaded', function () {
             btn.classList.add('active');
 
             playSound('theme');
-            showAchievement('🎨 Theme Master', `Switched to ${theme} theme!`);
+            showAchievement('Theme Master', `Switched to ${theme} theme!`, 'assets/icons/palette.svg');
         });
     });
 
@@ -835,29 +835,43 @@ document.addEventListener('DOMContentLoaded', function () {
     // ===========================
     // ACHIEVEMENT SYSTEM
     // ===========================
+    // ===========================
+    // ACHIEVEMENT SYSTEM
+    // ===========================
     const achievements = {
-        firstVisit: { icon: '👋', title: 'Welcome!', desc: 'First visit to the portfolio' },
-        explorer: { icon: '🗺️', title: 'Explorer', desc: 'Visited all sections' },
-        projectViewer: { icon: '🚀', title: 'Project Enthusiast', desc: 'Viewed projects section' },
-        skillsViewer: { icon: '🛠️', title: 'Skills Scout', desc: 'Checked out skills' },
-        contactViewer: { icon: '📬', title: 'Networker', desc: 'Visited contact section' },
-        terminalUser: { icon: '💻', title: 'Terminal Master', desc: 'Used the interactive terminal' },
-        themeChanger: { icon: '🎨', title: 'Theme Master', desc: 'Changed the theme' },
-        scrollMaster: { icon: '📜', title: 'Scroll Master', desc: 'Scrolled to the bottom' }
+        firstVisit: { icon: 'assets/icons/hand.svg', title: 'Welcome!', desc: 'First visit to the portfolio' },
+        explorer: { icon: 'assets/icons/map.svg', title: 'Explorer', desc: 'Visited all sections' },
+        projectViewer: { icon: 'assets/icons/rocket.svg', title: 'Project Enthusiast', desc: 'Viewed projects section' },
+        skillsViewer: { icon: 'assets/icons/tools.svg', title: 'Skills Scout', desc: 'Checked out skills' },
+        contactViewer: { icon: 'assets/icons/mailbox.svg', title: 'Networker', desc: 'Visited contact section' },
+        terminalUser: { icon: 'assets/icons/laptop.svg', title: 'Terminal Master', desc: 'Used the interactive terminal' },
+        themeChanger: { icon: 'assets/icons/palette.svg', title: 'Theme Master', desc: 'Changed the theme' },
+        scrollMaster: { icon: 'assets/icons/scroll.svg', title: 'Scroll Master', desc: 'Scrolled to the bottom' }
     };
 
     const unlockedAchievements = JSON.parse(localStorage.getItem('achievements') || '[]');
 
-    function showAchievement(title, description) {
+    function showAchievement(title, description, iconPath = null) {
         const container = document.getElementById('achievement-container');
         const notification = document.createElement('div');
         notification.className = 'achievement-notification';
 
-        const icon = title.split(' ')[0];
+        // Check if iconPath is provided, otherwise try to extract or default
+        // If the title contains an image tag (passed as string), we need to handle it.
+        // But better to separate logic.
+
+        let iconHTML = '';
+        if (iconPath) {
+            iconHTML = `<img src="${iconPath}" class="emoji-icon" alt="achievement">`;
+        } else if (title.includes('<img')) {
+            // If title has image tag, just use it (legacy/compatibility)
+            // But we should try to avoid this.
+        }
+
         notification.innerHTML = `
-            <div class="achievement-icon-notif">${icon}</div>
+            <div class="achievement-icon-notif">${iconHTML}</div>
             <div class="achievement-text">
-                <h4>${title}</h4>
+                <h4>${title.replace(/<img[^>]*>/g, '')}</h4>
                 <p>${description}</p>
             </div>
         `;
@@ -875,7 +889,7 @@ document.addEventListener('DOMContentLoaded', function () {
             unlockedAchievements.push(key);
             localStorage.setItem('achievements', JSON.stringify(unlockedAchievements));
             const achievement = achievements[key];
-            showAchievement(`${achievement.icon} ${achievement.title}`, achievement.desc);
+            showAchievement(achievement.title, achievement.desc, achievement.icon);
         }
     }
 
@@ -980,7 +994,7 @@ document.addEventListener('DOMContentLoaded', function () {
             unlockedAchievements.forEach(key => {
                 const ach = achievements[key];
                 if (ach) {
-                    output += `<p>${ach.icon} ${ach.title} - ${ach.desc}</p>`;
+                    output += `<p><img src="${ach.icon}" class="emoji-icon" style="vertical-align: text-bottom;"> ${ach.title} - ${ach.desc}</p>`;
                 }
             });
             return output || '<p>No achievements unlocked yet!</p>';

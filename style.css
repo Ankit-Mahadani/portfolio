@@ -63,6 +63,50 @@ button,
         border-color 0.3s ease;
 }
 
+/* Emoji Icons Replacement Styles */
+.emoji-icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    display: inline-block;
+    object-fit: contain;
+    margin-right: 8px;
+}
+
+.intro-overlay .emoji-icon {
+    width: 0.8em;
+    height: 0.8em;
+}
+
+.theme-btn .emoji-icon {
+    width: 1.2em;
+    height: 1.2em;
+    filter: drop-shadow(0 0 2px var(--primary));
+}
+
+.sound-toggle .emoji-icon {
+    width: 1.2em;
+    height: 1.2em;
+}
+
+.title-icon .emoji-icon {
+    width: 1.2em;
+    height: 1.2em;
+    margin-right: 0;
+}
+
+.nav-menu .emoji-icon {
+    width: 0.9em;
+    height: 0.9em;
+    margin-right: 0;
+}
+
+.logo .emoji-icon {
+    width: 0.8em;
+    height: 0.8em;
+    margin-right: 5px;
+}
+
 /* ===========================
    DINO GAME INTRO OVERLAY
    =========================== */
@@ -108,7 +152,7 @@ button,
 
 .error-code {
     font-family: var(--font-pixel);
-    font-size: clamp(40px, 8vw, 80px);
+    font-size: clamp(32px, 6vw, 64px);
     color: #ff0055;
     margin-bottom: 20px;
     text-shadow: 4px 4px 0 rgba(255, 0, 85, 0.3);
@@ -117,16 +161,16 @@ button,
 
 .error-title {
     font-family: var(--font-pixel);
-    font-size: clamp(20px, 4vw, 32px);
+    font-size: clamp(16px, 3.2vw, 26px);
     color: var(--text-dim);
-    margin-bottom: 60px;
+    margin-bottom: 50px;
 }
 
 .game-over-text {
     font-family: var(--font-pixel);
-    font-size: clamp(24px, 5vw, 48px);
+    font-size: clamp(20px, 4vw, 38px);
     color: var(--primary);
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     text-shadow:
         2px 2px 0 var(--secondary),
         4px 4px 0 var(--accent);
@@ -135,7 +179,7 @@ button,
 
 .press-space {
     font-family: var(--font-pixel);
-    font-size: clamp(14px, 2.5vw, 20px);
+    font-size: clamp(12px, 2vw, 16px);
     color: var(--text-light);
 }
 
@@ -351,9 +395,9 @@ button,
 
 .progress-cat-icon {
     position: absolute;
-    top: -8px;
+    top: -15px;
     left: 0%;
-    font-size: 20px;
+    font-size: 35px;
     transition: left 0.3s ease;
     filter: drop-shadow(0 0 10px var(--primary));
 }
@@ -388,6 +432,13 @@ button,
     font-size: 16px;
     color: var(--primary);
     text-shadow: 2px 2px 0 var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo .emoji-icon {
+    margin-right: 0;
 }
 
 .nav-menu {
@@ -403,6 +454,9 @@ button,
     text-decoration: none;
     transition: all 0.3s;
     position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .nav-menu a:hover {
@@ -513,6 +567,10 @@ button,
     transition: all 0.3s;
     text-transform: uppercase;
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
 .btn-primary {
@@ -582,11 +640,14 @@ kbd {
     margin-bottom: 60px;
     text-align: center;
     text-shadow: 2px 2px 0 var(--secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
 }
 
 .title-icon {
     display: inline-block;
-    margin-right: 15px;
     animation: bounce 2s infinite;
 }
 
@@ -694,6 +755,13 @@ kbd {
     font-size: 16px;
     color: var(--accent);
     margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.category-title .emoji-icon {
+    margin-right: 0;
 }
 
 .skill-items {
@@ -787,6 +855,9 @@ kbd {
     font-size: 16px;
     color: var(--primary);
     margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .project-description {
@@ -858,6 +929,9 @@ kbd {
     font-size: 18px;
     color: var(--primary);
     margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .experience-company {
@@ -925,6 +999,10 @@ kbd {
     font-size: 14px;
     color: var(--primary);
     margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
 .achievement-card p {
@@ -1039,6 +1117,9 @@ kbd {
     font-size: 14px;
     color: var(--primary);
     margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .contact-item a {
@@ -1175,6 +1256,9 @@ kbd {
     cursor: pointer;
     border-radius: 5px;
     transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .theme-btn:hover {
@@ -1248,6 +1332,9 @@ kbd {
     cursor: pointer;
     border-radius: 5px;
     transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .sound-toggle:hover {
@@ -1284,6 +1371,13 @@ kbd {
 .achievement-icon-notif {
     font-size: 40px;
     animation: bounce 1s infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.achievement-icon-notif .emoji-icon {
+    margin-right: 0;
 }
 
 .achievement-text h4 {
@@ -2292,4 +2386,18 @@ kbd {
 
 .contact-item:nth-child(6) {
     animation-delay: 0.6s;
+}
+
+/* ===========================
+   ICON MARGIN RESET
+   Removes redundant margins for flex containers
+   =========================== */
+.btn .emoji-icon,
+.project-title .emoji-icon,
+.experience-title .emoji-icon,
+.achievement-card h3 .emoji-icon,
+.contact-item h4 .emoji-icon,
+.theme-btn .emoji-icon,
+.sound-toggle .emoji-icon {
+    margin-right: 0;
 }
