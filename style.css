@@ -831,7 +831,15 @@ kbd {
     font-family: var(--font-pixel);
     font-size: 18px;
     color: var(--primary);
-    margin-bottom: 15px;
+    margin-bottom: 8px;
+}
+
+.experience-company {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    color: var(--accent);
+    margin-bottom: 12px;
+    font-style: italic;
 }
 
 .experience-description {
@@ -1725,5 +1733,133 @@ kbd {
 
     .contact-icon {
         font-size: 30px;
+    }
+}
+
+/* ===========================
+   GEEKSFORGEEKS STATS - CARD LAYOUT
+   =========================== */
+.gfg-stats-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.gfg-main-title {
+    font-family: var(--font-pixel);
+    font-size: 20px;
+    color: var(--primary);
+    text-align: center;
+    margin-bottom: 40px;
+    text-shadow: 2px 2px 0 var(--secondary);
+}
+
+.gfg-card {
+    background: var(--card-bg);
+    border: 3px solid var(--border-color);
+    border-radius: 8px;
+    padding: 25px;
+    margin-bottom: 25px;
+    transition: all 0.3s;
+}
+
+.gfg-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px var(--shadow);
+    border-color: var(--accent);
+}
+
+.gfg-card-title {
+    font-family: var(--font-pixel);
+    font-size: 16px;
+    color: var(--accent);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.gfg-stats-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.gfg-stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    background: var(--bg-darker);
+    border-radius: 5px;
+    border: 2px solid transparent;
+    transition: all 0.3s;
+}
+
+.gfg-stat-row:hover {
+    border-color: var(--primary);
+    transform: translateX(5px);
+}
+
+.gfg-stat-label {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    color: var(--text-light);
+    font-weight: 500;
+}
+
+.gfg-stat-label.easy {
+    color: #4ade80;
+}
+
+.gfg-stat-label.medium {
+    color: #fbbf24;
+}
+
+.gfg-stat-label.hard {
+    color: #f87171;
+}
+
+.gfg-stat-label.codechef {
+    color: #4ade80;
+}
+
+.gfg-stat-label.codeforces {
+    color: #fbbf24;
+}
+
+.gfg-stat-number {
+    font-family: var(--font-pixel);
+    font-size: 18px;
+    color: var(--primary);
+    font-weight: bold;
+}
+
+.gfg-total {
+    font-family: var(--font-pixel);
+    font-size: 14px;
+    color: var(--accent);
+    text-align: center;
+    padding: 10px;
+    background: var(--bg-darker);
+    border-radius: 5px;
+    border: 2px solid var(--accent);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .gfg-stats-container {
+        padding: 0 10px;
+    }
+
+    .gfg-card {
+        padding: 20px;
+    }
+
+    .gfg-stat-row {
+        padding: 10px 15px;
+    }
+
+    .gfg-stat-label,
+    .gfg-stat-number {
+        font-size: 16px;
     }
 }

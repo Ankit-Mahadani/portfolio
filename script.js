@@ -940,7 +940,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <p class="success">About Ankit Mahadani:</p>
             <p>Computer Science student at VIT Bhopal</p>
             <p>Specializing in AI, ML, and Full-Stack Development</p>
-            <p>Founder of AgentXpertt startup</p>
+            <p>Technical Co-Lead at Stats-O-Locked Club</p>
             <p>500+ DSA problems solved</p>
         `,
         skills: () => `
@@ -1070,359 +1070,93 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // ===========================
-    // LIVE CODING STATS
+    // GEEKSFORGEEKS STATS
     // ===========================
-    const CACHE_DURATION = 6 * 60 * 60 * 1000; // 6 hours in milliseconds
-    const USERNAMES = {
-        geeksforgeeks: 'ankitmahadani',
-        codeforces: 'ankitmahadani181',
-        github: 'Ankit-Mahadani'
+
+    // GeeksforGeeks stats data (hardcoded based on your profile)
+    const gfgStats = {
+        fundamentals: {
+            total: 33,
+            gfg: 33
+        },
+        dsa: {
+            total: 214,
+            easy: 99,
+            medium: 95,
+            hard: 20
+        },
+        competitive: {
+            total: 67,
+            codechef: 30,
+            codeforces: 37
+        }
     };
 
-    // Cache management
-    function getCachedStats() {
-        const cached = localStorage.getItem('codingStats');
-        if (!cached) return null;
-
-        const { data, timestamp } = JSON.parse(cached);
-        const now = Date.now();
-
-        if (now - timestamp > CACHE_DURATION) {
-            return null; // Cache expired
-        }
-
-        return data;
-    }
-
-    function setCachedStats(data) {
-        const cacheData = {
-            data: data,
-            timestamp: Date.now()
-        };
-        localStorage.setItem('codingStats', JSON.stringify(cacheData));
-    }
-
-    function getLastUpdateTime() {
-        const cached = localStorage.getItem('codingStats');
-        if (!cached) return 'Never';
-
-        const { timestamp } = JSON.parse(cached);
-        const date = new Date(timestamp);
-        return date.toLocaleString();
-    }
-
-    // Fetch GeeksforGeeks stats
-    async function fetchGeeksforGeeksStats(username) {
-        try {
-            // GeeksforGeeks doesn't have a public API, so we'll use a scraping approach or API proxy
-            // For now, using a placeholder structure based on the image you provided
-            const response = await fetch(`https://geeksforgeeks-api.vercel.app/${username}`);
-
-            if (!response.ok) throw new Error('Failed to fetch GFG stats');
-
-            const data = await response.json();
-
-            // Parse the data structure
-            return {
-                fundamentals: data.fundamentals || 33,
-                dsa: {
-                    total: data.dsa?.total || 214,
-                    easy: data.dsa?.easy || 99,
-                    medium: data.dsa?.medium || 95,
-                    hard: data.dsa?.hard || 20
-                },
-                competitive: {
-                    total: data.competitive?.total || 67,
-                    codechef: data.competitive?.codechef || 30,
-                    codeforces: data.competitive?.codeforces || 37
-                }
-            };
-        } catch (error) {
-            console.error('GeeksforGeeks API Error:', error);
-            throw error;
-        }
-    }
-
-    // Fetch Codeforces stats
-    async function fetchCodeforcesStats(username) {
-        try {
-            const response = await fetch(`https://codeforces.com/api/user.info?handles=${username}`);
-            const data = await response.json();
-
-            if (data.status !== 'OK') throw new Error('User not found');
-
-            const user = data.result[0];
-            return {
-                rating: user.rating || 'Unrated',
-                maxRating: user.maxRating || 'N/A',
-                rank: user.rank || 'Unrated',
-                maxRank: user.maxRank || 'N/A'
-            };
-        } catch (error) {
-            console.error('Codeforces API Error:', error);
-            throw error;
-        }
-    }
-
-    // Fetch GitHub stats
-    async function fetchGitHubStats(username) {
-        try {
-            const userResponse = await fetch(`https://api.github.com/users/${username}`);
-            const userData = await userResponse.json();
-
-            if (!userData.login) throw new Error('User not found');
-
-            return {
-                repos: userData.public_repos || 0,
-                followers: userData.followers || 0,
-                following: userData.following || 0
-            };
-        } catch (error) {
-            console.error('GitHub API Error:', error);
-            throw error;
-        }
-    }
-
-    // Display stats in UI
-    function displayGeeksforGeeksStats(stats) {
-        if (!stats) {
-            displayError('geeksforgeeks-stats', 'No stats available');
-            return;
-        }
-
-        const container = document.getElementById('geeksforgeeks-stats');
+    // Display GFG stats if container exists
+    function displayGFGStats() {
+        const container = document.getElementById('gfg-stats');
         if (!container) {
-            console.error('GeeksforGeeks stats container not found');
+            console.log('GFG stats container not found');
             return;
         }
 
         container.innerHTML = `
-            <div class="stat-category">
-                <h4>Fundamentals</h4>
-                <div class="stat-item">
-                    <span class="stat-label">GFG</span>
-                    <span class="stat-value highlight">${stats.fundamentals || 0}</span>
+            <div class="gfg-stats-container">
+                <h3 class="gfg-main-title">Problems Solved</h3>
+                
+                <!-- Fundamentals Card -->
+                <div class="gfg-card">
+                    <h4 class="gfg-card-title">Fundamentals</h4>
+                    <div class="gfg-stats-list">
+                        <div class="gfg-stat-row">
+                            <span class="gfg-stat-label">GFG</span>
+                            <span class="gfg-stat-number">${gfgStats.fundamentals.gfg}</span>
+                        </div>
+                    </div>
+                    <div class="gfg-total">Total: ${gfgStats.fundamentals.total}</div>
                 </div>
-            </div>
-            
-            <div class="stat-category">
-                <h4>DSA</h4>
-                <div class="stat-item">
-                    <span class="stat-label">Total</span>
-                    <span class="stat-value highlight">${stats.dsa?.total || 0}</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-label easy-label">Easy</span>
-                    <span class="stat-value">${stats.dsa?.easy || 0}</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-label medium-label">Medium</span>
-                    <span class="stat-value">${stats.dsa?.medium || 0}</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-label hard-label">Hard</span>
-                    <span class="stat-value">${stats.dsa?.hard || 0}</span>
-                </div>
-            </div>
-            
-            <div class="stat-category">
-                <h4>Competitive Programming</h4>
-                <div class="stat-item">
-                    <span class="stat-label">Total</span>
-                    <span class="stat-value highlight">${stats.competitive?.total || 0}</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-label">Codechef</span>
-                    <span class="stat-value">${stats.competitive?.codechef || 0}</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-label">Codeforces</span>
-                    <span class="stat-value">${stats.competitive?.codeforces || 0}</span>
-                </div>
-            </div>
-        `;
-        animateStatNumbers(container);
-    }
 
-    function displayCodeforcesStats(stats) {
-        if (!stats) {
-            displayError('codeforces-stats', 'No stats available');
-            return;
-        }
+                <!-- DSA Card -->
+                <div class="gfg-card">
+                    <h4 class="gfg-card-title">DSA</h4>
+                    <div class="gfg-stats-list">
+                        <div class="gfg-stat-row">
+                            <span class="gfg-stat-label easy">Easy</span>
+                            <span class="gfg-stat-number">${gfgStats.dsa.easy}</span>
+                        </div>
+                        <div class="gfg-stat-row">
+                            <span class="gfg-stat-label medium">Medium</span>
+                            <span class="gfg-stat-number">${gfgStats.dsa.medium}</span>
+                        </div>
+                        <div class="gfg-stat-row">
+                            <span class="gfg-stat-label hard">Hard</span>
+                            <span class="gfg-stat-number">${gfgStats.dsa.hard}</span>
+                        </div>
+                    </div>
+                    <div class="gfg-total">Total: ${gfgStats.dsa.total}</div>
+                </div>
 
-        const container = document.getElementById('codeforces-stats');
-        if (!container) {
-            console.error('Codeforces stats container not found');
-            return;
-        }
-
-        const rankClass = stats.rank ? stats.rank.toLowerCase().replace(' ', '-') : 'unrated';
-        container.innerHTML = `
-            <div class="stat-item">
-                <span class="stat-label">Current Rating</span>
-                <span class="stat-value highlight">${stats.rating || 'Unrated'}</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-label">Max Rating</span>
-                <span class="stat-value">${stats.maxRating || 'N/A'}</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-label">Current Rank</span>
-                <span class="stat-value">
-                    <span class="rank-badge ${rankClass}">${stats.rank || 'Unrated'}</span>
-                </span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-label">Max Rank</span>
-                <span class="stat-value">${stats.maxRank || 'N/A'}</span>
-            </div>
-        `;
-        animateStatNumbers(container);
-    }
-
-    function displayGitHubStats(stats) {
-        if (!stats) {
-            displayError('github-stats', 'No stats available');
-            return;
-        }
-
-        const container = document.getElementById('github-stats');
-        if (!container) {
-            console.error('GitHub stats container not found');
-            return;
-        }
-
-        container.innerHTML = `
-            <div class="stat-item">
-                <span class="stat-label">Public Repos</span>
-                <span class="stat-value highlight">${stats.repos || 0}</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-label">Followers</span>
-                <span class="stat-value">${stats.followers || 0}</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-label">Following</span>
-                <span class="stat-value">${stats.following || 0}</span>
-            </div>
-        `;
-        animateStatNumbers(container);
-    }
-
-    function displayError(containerId, message) {
-        const container = document.getElementById(containerId);
-        container.innerHTML = `
-            <div class="stats-error">
-                <div class="stats-error-icon">⚠️</div>
-                <p>${message}</p>
+                <!-- Competitive Programming Card -->
+                <div class="gfg-card">
+                    <h4 class="gfg-card-title">Competitive Programming</h4>
+                    <div class="gfg-stats-list">
+                        <div class="gfg-stat-row">
+                            <span class="gfg-stat-label codechef">Codechef</span>
+                            <span class="gfg-stat-number">${gfgStats.competitive.codechef}</span>
+                        </div>
+                        <div class="gfg-stat-row">
+                            <span class="gfg-stat-label codeforces">Codeforces</span>
+                            <span class="gfg-stat-number">${gfgStats.competitive.codeforces}</span>
+                        </div>
+                    </div>
+                    <div class="gfg-total">Total: ${gfgStats.competitive.total}</div>
+                </div>
             </div>
         `;
     }
 
-    // Animate stat numbers
-    function animateStatNumbers(container) {
-        const statValues = container.querySelectorAll('.stat-value');
-        statValues.forEach(stat => {
-            const text = stat.textContent;
-            const number = parseInt(text.replace(/,/g, ''));
+    // Initialize GFG stats on page load
+    displayGFGStats();
 
-            if (!isNaN(number) && number > 0) {
-                let current = 0;
-                const increment = Math.ceil(number / 30);
-                const timer = setInterval(() => {
-                    current += increment;
-                    if (current >= number) {
-                        stat.textContent = number.toLocaleString();
-                        clearInterval(timer);
-                    } else {
-                        stat.textContent = current.toLocaleString();
-                    }
-                }, 30);
-            }
-        });
-    }
-
-    // Main function to update all stats
-    async function updateCodingStats(forceRefresh = false) {
-        const updateTimeEl = document.getElementById('statsUpdateTime');
-
-        if (!updateTimeEl) {
-            console.error('Stats update time element not found');
-            return;
-        }
-
-        // Check cache first
-        if (!forceRefresh) {
-            const cached = getCachedStats();
-            if (cached) {
-                // Validate cached data before displaying
-                if (cached.geeksforgeeks) {
-                    displayGeeksforGeeksStats(cached.geeksforgeeks);
-                } else {
-                    displayError('geeksforgeeks-stats', 'No cached data available');
-                }
-
-                if (cached.codeforces) {
-                    displayCodeforcesStats(cached.codeforces);
-                } else {
-                    displayError('codeforces-stats', 'No cached data available');
-                }
-
-                if (cached.github) {
-                    displayGitHubStats(cached.github);
-                } else {
-                    displayError('github-stats', 'No cached data available');
-                }
-
-                updateTimeEl.textContent = `Last updated: ${getLastUpdateTime()}`;
-                return;
-            }
-        }
-
-        // Fetch fresh data
-        const allStats = {};
-
-        // GeeksforGeeks
-        try {
-            allStats.geeksforgeeks = await fetchGeeksforGeeksStats(USERNAMES.geeksforgeeks);
-            displayGeeksforGeeksStats(allStats.geeksforgeeks);
-        } catch (error) {
-            displayError('geeksforgeeks-stats', 'Failed to load stats');
-        }
-
-        // Codeforces
-        try {
-            allStats.codeforces = await fetchCodeforcesStats(USERNAMES.codeforces);
-            displayCodeforcesStats(allStats.codeforces);
-        } catch (error) {
-            displayError('codeforces-stats', 'Failed to load stats');
-        }
-
-        // GitHub
-        try {
-            allStats.github = await fetchGitHubStats(USERNAMES.github);
-            displayGitHubStats(allStats.github);
-        } catch (error) {
-            displayError('github-stats', 'Failed to load stats');
-        }
-
-        // Cache the results
-        if (Object.keys(allStats).length > 0) {
-            setCachedStats(allStats);
-            updateTimeEl.textContent = `Last updated: ${getLastUpdateTime()}`;
-        }
-    }
-
-    // Refresh button handler
-    const refreshBtn = document.getElementById('refreshStatsBtn');
-    if (refreshBtn) {
-        refreshBtn.addEventListener('click', () => {
-            playSound('click');
-            updateCodingStats(true);
-        });
-    }
-
-    // Load stats on page load
-    updateCodingStats();
 
 });

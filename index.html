@@ -126,6 +126,8 @@
                 <p class="hero-description">Building intelligent solutions with AI & Machine Learning</p>
                 <div class="cta-buttons">
                     <a href="#projects" class="btn btn-primary">VIEW PROJECTS</a>
+                    <a href="https://drive.google.com/uc?export=download&id=1jBpS5pcIPqX2SiCKA51dU1xRu0lJaFYt"
+                        class="btn btn-secondary" target="_blank" download>📄 DOWNLOAD RESUME</a>
                     <a href="#contact" class="btn btn-secondary">GET IN TOUCH</a>
                 </div>
                 <div class="hint-box">
@@ -159,12 +161,13 @@
                         </p>
                         <p class="terminal-text">
                             My expertise lies in Machine Learning, Deep Learning, NLP, AI Agents, and Workflow
-                            Automation. I enjoy solving complex problems and have practiced 500+ Data Structures &
+                            Automation. I enjoy solving complex problems and have practiced 300+ Data Structures &
                             Algorithms questions to strengthen my problem-solving skills.
                         </p>
                         <p class="terminal-text">
-                            Currently building AI agent solutions through my startup AgentXpertt, focusing on CRM
-                            automation and intelligent workflow systems.
+                            Currently serving as Technical Co-Lead at Stats-O-Locked Club, building a technical
+                            community focused on Statistics, Data Science, and Machine Learning while fostering
+                            collaborative learning and research initiatives.
                         </p>
                         <p><span class="prompt">$</span> <span class="blink">_</span></p>
                     </div>
@@ -363,33 +366,43 @@
                 <div class="experience-item">
                     <div class="experience-badge">🤖</div>
                     <div class="experience-content">
-                        <h3 class="experience-title">AI Agent Developer Intern</h3>
+                        <h3 class="experience-title">AI Agent Developer — CrowdWisdom Trading</h3>
+                        <p class="experience-company">April 2025 - Current</p>
                         <p class="experience-description">
-                            Developed automation workflows using AI agents. Built chatbot and CRM automation solutions.
-                            Worked with LLM APIs and real-time integrations.
+                            Developed a scalable web scraping system aggregating data from 1,000+ websites, improving
+                            market
+                            intelligence coverage by 40% and enabling faster decision-making for trading operations.
+                            Built AI-powered Telegram & voice bots that automated outreach to 300+ B2B leads weekly,
+                            increasing lead metrics by 30% and reducing manual task overhead by 25%.
                         </p>
                         <div class="experience-skills">
-                            <span class="exp-tag">AI Agents</span>
-                            <span class="exp-tag">LLM APIs</span>
-                            <span class="exp-tag">Automation</span>
-                            <span class="exp-tag">CRM</span>
+                            <span class="exp-tag">n8n</span>
+                            <span class="exp-tag">Python</span>
+                            <span class="exp-tag">Node.js</span>
+                            <span class="exp-tag">REST APIs</span>
+                            <span class="exp-tag">GPT/Gemini LLMs</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="experience-item">
-                    <div class="experience-badge">🚀</div>
+                    <div class="experience-badge">📊</div>
                     <div class="experience-content">
-                        <h3 class="experience-title">Founder — AgentXpertt (Startup)</h3>
+                        <h3 class="experience-title">Technical Co-Lead — Stats-O-Locked Club</h3>
+                        <p class="experience-company">February 2026 - Current</p>
                         <p class="experience-description">
-                            Building AI agent solutions for businesses. Designing SaaS-based automation products.
-                            Working on CRM AI workflow optimization.
+                            Leading technical initiatives for a student community focused on Statistics, Data Science,
+                            and ML.
+                            Building collaborations with IITs and leading universities. Managing research team creating
+                            educational content and supporting members in hackathons. Contributing to academic
+                            conference
+                            management and fostering peer-to-peer learning through workshops and competitions.
                         </p>
                         <div class="experience-skills">
-                            <span class="exp-tag">Startup</span>
-                            <span class="exp-tag">SaaS</span>
-                            <span class="exp-tag">AI Solutions</span>
-                            <span class="exp-tag">Business Dev</span>
+                            <span class="exp-tag">Leadership</span>
+                            <span class="exp-tag">Data Science</span>
+                            <span class="exp-tag">Research</span>
+                            <span class="exp-tag">Community Building</span>
                         </div>
                     </div>
                 </div>
@@ -412,7 +425,7 @@
                 <div class="achievement-card">
                     <div class="achievement-icon">👨💻</div>
                     <h3>DSA Problems Solved</h3>
-                    <p class="counter" data-target="500">0</p>
+                    <p class="counter" data-target="300">0</p>
                 </div>
                 <div class="achievement-card">
                     <div class="achievement-icon">🚀</div>
@@ -428,61 +441,14 @@
         </div>
     </section>
 
-    <!-- Coding Stats Section -->
+    <!-- GeeksforGeeks Stats Section -->
     <section id="coding-stats" class="section section-dark">
         <div class="container">
             <h2 class="section-title">
-                <span class="title-icon">📊</span> LIVE_CODING_STATS
-                <button class="refresh-stats-btn" id="refreshStatsBtn" title="Refresh Stats">
-                    <span class="refresh-icon">🔄</span>
-                </button>
+                <span class="title-icon">📊</span> CODING_STATS
             </h2>
-            <div class="stats-grid">
-                <!-- LeetCode Stats -->
-                <div class="stats-platform-card" id="leetcode-card">
-                    <div class="platform-header">
-                        <span class="platform-icon">⚡</span>
-                        <h3>LeetCode</h3>
-                    </div>
-                    <div class="stats-content" id="leetcode-stats">
-                        <div class="stats-loading">
-                            <div class="loading-spinner"></div>
-                            <p>Loading stats...</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Codeforces Stats -->
-                <div class="stats-platform-card" id="codeforces-card">
-                    <div class="platform-header">
-                        <span class="platform-icon">🏆</span>
-                        <h3>Codeforces</h3>
-                    </div>
-                    <div class="stats-content" id="codeforces-stats">
-                        <div class="stats-loading">
-                            <div class="loading-spinner"></div>
-                            <p>Loading stats...</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- GitHub Stats -->
-                <div class="stats-platform-card" id="github-card">
-                    <div class="platform-header">
-                        <span class="platform-icon">💻</span>
-                        <h3>GitHub</h3>
-                    </div>
-                    <div class="stats-content" id="github-stats">
-                        <div class="stats-loading">
-                            <div class="loading-spinner"></div>
-                            <p>Loading stats...</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="stats-footer">
-                <p class="stats-update-time" id="statsUpdateTime">Last updated: Never</p>
-            </div>
+            <!-- GFG Stats Container -->
+            <div id="gfg-stats"></div>
         </div>
     </section>
 
@@ -518,7 +484,7 @@
                         <span class="contact-icon">📧</span>
                         <div>
                             <h4>Email</h4>
-                            <a href="mailto:your-email@gmail.com">your-email@gmail.com</a>
+                            <a href="mailto:ankitmahadani181@gmail.com">ankitmahadani181@gmail.com</a>
                         </div>
                     </div>
                     <div class="contact-item">
