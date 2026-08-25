@@ -108,7 +108,7 @@ button,
 }
 
 /* ===========================
-   DINO GAME INTRO OVERLAY
+   TERMINAL INTRO OVERLAY
    =========================== */
 .intro-overlay {
     position: fixed;
@@ -119,6 +119,9 @@ button,
     z-index: 10000;
     background: var(--bg-dark);
     transition: opacity 0.5s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .intro-overlay.hidden {
@@ -126,128 +129,110 @@ button,
     pointer-events: none;
 }
 
-/* Error Screen */
-.error-screen {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--bg-dark);
+/* Terminal Intro Screen */
+.terminal-intro {
+    width: 90%;
+    max-width: 800px;
     z-index: 10001;
     transition: opacity 0.5s;
+    background: var(--card-bg);
+    border: 3px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px var(--shadow), inset 0 0 20px rgba(0, 0, 0, 0.5);
+    animation: crtTurnOn 0.5s ease-out forwards;
+    position: relative;
 }
 
-.error-screen.hidden {
+@keyframes crtTurnOn {
+    0% {
+        transform: scale(1, 0.001);
+        filter: brightness(10);
+        opacity: 0;
+    }
+    40% {
+        transform: scale(1, 0.001);
+        filter: brightness(10);
+        opacity: 1;
+    }
+    70% {
+        transform: scale(1, 1);
+        filter: brightness(1.5);
+    }
+    100% {
+        transform: scale(1, 1);
+        filter: brightness(1);
+    }
+}
+
+.terminal-intro.hidden {
     opacity: 0;
     pointer-events: none;
 }
 
-.error-content {
-    text-align: center;
+.terminal-intro-header {
+    background: var(--bg-darker);
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 2px solid var(--border-color);
 }
 
-.error-code {
-    font-family: var(--font-pixel);
-    font-size: clamp(32px, 6vw, 64px);
-    color: #ff0055;
-    margin-bottom: 20px;
-    text-shadow: 4px 4px 0 rgba(255, 0, 85, 0.3);
-    animation: glitchError 2s infinite;
-}
-
-.error-title {
-    font-family: var(--font-pixel);
-    font-size: clamp(16px, 3.2vw, 26px);
-    color: var(--text-dim);
-    margin-bottom: 50px;
-}
-
-.game-over-text {
-    font-family: var(--font-pixel);
-    font-size: clamp(20px, 4vw, 38px);
+.terminal-intro-body {
+    padding: 30px;
+    font-size: 20px;
+    line-height: 1.8;
+    min-height: 300px;
+    font-family: var(--font-mono);
     color: var(--primary);
-    margin-bottom: 30px;
-    text-shadow:
-        2px 2px 0 var(--secondary),
-        4px 4px 0 var(--accent);
-    animation: pulse 2s infinite;
+    text-shadow: 0 0 5px rgba(0, 255, 159, 0.5);
+    display: flex;
+    flex-direction: column;
+    position: relative;
 }
 
-.press-space {
-    font-family: var(--font-pixel);
-    font-size: clamp(12px, 2vw, 16px);
-    color: var(--text-light);
+
+
+.fast-dump {
+    font-size: 14px;
+    color: var(--primary);
+    opacity: 0.8;
+    margin-bottom: 15px;
+    white-space: pre-wrap;
+    word-break: break-all;
+    line-height: 1.2;
 }
 
-.space-key {
-    display: inline-block;
-    background: var(--primary);
-    color: var(--bg-dark);
-    padding: 8px 20px;
-    border-radius: 5px;
-    margin: 0 10px;
-    box-shadow: 0 0 20px var(--shadow);
-}
-
-.blink-fast {
-    animation: blink 0.5s infinite;
-}
-
-/* Dino Canvas */
-.dino-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 10002;
-    background: var(--bg-dark);
+.loading-bar {
+    margin-top: 15px;
+    margin-bottom: 20px;
+    font-family: var(--font-mono);
+    color: var(--accent);
     display: none;
+    text-shadow: 0 0 5px rgba(0, 212, 255, 0.5);
 }
 
-.dino-canvas.active {
+.loading-bar.active {
     display: block;
 }
 
-/* Speed Lines Effect */
-.speed-lines {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 10003;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.3s;
+.typing-line {
+    margin-bottom: 10px;
+    word-break: break-all;
 }
 
-.speed-lines.active {
-    opacity: 1;
+.cursor-blink {
+    display: inline-block;
+    animation: blink 1s step-end infinite;
 }
 
-.speed-line {
-    position: absolute;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--primary), transparent);
-    animation: speedLine 0.5s linear infinite;
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
 }
 
-@keyframes speedLine {
-    from {
-        left: 100%;
-        width: 0;
-    }
 
-    to {
-        left: -100%;
-        width: 200px;
-    }
-}
 
 /* Glitch Overlay */
 .glitch-overlay {

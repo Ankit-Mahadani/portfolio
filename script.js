@@ -3,10 +3,9 @@
 // ===========================
 
 // ===========================
-// DINO GAME INTRO SEQUENCE
+// TERMINAL INTRO SEQUENCE
 // ===========================
 let introActive = true;
-let dinoGame = null;
 
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -17,300 +16,124 @@ document.addEventListener('DOMContentLoaded', function () {
     // INTRO SEQUENCE CONTROLLER
     // ===========================
     function startIntroSequence() {
-        const errorScreen = document.getElementById('error-screen');
-        const dinoCanvas = document.getElementById('dino-canvas');
-        const speedLines = document.getElementById('speed-lines');
-        const glitchOverlay = document.getElementById('glitch-overlay');
         const introOverlay = document.getElementById('intro-overlay');
-
-        // Function to start the intro game
-        function startIntroGame() {
-            if (!introActive) return;
-
-            introActive = false; // Prevent multiple triggers
-
-            // Hide error screen
-            errorScreen.classList.add('hidden');
-
-            // Show and start dino game
-            setTimeout(() => {
-                dinoCanvas.classList.add('active');
-                dinoGame = new DinoGame(dinoCanvas);
-                dinoGame.start();
-
-                // Add jump controls for the game
-                document.addEventListener('keydown', function jumpHandler(e) {
-                    if ((e.code === 'Space' || e.code === 'ArrowUp')) {
-                        e.preventDefault();
-                        dinoGame.jump();
-                    }
-                });
-
-                // Add click/touch controls for jumping
-                document.addEventListener('click', function clickJumpHandler() {
-                    if (dinoGame) {
-                        dinoGame.jump();
-                    }
-                });
-
-                document.addEventListener('touchstart', function touchJumpHandler() {
-                    if (dinoGame) {
-                        dinoGame.jump();
-                    }
-                });
-
-                // After 2.5 seconds, speed up dramatically
-                setTimeout(() => {
-                    dinoGame.speedUp();
-                    speedLines.classList.add('active');
-                    createSpeedLines(speedLines);
-
-                    // After 1.5 more seconds, glitch and transition
-                    setTimeout(() => {
-                        glitchOverlay.classList.add('active');
-
-                        // Complete transition after glitch
-                        setTimeout(() => {
-                            introOverlay.classList.add('hidden');
-
-                            // Scroll to top of portfolio
-                            window.scrollTo(0, 0);
-
-                            // Remove overlay completely after fade
-                            setTimeout(() => {
-                                introOverlay.remove();
-                            }, 500);
-                        }, 1000);
-                    }, 1500);
-                }, 2500);
-            }, 500);
+        const typingContainer = document.getElementById('typing-container');
+        const glitchOverlay = document.getElementById('glitch-overlay');
+        const fastDump = document.getElementById('fast-dump');
+        const loadingBar = document.getElementById('loading-bar');
+        
+        if (!introOverlay || !typingContainer) {
+            introActive = false;
+            return;
         }
 
-        // Listen for spacebar to start
-        document.addEventListener('keydown', function spaceHandler(e) {
-            if (e.code === 'Space' && introActive) {
-                e.preventDefault();
-                document.removeEventListener('keydown', spaceHandler);
-                startIntroGame();
-            }
-        });
-
-        // Listen for click/touch to start
-        function clickTouchHandler(e) {
-            if (introActive) {
-                e.preventDefault();
-                document.removeEventListener('click', clickTouchHandler);
-                document.removeEventListener('touchstart', clickTouchHandler);
-                startIntroGame();
-            }
-        }
-
-        document.addEventListener('click', clickTouchHandler);
-        document.addEventListener('touchstart', clickTouchHandler);
-    }
-
-    // ===========================
-    // DINO GAME CLASS
-    // ===========================
-    class DinoGame {
-        constructor(canvas) {
-            this.canvas = canvas;
-            this.ctx = canvas.getContext('2d');
-            this.canvas.width = window.innerWidth;
-            this.canvas.height = window.innerHeight;
-
-            this.dino = {
-                x: 100,
-                y: this.canvas.height - 150,
-                width: 50,
-                height: 50,
-                velocityY: 0,
-                jumping: false
-            };
-
-            this.obstacles = [];
-            this.clouds = [];
-            this.ground = this.canvas.height - 100;
-            this.score = 0;
-            this.speed = 5;
-            this.gameRunning = false;
-            this.frameCount = 0;
-
-            this.initClouds();
-        }
-
-        initClouds() {
-            for (let i = 0; i < 5; i++) {
-                this.clouds.push({
-                    x: Math.random() * this.canvas.width,
-                    y: Math.random() * (this.canvas.height / 2),
-                    width: 80,
-                    height: 30
-                });
-            }
-        }
-
-        start() {
-            this.gameRunning = true;
-            this.gameLoop();
-        }
-
-        jump() {
-            // Only jump if on the ground
-            if (!this.dino.jumping) {
-                this.dino.jumping = true;
-                this.dino.velocityY = -15; // Jump strength
-            }
-        }
-
-        speedUp() {
-            // Dramatically increase speed
-            const speedInterval = setInterval(() => {
-                this.speed += 2;
-                if (this.speed > 30) {
-                    clearInterval(speedInterval);
+        // 1. Fast Memory Dump Animation
+        function runMemoryDump() {
+            let dumpCount = 0;
+            const maxDumps = 15;
+            
+            const dumpInterval = setInterval(() => {
+                let hexStr = '';
+                for(let i=0; i<6; i++) {
+                    hexStr += '0x' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0').toUpperCase() + ' ';
                 }
+                fastDump.textContent += hexStr + '\n';
+                dumpCount++;
+                
+                if(dumpCount >= maxDumps) {
+                    clearInterval(dumpInterval);
+                    setTimeout(() => {
+                        fastDump.style.display = 'none';
+                        startTyping();
+                    }, 100);
+                }
+            }, 30);
+        }
+
+        // 2. Typing Boot Lines
+        const bootLines = [
+            "> Initializing Neural Network...",
+            "> Loading Data Science Modules...",
+            "> Compiling AI Models...",
+            "> Connecting to Ankit.Dev...",
+            "> Access Granted."
+        ];
+
+        let lineIndex = 0;
+        let charIndex = 0;
+
+        function startTyping() {
+            typeLine();
+        }
+
+        function typeLine() {
+            if (lineIndex < bootLines.length) {
+                if (charIndex === 0) {
+                    const lineElement = document.createElement('div');
+                    lineElement.className = 'typing-line';
+                    lineElement.id = `typing-line-${lineIndex}`;
+                    typingContainer.appendChild(lineElement);
+                }
+
+                const currentLine = bootLines[lineIndex];
+                const lineElement = document.getElementById(`typing-line-${lineIndex}`);
+                
+                if (charIndex < currentLine.length) {
+                    lineElement.textContent += currentLine.charAt(charIndex);
+                    charIndex++;
+                    setTimeout(typeLine, 10 + Math.random() * 15); // Random typing speed
+                } else {
+                    lineIndex++;
+                    charIndex = 0;
+                    setTimeout(typeLine, 100); // Pause between lines
+                }
+            } else {
+                // Intro finished typing, start progress bar
+                startProgressBar();
+            }
+        }
+
+        // 3. Progress Bar Animation
+        function startProgressBar() {
+            loadingBar.classList.add('active');
+            let progress = 0;
+            
+            const progressInterval = setInterval(() => {
+                progress += Math.floor(Math.random() * 15) + 5;
+                if (progress > 100) progress = 100;
+                
+                const filled = Math.floor(progress / 5);
+                const empty = 20 - filled;
+                
+                loadingBar.textContent = `[${'█'.repeat(filled)}${'░'.repeat(empty)}] ${progress}%`;
+                
+                if (progress === 100) {
+                    clearInterval(progressInterval);
+                    finishIntro();
+                }
+            }, 40);
+        }
+
+        // 4. Finish Sequence
+        function finishIntro() {
+            setTimeout(() => {
+                glitchOverlay.classList.add('active');
+
+                setTimeout(() => {
+                    introOverlay.classList.add('hidden');
+                    window.scrollTo(0, 0);
+                    introActive = false;
+
+                    setTimeout(() => {
+                        introOverlay.remove();
+                    }, 500);
+                }, 300);
             }, 100);
         }
 
-        gameLoop() {
-            if (!this.gameRunning) return;
-
-            this.update();
-            this.draw();
-            this.frameCount++;
-
-            requestAnimationFrame(() => this.gameLoop());
-        }
-
-        update() {
-            // Update dino
-            if (this.dino.jumping) {
-                this.dino.velocityY += 0.8;
-                this.dino.y += this.dino.velocityY;
-
-                if (this.dino.y >= this.ground - this.dino.height) {
-                    this.dino.y = this.ground - this.dino.height;
-                    this.dino.jumping = false;
-                    this.dino.velocityY = 0;
-                }
-            }
-
-            // Update obstacles
-            this.obstacles.forEach((obstacle, index) => {
-                obstacle.x -= this.speed;
-                if (obstacle.x + obstacle.width < 0) {
-                    this.obstacles.splice(index, 1);
-                    this.score++;
-                }
-            });
-
-            // Spawn obstacles
-            if (this.frameCount % 100 === 0) {
-                this.obstacles.push({
-                    x: this.canvas.width,
-                    y: this.ground - 40,
-                    width: 30,
-                    height: 40
-                });
-            }
-
-            // Update clouds
-            this.clouds.forEach(cloud => {
-                cloud.x -= this.speed * 0.3;
-                if (cloud.x + cloud.width < 0) {
-                    cloud.x = this.canvas.width;
-                    cloud.y = Math.random() * (this.canvas.height / 2);
-                }
-            });
-        }
-
-        draw() {
-            // Clear canvas
-            this.ctx.fillStyle = '#0a0e27';
-            this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-
-            // Draw clouds
-            this.ctx.fillStyle = '#1a1f3a';
-            this.clouds.forEach(cloud => {
-                this.ctx.fillRect(cloud.x, cloud.y, cloud.width, cloud.height);
-            });
-
-            // Draw ground
-            this.ctx.strokeStyle = '#00ff9f';
-            this.ctx.lineWidth = 3;
-            this.ctx.beginPath();
-            this.ctx.moveTo(0, this.ground);
-            this.ctx.lineTo(this.canvas.width, this.ground);
-            this.ctx.stroke();
-
-            // Draw dino (pixel art style)
-            this.drawDino();
-
-            // Draw obstacles
-            this.ctx.fillStyle = '#ff00ff';
-            this.obstacles.forEach(obstacle => {
-                this.ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
-            });
-
-            // Draw score
-            this.ctx.fillStyle = '#00ff9f';
-            this.ctx.font = '20px "Press Start 2P"';
-            this.ctx.fillText(`HI ${String(this.score).padStart(5, '0')}`, this.canvas.width - 200, 50);
-        }
-
-        drawDino() {
-            const x = this.dino.x;
-            const y = this.dino.y;
-            const size = 10;
-
-            this.ctx.fillStyle = '#00ff9f';
-
-            // Dino body (simplified pixel art)
-            // Head
-            this.ctx.fillRect(x + size * 3, y, size, size);
-            this.ctx.fillRect(x + size * 4, y, size, size);
-
-            // Eye
-            this.ctx.fillStyle = '#0a0e27';
-            this.ctx.fillRect(x + size * 4, y, size / 2, size / 2);
-            this.ctx.fillStyle = '#00ff9f';
-
-            // Body
-            this.ctx.fillRect(x + size * 2, y + size, size * 3, size);
-            this.ctx.fillRect(x + size, y + size * 2, size * 4, size);
-            this.ctx.fillRect(x, y + size * 3, size * 4, size);
-
-            // Legs (animated)
-            const legOffset = Math.floor(this.frameCount / 5) % 2;
-            if (legOffset === 0) {
-                this.ctx.fillRect(x + size, y + size * 4, size, size);
-                this.ctx.fillRect(x + size * 3, y + size * 4, size, size);
-            } else {
-                this.ctx.fillRect(x, y + size * 4, size, size);
-                this.ctx.fillRect(x + size * 2, y + size * 4, size, size);
-            }
-
-            // Tail
-            this.ctx.fillRect(x, y + size * 2, size, size);
-        }
+        // Start memory dump after a short delay
+        setTimeout(runMemoryDump, 400);
     }
-
-    // ===========================
-    // SPEED LINES CREATOR
-    // ===========================
-    function createSpeedLines(container) {
-        const lineCount = 20;
-
-        for (let i = 0; i < lineCount; i++) {
-            const line = document.createElement('div');
-            line.className = 'speed-line';
-            line.style.top = Math.random() * 100 + '%';
-            line.style.animationDelay = Math.random() * 0.5 + 's';
-            container.appendChild(line);
-        }
-    }
-
     // ===========================
     // THREE.JS 3D BACKGROUND (only loads after intro)
     // ===========================
@@ -662,9 +485,9 @@ document.addEventListener('DOMContentLoaded', function () {
     // ===========================
     // CONSOLE MESSAGE
     // ===========================
-    console.log('%c🎮 RETRO PORTFOLIO LOADED! 🎮', 'font-size: 20px; color: #00ff9f; font-weight: bold;');
-    console.log('%cDino intro sequence activated!', 'font-size: 14px; color: #00d4ff;');
-    console.log('%cPress SPACE to start the journey!', 'font-size: 12px; color: #ff00ff;');
+    console.log('%c> SYSTEM INITIALIZED 💻', 'font-size: 20px; color: #00ff9f; font-weight: bold;');
+    console.log('%cTerminal intro sequence completed.', 'font-size: 14px; color: #00d4ff;');
+    console.log('%cWelcome to Ankit.Dev!', 'font-size: 12px; color: #ff00ff;');
 
     // ===========================
     // PARTICLE CURSOR TRAIL

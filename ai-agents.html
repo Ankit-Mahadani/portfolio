@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agents - Ankit Mahadani</title>
+    <meta name="description"
+        content="AI Agent Projects by Ankit Mahadani - Specializing in n8n automations, LLMs, and RAG pipelines.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/icons/gamepad.svg">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        .agents-hero {
+            padding-top: 150px;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .agents-hero h1 {
+            font-size: 3rem;
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary);
+            margin-bottom: 20px;
+            font-family: var(--font-pixel);
+        }
+        .agents-hero p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .agent-card-large {
+            background: var(--card-bg);
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 255, 159, 0.1);
+            transition: all 0.3s;
+        }
+        .agent-card-large:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(0, 255, 159, 0.3);
+            border-color: var(--accent);
+        }
+        .agent-card-large h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .agent-card-large p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #ddd;
+        }
+        .agent-features {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+        }
+        .agent-features li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .agent-features li::before {
+            content: "✓";
+            color: var(--accent);
+            font-weight: bold;
+        }
+        .agent-tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .agent-tech-badge {
+            background: rgba(0, 255, 159, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        /* Workflow Diagram CSS */
+        .wf-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin: 30px 0;
+            padding: 25px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            border: 1px dashed rgba(0, 255, 159, 0.4);
+            flex-wrap: wrap;
+        }
+        .wf-col {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex: 1;
+            min-width: 150px;
+        }
+        .wf-node {
+            background: #111526;
+            border: 1px solid var(--primary);
+            padding: 12px 15px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            transition: transform 0.2s;
+        }
+        .wf-node:hover {
+            transform: scale(1.05);
+            z-index: 10;
+        }
+        .wf-node.trigger { border-left: 4px solid #ff3366; }
+        .wf-node.ai { border-left: 4px solid #00ff9f; }
+        .wf-node.db { border-left: 4px solid #ffd700; }
+        .wf-node.action { border-left: 4px solid #00ccff; }
+        
+        .wf-arrow {
+            color: var(--primary);
+            font-size: 1.5rem;
+            animation: pulse-arrow 2s infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        @keyframes pulse-arrow {
+            0% { opacity: 0.3; transform: translateX(-3px); }
+            50% { opacity: 1; transform: translateX(3px); }
+            100% { opacity: 0.3; transform: translateX(-3px); }
+        }
+        
+        @media (max-width: 768px) {
+            .wf-diagram { flex-direction: column; }
+            .wf-arrow { transform: rotate(90deg); margin: 10px 0; animation: none; }
+            .wf-col { width: 100%; }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 3D Canvas Background -->
+    <div id="three-container"></div>
+
+    <!-- Particle Cursor Trail -->
+    <canvas id="cursor-canvas"></canvas>
+
+    <!-- Theme Switcher -->
+    <div class="theme-switcher">
+        <button class="theme-btn" data-theme="retro" title="Retro Theme"><img src="assets/icons/gamepad.svg"
+                class="emoji-icon" alt="retro"></button>
+        <button class="theme-btn" data-theme="cyberpunk" title="Cyberpunk Theme"><img src="assets/icons/city-night.svg"
+                class="emoji-icon" alt="cyberpunk"></button>
+        <button class="theme-btn" data-theme="vaporwave" title="Vaporwave Theme"><img src="assets/icons/flower.svg"
+                class="emoji-icon" alt="vaporwave"></button>
+        <button class="theme-btn" data-theme="matrix" title="Matrix Theme"><img src="assets/icons/heart-green.svg"
+                class="emoji-icon" alt="matrix"></button>
+        <button class="theme-btn" data-theme="gameboy" title="Gameboy Theme"><img src="assets/icons/target.svg"
+                class="emoji-icon" alt="gameboy"></button>
+    </div>
+
+    <!-- Sound Toggle -->
+    <button class="sound-toggle" id="soundToggle" title="Toggle Sound Effects">
+        <span class="sound-on"><img src="assets/icons/sound-on.svg" class="emoji-icon" alt="sound on"></span>
+        <span class="sound-off" style="display:none;"><img src="assets/icons/sound-off.svg" class="emoji-icon"
+                alt="sound off"></span>
+    </button>
+
+    <!-- Achievement Notifications -->
+    <div id="achievement-container"></div>
+
+    <!-- Interactive Terminal Modal -->
+    <div id="terminal-modal" class="terminal-modal">
+        <div class="terminal-modal-content">
+            <div class="terminal-modal-header">
+                <span class="terminal-btn red" id="closeTerminal"></span>
+                <span class="terminal-btn yellow"></span>
+                <span class="terminal-btn green"></span>
+                <span class="terminal-title">interactive_terminal.sh</span>
+            </div>
+            <div class="terminal-modal-body" id="terminalOutput">
+                <p><span class="prompt">$</span> Welcome to Ankit's Interactive Terminal!</p>
+                <p>Type 'help' for available commands.</p>
+            </div>
+            <div class="terminal-input-container">
+                <span class="prompt">$</span>
+                <input type="text" id="terminalInput" class="terminal-input" placeholder="Type a command..."
+                    autocomplete="off">
+            </div>
+        </div>
+    </div>
+
+    <!-- Terminal Trigger Button -->
+    <button class="terminal-trigger" id="terminalTrigger" title="Open Terminal (Ctrl+`)">
+        &gt;_
+    </button>
+
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+        <div class="progress-cat-icon"><img src="assets/icons/cat.svg" class="emoji-icon" alt="cat"></div>
+    </div>
+
+    <!-- Scanline Effect -->
+    <div class="scanlines"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">
+                <img src="assets/icons/play.svg" class="emoji-icon blink" alt="play"> ANKIT.DEV
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html#home">HOME</a></li>
+                <li><a href="index.html#about">ABOUT</a></li>
+                <li><a href="index.html#skills">SKILLS</a></li>
+                <li><a href="index.html#projects">PROJECTS</a></li>
+                <li><a href="index.html#experience">EXPERIENCE</a></li>
+                <li><a href="index.html#contact">CONTACT</a></li>
+                <li><a href="#" style="color: var(--primary); font-weight: bold; text-shadow: 0 0 5px var(--primary);">AI_AGENTS</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- AI Agents Content -->
+    <section class="section agents-hero">
+        <div class="container">
+            <h1>AI AGENT ARCHITECTURE</h1>
+            <p>Showcasing production-ready LLM-powered agents, scalable RAG pipelines, and automated n8n workflows that drive operational efficiency and intelligent decision-making.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <!-- Agent 1 -->
+            <div class="agent-card-large">
+                <h3><img src="assets/icons/robot.svg" class="emoji-icon" alt="bot"> Personal AI Assistant (Chat & Call)</h3>
+                <p>An autonomous AI assistant engineered to manage daily operations, handle communications, and organize schedules with high reliability.</p>
+                <ul class="agent-features">
+                    <li>Automates 85% of routine administrative tasks autonomously.</li>
+                    <li>Manages and schedules 100+ weekly events and reminders.</li>
+                    <li>Integrates seamlessly with Google Calendar API and SMTP/IMAP protocols.</li>
+                    <li>Built on an advanced LangChain and Gemini foundational core.</li>
+                </ul>
+                <div class="agent-tech-stack">
+                    <span class="agent-tech-badge">n8n Workflow</span>
+                    <span class="agent-tech-badge">LangChain</span>
+                    <span class="agent-tech-badge">Gemini LLM</span>
+                    <span class="agent-tech-badge">Google Calendar API</span>
+                    <span class="agent-tech-badge">SMTP/IMAP</span>
+                </div>
+            </div>
+
+            <!-- Agent 2 -->
+            <div class="agent-card-large">
+                <h3><img src="assets/icons/mic.svg" class="emoji-icon" alt="voice"> Hebrew AI Sales Agent (Voice & Text)</h3>
+                <p>A B2B sales automation agent designed to scale outreach, engage prospects, and drive conversions through intelligent multi-channel communication.</p>
+                <ul class="agent-features">
+                    <li>Automates personalized outreach and follow-ups for 500+ B2B leads weekly.</li>
+                    <li>Integrates with Telegram Bot API and Twilio for cross-platform voice and text capabilities.</li>
+                    <li>Boosted operational efficiency by 30% while reducing manual sales effort.</li>
+                    <li>Increased successful conversions by 20% through timely, intelligent follow-ups.</li>
+                </ul>
+
+                <!-- Visual Workflow Diagram -->
+                <div class="wf-diagram">
+                    <div class="wf-col">
+                        <div class="wf-node trigger">⚡ Telegram Trigger</div>
+                        <div class="wf-node trigger">🌐 Firecrawl Scraper</div>
+                    </div>
+                    <div class="wf-arrow">➔</div>
+                    <div class="wf-col">
+                        <div class="wf-node ai">🧠 Gemini 2.5 Agent</div>
+                        <div class="wf-node db">🗄️ Supabase Vector DB</div>
+                    </div>
+                    <div class="wf-arrow">➔</div>
+                    <div class="wf-col">
+                        <div class="wf-node action">💬 Telegram Reply</div>
+                        <div class="wf-node action">📊 Google Sheets Log</div>
+                    </div>
+                </div>
+                <div class="agent-tech-stack">
+                    <span class="agent-tech-badge">Telegram API</span>
+                    <span class="agent-tech-badge">Twilio Voice API</span>
+                    <span class="agent-tech-badge">AI Conversational Logic</span>
+                    <span class="agent-tech-badge">Sales Automation</span>
+                </div>
+            </div>
+
+            <!-- Agent 3 -->
+            <div class="agent-card-large">
+                <h3><img src="assets/icons/gear.svg" class="emoji-icon" alt="crm"> AI CRM Automation Agents</h3>
+                <p>Intelligent agent workflows integrated directly into CRM systems for dynamic lead qualification and task management orchestration.</p>
+                <ul class="agent-features">
+                    <li>Scalable automation pipelines handling data aggregation and lead qualification.</li>
+                    <li>Reduced manual task overhead across the team by 25%.</li>
+                    <li>Enhanced business productivity through smart, automated task routing and follow-ups.</li>
+                    <li>Deep integrations via robust REST APIs and GPT/Gemini analysis engines.</li>
+                </ul>
+                <div class="agent-tech-stack">
+                    <span class="agent-tech-badge">n8n</span>
+                    <span class="agent-tech-badge">GPT/Gemini Models</span>
+                    <span class="agent-tech-badge">CRM REST APIs</span>
+                    <span class="agent-tech-badge">Python Scripts</span>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 50px;">
+                <a href="index.html#projects" class="btn btn-secondary">← BACK TO ALL PROJECTS</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Ankit Mahadani. Built with <span class="heart"><img src="assets/icons/heart.svg"
+                        class="emoji-icon" alt="love"></span> and retro vibes</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Disable intro logic on this page instantly
+        introActive = false;
+        
+        // Remove active nav link styling for home
+        document.addEventListener('DOMContentLoaded', () => {
+            const navLinks = document.querySelectorAll('.nav-menu a');
+            navLinks.forEach(link => link.classList.remove('active'));
+        });
+    </script>
+</body>
+
+</html>

@@ -16,26 +16,25 @@
 </head>
 
 <body>
-    <!-- DINO GAME INTRO OVERLAY -->
+    <!-- COOL TERMINAL INTRO OVERLAY -->
     <div id="intro-overlay" class="intro-overlay">
-        <!-- Error Screen -->
-        <div id="error-screen" class="error-screen">
-            <div class="error-content">
-                <div class="error-code">ERROR 404</div>
-                <div class="error-title">PORTFOLIO NOT FOUND</div>
-                <div class="game-over-text">GAME IS NOT OVER...</div>
-                <div class="press-space">
-                    <img src="assets/icons/play.svg" class="emoji-icon blink-fast" alt="play"> PRESS <span
-                        class="space-key">SPACE</span> TO CONTINUE
+        <!-- Terminal Intro Screen -->
+        <div id="terminal-intro" class="terminal-intro">
+            <div class="terminal-intro-content">
+                <div class="terminal-intro-header">
+                    <span class="terminal-btn red"></span>
+                    <span class="terminal-btn yellow"></span>
+                    <span class="terminal-btn green"></span>
+                    <span class="terminal-title">boot_sequence.sh</span>
+                </div>
+                <div class="terminal-intro-body">
+                    <div id="fast-dump" class="fast-dump"></div>
+                    <div id="typing-container"></div>
+                    <div id="loading-bar" class="loading-bar"></div>
+                    <div id="cursor-blink" class="cursor-blink">_</div>
                 </div>
             </div>
         </div>
-
-        <!-- Dino Game Canvas -->
-        <canvas id="dino-canvas" class="dino-canvas"></canvas>
-
-        <!-- Speed Lines Effect -->
-        <div id="speed-lines" class="speed-lines"></div>
 
         <!-- Glitch Overlay -->
         <div id="glitch-overlay" class="glitch-overlay"></div>
@@ -119,6 +118,7 @@
                 <li><a href="#projects">PROJECTS</a></li>
                 <li><a href="#experience">EXPERIENCE</a></li>
                 <li><a href="#contact">CONTACT</a></li>
+                <li><a href="ai-agents.html" style="color: var(--primary); font-weight: bold; text-shadow: 0 0 5px var(--primary);">AI_AGENTS</a></li>
             </ul>
         </nav>
     </header>
@@ -131,7 +131,7 @@
                 <h2 class="subtitle">
                     <span class="typing-text">DATA SCIENTIST • ML ENGINEER • AI DEVELOPER</span>
                 </h2>
-                <p class="hero-description">Specializing in Data Science, Machine Learning & AI Solutions</p>
+                <p class="hero-description">AI & Automation Engineer with hands-on experience building LLM-powered agents, RAG pipelines, and n8n workflow automations</p>
                 <div class="cta-buttons">
                     <a href="#projects" class="btn btn-primary">VIEW PROJECTS</a>
                     <a href="https://drive.google.com/uc?export=download&id=1tWw9r6jqGgLbpPE0j4QSL-saYaNo9_ia"
@@ -164,26 +164,13 @@
                     <div class="terminal-body">
 
                         <p class="terminal-text">
-                            I'm Ankit Mahadani, a passionate Data Scientist and ML Engineer pursuing Computer Science at
-                            VIT Bhopal. I specialize in building intelligent solutions using Machine Learning, Deep
-                            Learning,
-                            and AI technologies, with hands-on experience in deploying production-ready models and
-                            automation systems.
+                            I'm Ankit Mahadani, an AI & Automation Engineer pursuing Computer Science at VIT Bhopal (Expected 2028). I have hands-on experience building LLM-powered agents, RAG pipelines, and n8n workflow automations.
                         </p>
                         <p class="terminal-text">
-                            My technical expertise spans across ML/DL frameworks (TensorFlow, PyTorch, Scikit-learn),
-                            NLP, Computer Vision, and AI Agents. I've solved 300+ DSA problems and contributed to
-                            multiple
-                            AI projects including health diagnostics systems, stock prediction models, and intelligent
-                            automation platforms.
+                            I am proficient in TensorFlow, Scikit-Learn, GPT/Gemini, and REST APIs. I have a proven track record of reducing manual workload by 25–30% and scaling lead generation to 500+ contacts/week.
                         </p>
                         <p class="terminal-text">
-                            As Technical Co-Lead at Stats-O-Locked Club, I lead a community of data enthusiasts,
-                            collaborate
-                            with IITs and universities, and drive research initiatives in Statistics, Data Science, and
-                            ML.
-                            I'm passionate about leveraging AI to solve real-world problems and create impactful
-                            solutions.
+                            My technical expertise spans across Data Science, Machine Learning, and backend architectures. I'm passionate about leveraging AI to build intelligent, scalable systems that solve real-world problems and drive operational efficiency.
                         </p>
                         <p><span class="prompt">$</span> <span class="blink">_</span></p>
                     </div>
@@ -201,74 +188,70 @@
             </h2>
             <div class="skills-grid">
                 <div class="skill-category">
-                    <h3 class="category-title"><img src="assets/icons/laptop.svg" class="emoji-icon" alt="code">
-                        PROGRAMMING LANGUAGES</h3>
+                    <h3 class="category-title"><img src="assets/icons/brain.svg" class="emoji-icon" alt="core"> CORE CS & LANGUAGES</h3>
                     <div class="skill-items">
                         <span class="skill-tag">Python</span>
-                        <span class="skill-tag">MATLAB</span>
-                        <span class="skill-tag">C++</span>
-                        <span class="skill-tag">Java</span>
-                        <span class="skill-tag">JavaScript</span>
                         <span class="skill-tag">SQL</span>
+                        <span class="skill-tag">Java</span>
+                        <span class="skill-tag">C++</span>
+                        <span class="skill-tag">Data Structures & Algorithms</span>
+                        <span class="skill-tag">DBMS</span>
+                        <span class="skill-tag">Operating Systems</span>
+                        <span class="skill-tag">Computer Networks</span>
                     </div>
                 </div>
                 <div class="skill-category">
-                    <h3 class="category-title"><img src="assets/icons/chart.svg" class="emoji-icon" alt="data"> DATA
-                        SCIENCE & ML</h3>
+                    <h3 class="category-title"><img src="assets/icons/chart.svg" class="emoji-icon" alt="data"> DATA SCIENCE</h3>
                     <div class="skill-items">
-                        <span class="skill-tag">Machine Learning</span>
-                        <span class="skill-tag">Deep Learning</span>
-                        <span class="skill-tag">Data Analysis</span>
-                        <span class="skill-tag">Statistical Modeling</span>
+                        <span class="skill-tag">EDA</span>
                         <span class="skill-tag">Feature Engineering</span>
-                        <span class="skill-tag">Model Deployment</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3 class="category-title"><img src="assets/icons/brain.svg" class="emoji-icon" alt="frameworks">
-                        ML/DL FRAMEWORKS</h3>
-                    <div class="skill-items">
-                        <span class="skill-tag">TensorFlow</span>
-                        <span class="skill-tag">PyTorch</span>
-                        <span class="skill-tag">Scikit-learn</span>
-                        <span class="skill-tag">Keras</span>
                         <span class="skill-tag">Pandas</span>
                         <span class="skill-tag">NumPy</span>
+                        <span class="skill-tag">Matplotlib</span>
+                        <span class="skill-tag">Seaborn</span>
                     </div>
                 </div>
                 <div class="skill-category">
-                    <h3 class="category-title"><img src="assets/icons/robot.svg" class="emoji-icon" alt="ai"> AI
-                        SPECIALIZATIONS</h3>
+                    <h3 class="category-title"><img src="assets/icons/gear.svg" class="emoji-icon" alt="ml"> MACHINE LEARNING</h3>
                     <div class="skill-items">
-                        <span class="skill-tag">NLP</span>
-                        <span class="skill-tag">Computer Vision</span>
-                        <span class="skill-tag">LLM Applications</span>
-                        <span class="skill-tag">Time-Series Analysis</span>
-                        <span class="skill-tag">OpenCV</span>
+                        <span class="skill-tag">Scikit-Learn</span>
+                        <span class="skill-tag">TensorFlow</span>
+                        <span class="skill-tag">PyTorch</span>
+                        <span class="skill-tag">Random Forest</span>
+                        <span class="skill-tag">AdaBoost</span>
+                        <span class="skill-tag">Regression & Clustering</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3 class="category-title"><img src="assets/icons/robot.svg" class="emoji-icon" alt="ai"> ARTIFICIAL INTELLIGENCE</h3>
+                    <div class="skill-items">
+                        <span class="skill-tag">LLMs & Prompt Engineering</span>
+                        <span class="skill-tag">LangChain</span>
+                        <span class="skill-tag">RAG</span>
+                        <span class="skill-tag">Vector Databases</span>
+                        <span class="skill-tag">n8n</span>
                         <span class="skill-tag">AI Agents</span>
                     </div>
                 </div>
                 <div class="skill-category">
-                    <h3 class="category-title"><img src="assets/icons/gear.svg" class="emoji-icon" alt="tools"> TOOLS &
-                        PLATFORMS</h3>
+                    <h3 class="category-title"><img src="assets/icons/laptop.svg" class="emoji-icon" alt="cloud"> BACKEND & CLOUD</h3>
                     <div class="skill-items">
-                        <span class="skill-tag">Git & GitHub</span>
-                        <span class="skill-tag">Jupyter Notebook</span>
-                        <span class="skill-tag">n8n Automation</span>
-                        <span class="skill-tag">REST APIs</span>
-                        <span class="skill-tag">Linux</span>
+                        <span class="skill-tag">Flask</span>
+                        <span class="skill-tag">FastAPI</span>
+                        <span class="skill-tag">RESTful APIs</span>
                         <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">Linux</span>
+                        <span class="skill-tag">AWS/GCP</span>
                     </div>
                 </div>
                 <div class="skill-category">
-                    <h3 class="category-title"><img src="assets/icons/brain.svg" class="emoji-icon" alt="core"> CORE
-                        FUNDAMENTALS</h3>
+                    <h3 class="category-title"><img src="assets/icons/tools.svg" class="emoji-icon" alt="tools"> TOOLS & DATABASES</h3>
                     <div class="skill-items">
-                        <span class="skill-tag">Data Structures</span>
-                        <span class="skill-tag">Algorithms</span>
-                        <span class="skill-tag">OOP</span>
-                        <span class="skill-tag">System Design</span>
-                        <span class="skill-tag">Problem Solving</span>
+                        <span class="skill-tag">MySQL & SQLite</span>
+                        <span class="skill-tag">Git & GitHub</span>
+                        <span class="skill-tag">Web Scraping</span>
+                        <span class="skill-tag">CI/CD</span>
+                        <span class="skill-tag">JSON</span>
                     </div>
                 </div>
             </div>
@@ -289,27 +272,20 @@
                         <span class="project-level">LVL 5</span>
                         <span class="project-status">COMPLETED</span>
                     </div>
-                    <h3 class="project-title"><img src="assets/icons/hospital.svg" class="emoji-icon" alt="hospital"> AI
-                        Health Symptom Intelligence System</h3>
+                    <h3 class="project-title"><img src="assets/icons/robot.svg" class="emoji-icon" alt="bot"> Personal AI Assistant (Chat & Call)</h3>
                     <p class="project-description">
-                        Developed an intelligent health diagnostics system that analyzes symptoms and medical images
-                        using
-                        ML models to predict diseases. Integrated real-time GPS tracking to locate and connect users
-                        with
-                        nearby hospitals, featuring emergency SOS alerts and AI-powered risk assessment.
+                        Built an AI assistant using n8n, LangChain/Gemini, Google Calendar API & SMTP/IMAP. Automates 85% of routine tasks and manages 100+ weekly events and reminders autonomously.
                     </p>
                     <div class="project-tech">
-                        <span class="tech-badge">Flutter/React</span>
-                        <span class="tech-badge">Python ML</span>
-                        <span class="tech-badge">Firebase</span>
-                        <span class="tech-badge">GPS APIs</span>
+                        <span class="tech-badge">n8n</span>
+                        <span class="tech-badge">LangChain</span>
+                        <span class="tech-badge">Gemini</span>
+                        <span class="tech-badge">APIs</span>
                     </div>
                     <div class="project-achievements">
-                        ✓ Emergency alert features<br>
-                        ✓ AI-based risk severity detection<br>
-                        ✓ VIT-JHU Health Hackathon project<br>
-                        ✓ <a href="https://github.com/Ankit-Mahadani/vit-b-jhu-hackathon" target="_blank"
-                            style="color: var(--accent);">View on GitHub →</a>
+                        ✓ Automates 85% of routine tasks<br>
+                        ✓ Manages 100+ weekly events<br>
+                        ✓ Calendar & Email Integration
                     </div>
                 </div>
 
@@ -317,26 +293,22 @@
                 <div class="project-card">
                     <div class="project-header">
                         <span class="project-level">LVL 5</span>
-                        <span class="project-status">ACTIVE</span>
+                        <span class="project-status">COMPLETED</span>
                     </div>
-                    <h3 class="project-title"><img src="assets/icons/robot.svg" class="emoji-icon" alt="bot"> AI CRM
-                        Automation Agents</h3>
+                    <h3 class="project-title"><img src="assets/icons/mic.svg" class="emoji-icon" alt="voice"> Hebrew AI Sales Agent</h3>
                     <p class="project-description">
-                        Built intelligent AI agents using LLMs to automate CRM workflows including lead qualification,
-                        automated follow-ups, and task management. Implemented scalable automation pipelines that
-                        reduced
-                        manual work by 25% and improved business productivity through smart workflow orchestration.
+                        Created a B2B sales agent integrating Telegram Bot API & Twilio to automate outreach and communication for 500+ leads/week, boosting efficiency by 30% and increasing conversions by 20%.
                     </p>
                     <div class="project-tech">
-                        <span class="tech-badge">LLMs</span>
-                        <span class="tech-badge">n8n</span>
-                        <span class="tech-badge">APIs</span>
+                        <span class="tech-badge">Telegram API</span>
+                        <span class="tech-badge">Twilio</span>
+                        <span class="tech-badge">AI Voice/Text</span>
                         <span class="tech-badge">Automation</span>
                     </div>
                     <div class="project-achievements">
-                        ✓ Scalable AI automation pipelines<br>
-                        ✓ Lead qualification system<br>
-                        ✓ Business productivity boost
+                        ✓ 500+ leads automated weekly<br>
+                        ✓ 30% efficiency boost<br>
+                        ✓ 20% conversion increase
                     </div>
                 </div>
 
@@ -346,24 +318,20 @@
                         <span class="project-level">LVL 4</span>
                         <span class="project-status">COMPLETED</span>
                     </div>
-                    <h3 class="project-title"><img src="assets/icons/mic.svg" class="emoji-icon" alt="voice"> Voice AI
-                        Bot Workflow System</h3>
+                    <h3 class="project-title"><img src="assets/icons/dna.svg" class="emoji-icon" alt="cells"> Lung & Pancreas Cancer Detection</h3>
                     <p class="project-description">
-                        Engineered an end-to-end voice AI system with multilingual support for automated reminders and
-                        customer interactions. Integrated Whisper for speech-to-text, Google TTS for voice synthesis,
-                        and Claude AI for intelligent conversation logic, creating seamless voice-based automation
-                        workflows.
+                        Developed an AI-powered Flask application using DenseNet, TensorFlow, Keras, and OpenCV to classify CT/MRI/X-ray scans, achieving 94% model accuracy in detecting cancer conditions.
                     </p>
                     <div class="project-tech">
-                        <span class="tech-badge">n8n</span>
-                        <span class="tech-badge">Whisper</span>
-                        <span class="tech-badge">Google TTS</span>
-                        <span class="tech-badge">Claude</span>
+                        <span class="tech-badge">TensorFlow</span>
+                        <span class="tech-badge">DenseNet</span>
+                        <span class="tech-badge">Flask</span>
+                        <span class="tech-badge">OpenCV</span>
                     </div>
                     <div class="project-achievements">
-                        ✓ Multilingual support<br>
-                        ✓ AI conversation logic<br>
-                        ✓ Automated reminder system
+                        ✓ 94% detection accuracy<br>
+                        ✓ CT/MRI/X-ray scan classification<br>
+                        ✓ Deep Learning architecture
                     </div>
                 </div>
 
@@ -373,78 +341,19 @@
                         <span class="project-level">LVL 4</span>
                         <span class="project-status">COMPLETED</span>
                     </div>
-                    <h3 class="project-title"><img src="assets/icons/dna.svg" class="emoji-icon" alt="cells"> Cancer
-                        Detection using Deep Learning</h3>
+                    <h3 class="project-title"><img src="assets/icons/memo.svg" class="emoji-icon" alt="note"> Darzi: AI Resume Tailor Suite</h3>
                     <p class="project-description">
-                        Built a deep learning model for detecting lung and pancreas cancer. Used image preprocessing
-                        techniques like Gaussian blur and augmentation to improve model accuracy.
+                        Designed & deployed an AI-driven resume platform leveraging advanced language models to generate ATS-optimized resumes perfectly tailored to specific job descriptions.
                     </p>
                     <div class="project-tech">
-                        <span class="tech-badge">Python</span>
-                        <span class="tech-badge">OpenCV</span>
-                        <span class="tech-badge">CNN</span>
-                        <span class="tech-badge">Deep Learning</span>
+                        <span class="tech-badge">LLMs</span>
+                        <span class="tech-badge">Prompt Engineering</span>
+                        <span class="tech-badge">Web App</span>
                     </div>
                     <div class="project-achievements">
-                        ✓ Multiple dataset integration<br>
-                        ✓ Image preprocessing pipeline<br>
-                        ✓ High accuracy detection<br>
-                        ✓ <a href="https://github.com/Ankit-Mahadani/Lung-and-Pancreas-Cancer" target="_blank"
-                            style="color: var(--accent);">View on GitHub →</a>
-                    </div>
-                </div>
-
-                <!-- Project 5 -->
-                <div class="project-card">
-                    <div class="project-header">
-                        <span class="project-level">LVL 3</span>
-                        <span class="project-status">COMPLETED</span>
-                    </div>
-                    <h3 class="project-title"><img src="assets/icons/memo.svg" class="emoji-icon" alt="note">
-                        Handwriting Improvement Note-Making App</h3>
-                    <p class="project-description">
-                        Developed a smart note-making app that improves handwriting using AI feedback. Provides
-                        real-time writing suggestions to enhance handwriting quality.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-badge">React</span>
-                        <span class="tech-badge">AI Models</span>
-                        <span class="tech-badge">Real-time Processing</span>
-                    </div>
-                    <div class="project-achievements">
-                        ✓ Real-time AI feedback<br>
-                        ✓ Writing improvement tracking<br>
-                        ✓ Interactive note interface<br>
-                        ✓ <a href="https://github.com/Ankit-Mahadani/handwritten-notes" target="_blank"
-                            style="color: var(--accent);">View on GitHub →</a>
-                    </div>
-                </div>
-
-                <!-- Project 6 -->
-                <div class="project-card">
-                    <div class="project-header">
-                        <span class="project-level">LVL 4</span>
-                        <span class="project-status">COMPLETED</span>
-                    </div>
-                    <h3 class="project-title"><img src="assets/icons/graph.svg" class="emoji-icon" alt="stocks"> Stock
-                        Price Prediction & Forecasting</h3>
-                    <p class="project-description">
-                        Built an LSTM neural network to forecast Motilal Oswal Midcap stock prices. Implemented
-                        data preprocessing, model training, and future price prediction using time-series deep learning
-                        techniques for accurate market forecasting.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-badge">Python</span>
-                        <span class="tech-badge">LSTM</span>
-                        <span class="tech-badge">TensorFlow</span>
-                        <span class="tech-badge">Time-Series</span>
-                    </div>
-                    <div class="project-achievements">
-                        ✓ LSTM neural network implementation<br>
-                        ✓ Time-series forecasting model<br>
-                        ✓ Data preprocessing & model training<br>
-                        ✓ <a href="https://github.com/Ankit-Mahadani/stock-predict-and-forecasting" target="_blank"
-                            style="color: var(--accent);">View on GitHub →</a>
+                        ✓ Automated resume tailoring<br>
+                        ✓ ATS-optimization algorithms<br>
+                        ✓ Advanced LLM integration
                     </div>
                 </div>
             </div>
@@ -460,46 +369,41 @@
             </h2>
             <div class="experience-timeline">
                 <div class="experience-item">
-                    <div class="experience-badge"><img src="assets/icons/robot.svg" class="emoji-icon" alt="bot"></div>
+                    <div class="experience-badge"><img src="assets/icons/gear.svg" class="emoji-icon" alt="automation"></div>
                     <div class="experience-content">
-                        <h3 class="experience-title">AI Agent Developer — CrowdWisdom Trading</h3>
-                        <p class="experience-company">April 2025 - Current</p>
+                        <h3 class="experience-title">AI Product & Automation Systems Engineer Intern — Saraswati Vidyamandir (SVM)</h3>
+                        <p class="experience-company">May 2026 - Present</p>
                         <p class="experience-description">
-                            Developed a scalable web scraping system aggregating data from 1,000+ websites, improving
-                            market
-                            intelligence coverage by 40% and enabling faster decision-making for trading operations.
-                            Built AI-powered Telegram & voice bots that automated outreach to 300+ B2B leads weekly,
-                            increasing lead metrics by 30% and reducing manual task overhead by 25%.
+                            • Optimized institute operations by building AI-powered automation systems for student management, parent communication, and staff coordination, reducing manual administrative workload by 30%.<br><br>
+                            • Developed scalable workflow automations using n8n, Python, Node.js, REST APIs, and GPT/Gemini LLMs, improving operational efficiency and accelerating task execution across multiple internal processes.<br><br>
+                            • Engineered mobile-friendly AI products and backend systems in collaboration with the founder, enhancing workflow reliability, improving user adoption for non-technical staff, and enabling faster system deployment cycles.
                         </p>
                         <div class="experience-skills">
                             <span class="exp-tag">n8n</span>
                             <span class="exp-tag">Python</span>
                             <span class="exp-tag">Node.js</span>
-                            <span class="exp-tag">REST APIs</span>
-                            <span class="exp-tag">GPT/Gemini LLMs</span>
+                            <span class="exp-tag">GPT/Gemini</span>
+                            <span class="exp-tag">System Design</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="experience-item">
-                    <div class="experience-badge"><img src="assets/icons/chart.svg" class="emoji-icon" alt="stats">
-                    </div>
+                    <div class="experience-badge"><img src="assets/icons/robot.svg" class="emoji-icon" alt="bot"></div>
                     <div class="experience-content">
-                        <h3 class="experience-title">Technical Co-Lead — Stats-O-Locked Club</h3>
-                        <p class="experience-company">February 2026 - Current</p>
+                        <h3 class="experience-title">AI Agent Developer — CrowdWisdom Trading</h3>
+                        <p class="experience-company">April 2025 - April 2026</p>
                         <p class="experience-description">
-                            Leading technical initiatives for a student community focused on Statistics, Data Science,
-                            and ML.
-                            Building collaborations with IITs and leading universities. Managing research team creating
-                            educational content and supporting members in hackathons. Contributing to academic
-                            conference
-                            management and fostering peer-to-peer learning through workshops and competitions.
+                            • Developed a scalable web scraping system aggregating data from 1,000+ websites, improving market intelligence coverage by 40% and enabling faster decision-making for trading strategies.<br><br>
+                            • Built AI-powered Telegram & voice bots that automated outreach to 500+ B2B leads weekly, increasing qualified leads by 30% and reducing manual sales effort by 15 hours per week.<br><br>
+                            • Automated backend workflows using n8n, Python, Node.js, REST APIs, and GPT/Gemini LLMs, reducing manual task overhead by 25% and boosting user engagement metrics by 25%.
                         </p>
                         <div class="experience-skills">
-                            <span class="exp-tag">Leadership</span>
-                            <span class="exp-tag">Data Science</span>
-                            <span class="exp-tag">Research</span>
-                            <span class="exp-tag">Community Building</span>
+                            <span class="exp-tag">Web Scraping</span>
+                            <span class="exp-tag">AI Agents</span>
+                            <span class="exp-tag">n8n</span>
+                            <span class="exp-tag">LLMs</span>
+                            <span class="exp-tag">Automation</span>
                         </div>
                     </div>
                 </div>
@@ -619,20 +523,17 @@
 
                 <!-- Certification 3 -->
                 <div class="cert-card">
-                    <div class="cert-badge"><img src="assets/icons/robot.svg" class="emoji-icon" alt="ai"></div>
-                    <h3 class="cert-title">Darzi: AI Resume Tailor Suite</h3>
-                    <p class="cert-issuer">VIT Bhopal AI Innovators Hub</p>
+                    <div class="cert-badge"><img src="assets/icons/trophy.svg" class="emoji-icon" alt="trophy"></div>
+                    <h3 class="cert-title">Hackathon Winner Certificate</h3>
+                    <p class="cert-issuer">Microsoft Club Event</p>
                     <p class="cert-description">
-                        Project Contributor for Darzi AI Resume Suite - an intelligent platform that empowers job
-                        seekers
-                        to create optimized, ATS-friendly resumes tailored to specific job descriptions using advanced
-                        language models. Completed in 2 months.
+                        Won a technical hackathon for innovative AI-based solution development. Demonstrated strong problem-solving and rapid prototyping skills.
                     </p>
                     <div class="cert-skills">
-                        <span class="cert-tag">AI/ML</span>
-                        <span class="cert-tag">NLP</span>
-                        <span class="cert-tag">LLMs</span>
-                        <span class="cert-tag">Project Development</span>
+                        <span class="cert-tag">Hackathon</span>
+                        <span class="cert-tag">AI Solutions</span>
+                        <span class="cert-tag">Innovation</span>
+                        <span class="cert-tag">Prototyping</span>
                     </div>
                 </div>
 
@@ -673,6 +574,20 @@
                         <div>
                             <h4>Email</h4>
                             <a href="mailto:ankitmahadani181@gmail.com">ankitmahadani181@gmail.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon" style="font-size: 24px;">📞</span>
+                        <div>
+                            <h4>Phone</h4>
+                            <a href="tel:+919434836393">+91-9434836393</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon" style="font-size: 24px;">📍</span>
+                        <div>
+                            <h4>Location</h4>
+                            <a>Durgapur, West Bengal, India</a>
                         </div>
                     </div>
                     <div class="contact-item">

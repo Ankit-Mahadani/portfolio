@@ -1,0 +1,2586 @@
+{
+  "name": "Storone scrap rag chat bot",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -6704,
+        112
+      ],
+      "id": "b576cd3e-a858-4ccb-9ee0-6f98efbe19b7",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5c0b2442-44a2-4576-9dd2-001e9000accb",
+              "name": "URL",
+              "value": "https://www.storone.com/",
+              "type": "string"
+            },
+            {
+              "id": "1fa06959-6ae7-400c-9624-e29a91ff3d38",
+              "name": "api key",
+              "value": "fc-1a9b620cadcc4bc9ab844d8c016580e3",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        384,
+        -16
+      ],
+      "id": "971bec65-80c1-488a-982b-b4d3daacb7ed",
+      "name": "URL to SCRAP"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.firecrawl.dev/v1/map",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('URL to SCRAP').item.json['api key'] }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "url",
+              "value": "={{ $('URL to SCRAP').item.json.URL }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        944,
+        -16
+      ],
+      "id": "8664e995-ddda-4851-a634-8c9efc26c32c",
+      "name": "Site Map"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "287fbdc5-8bf9-413c-b80c-d5b768a1eeb0",
+              "name": "links",
+              "value": "={{ $json.links }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1232,
+        -16
+      ],
+      "id": "0467124b-886d-4c2d-a411-07a8a992a1a3",
+      "name": "Edit links",
+      "retryOnFail": true,
+      "waitBetweenTries": 3000
+    },
+    {
+      "parameters": {
+        "content": "## STARTS THE WORKFLOW\n",
+        "height": 660,
+        "width": 260
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -6784,
+        -96
+      ],
+      "typeVersion": 1,
+      "id": "0cb3bf92-1a60-404e-82fe-0b8246133b99",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## FIRECRAWL API AND URL TO SCRAP\n## SET AREA\n",
+        "height": 660,
+        "width": 320
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        304,
+        -256
+      ],
+      "typeVersion": 1,
+      "id": "40bcfbdd-29ee-4c7c-9174-5a242e2789c6",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## MAPS OUT EVERY WEBPAGE FROM THE GIVEN WEBSITE URL\n",
+        "height": 660,
+        "width": 260,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        848,
+        -256
+      ],
+      "typeVersion": 1,
+      "id": "e5c82e04-fbe2-45a6-8fa8-24de6fe88786",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## CONVERTS ALL URL TO ARRAY",
+        "height": 660,
+        "width": 300
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1104,
+        -256
+      ],
+      "typeVersion": 1,
+      "id": "99ede2fa-86b9-4886-b3c0-4551c69bcf9c",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "public": true,
+        "options": {}
+      },
+      "id": "472bee33-1e82-4aca-8cd8-5fdbb590e527",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -304,
+        2128
+      ],
+      "webhookId": "7b34c20b-1c35-4de4-b460-411e748e9741"
+    },
+    {
+      "parameters": {
+        "content": "## RAG AI Agent with Chat Interface",
+        "height": 665,
+        "width": 1113
+      },
+      "id": "b4e05d81-1fe5-4dff-8626-dd1845d920f4",
+      "name": "Sticky Note13",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        688,
+        2032
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Telegram Trigger').item.json.message.text }}",
+        "options": {
+          "systemMessage": "=** use code tool before using supabase**\nYou are \"StorONE AI Assistant,\" designed to answer user queries by retrieving relevant information from the **StorONE vector store** in Supabase.  \nThis vector store contains:\n- Internal company documents\n- User notes and tasks\n- Calendar events\n- Website-scraped data\n\n---\n\n### **Search Parameters:**  \n- **Data Name:** storone  \n- **Description:** Retrieve all data related to the query.  \n- **Limit:** Top 5 most relevant results.  \n\n---\n\n### **When a query is received:**  \n1. Perform a **semantic vector search** in the \"storone\" vector store.  \n2. Retrieve the **top 5 most relevant documents** using semantic similarity.  \n3. Aggregate the content and generate a **concise, context-aware response**.\n\n---\n\n### **If no relevant information is found:**  \n- Respond with: `\"No relevant data found in the database. Please refine your query.\"`  \n\n---\n\n### **Optimization Techniques:**  \n- **Approximate Nearest Neighbors (ANN):** Use it for faster similarity lookups.  \n- **Parallel Fetching:** Execute vector searches asynchronously to reduce latency.  \n- **Indexed Vector Store:** Ensure key columns are indexed for optimized queries.  \n- **Connection Pooling:** Maintain persistent connections to Supabase.  \n- **Caching:** Implement short-term caching for repeated queries.  \n\n---\n\n### **Response Format:**  \n- **Direct Answer:** Provide the most relevant information clearly.  \n- **Bullet Points:** Use bullet points if there are multiple key points.  \n- **Highlight Important Data:** Bold important terms or values.  \n\n**Example Response:**  \n- **User:** \"What are the top features of StorONE's storage solution?\"  \n- **StorONE AI Assistant:**  \n  - High-performance storage optimization  \n  - Real-time data replication and recovery  \n  - Scalable architecture with cloud integration  \n  - Advanced data protection mechanisms  \n  - Cost-efficient with high-density storage  \n\n\n** use code tool before using supabase**",
+          "returnIntermediateSteps": true
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        1440,
+        2128
+      ],
+      "id": "40ec1f20-9a9b-4a05-b9de-8ca461be9155",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "functionCode": "const links = items[0].json.links;\nreturn links.map(link => ({ json: { url: link } }));\n"
+      },
+      "id": "0fc88a73-5922-4ac4-9d5a-84dd3a9ff865",
+      "name": "Split URLs",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        1568,
+        -16
+      ]
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "22c7d5a7-e8d8-4ebe-88c6-c61b20189c14",
+      "name": "Split In Batches",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 1,
+      "position": [
+        1920,
+        -16
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "e44cbc82-f9e2-4ad4-b38f-d778d857a065",
+              "leftValue": "={{$node[\"Split In Batches\"].context[\"noItemsLeft\"].toString()}}",
+              "rightValue": "false",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        4048,
+        672
+      ],
+      "id": "4f84b5ec-bca4-41d7-902c-0f114a872186",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "content": "## Returns url one by one from the links array",
+        "height": 660,
+        "width": 360
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1408,
+        -256
+      ],
+      "typeVersion": 1,
+      "id": "db47864f-9ed6-4fbf-9d63-be798b22d98c",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "## Iterates all objects of array one by one",
+        "height": 660,
+        "width": 360
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1760,
+        -256
+      ],
+      "typeVersion": 1,
+      "id": "07c2dd92-7ac3-4309-a72e-1651aa8f7581",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "content": "## stores the scraping data",
+        "height": 660,
+        "width": 280
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2784,
+        -256
+      ],
+      "typeVersion": 1,
+      "id": "f26d2094-5d1d-4411-a15c-432a8bb73777",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fd3f4b9f-c5c5-455e-b2c9-d3d6046b8128",
+              "name": "content",
+              "value": "={{ $('Firecrawl scrap 1').item.json.data.markdown }}",
+              "type": "string"
+            },
+            {
+              "id": "b23df6de-47ff-47c2-aac2-cac7ed6198b9",
+              "name": "context",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2848,
+        -48
+      ],
+      "id": "358feb3b-db2d-4011-9248-64618bbf37fb",
+      "name": "markdown"
+    },
+    {
+      "parameters": {
+        "content": "## checks if the loop is completed or not",
+        "height": 420,
+        "width": 360
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        3904,
+        544
+      ],
+      "typeVersion": 1,
+      "id": "580714a2-4219-40a2-84e6-2aefbd70e00d",
+      "name": "Sticky Note11"
+    },
+    {
+      "parameters": {
+        "content": "Scrap any website\npass- Scrap@123\n\n## supabase",
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -816,
+        2192
+      ],
+      "id": "95ca6c72-894a-4558-816e-5e5834293845",
+      "name": "Sticky Note15"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.firecrawl.dev/v1/scrape",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('URL to SCRAP').item.json['api key'] }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"url\": \"{{ $json.url }}\",\n  \"formats\": [\n    \"markdown\"\n  ]\n} ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2272,
+        -16
+      ],
+      "id": "79d753f6-b84c-48e9-9228-3c3b1e0ca172",
+      "name": "Firecrawl scrap 1",
+      "retryOnFail": true,
+      "waitBetweenTries": 3000
+    },
+    {
+      "parameters": {
+        "content": "## Scrap the given url using firecrawl",
+        "height": 660,
+        "width": 360,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2128,
+        -256
+      ],
+      "typeVersion": 1,
+      "id": "abf720c5-c70c-4fa6-8c71-a787249d13bd",
+      "name": "Sticky Note16"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "tableName": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "options": {
+          "queryName": "match_documents"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1,
+      "position": [
+        3312,
+        -160
+      ],
+      "id": "bed71276-aa1e-4b54-9a78-041bb59fcd7c",
+      "name": "Supabase Vector Store1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "nctbHHadngsnBooT",
+          "name": "Storone- supabase"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        3344,
+        0
+      ],
+      "id": "6f6210ae-4031-4c50-b6ab-e5a98a02f256",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "chunkSize": 7000
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        3440,
+        192
+      ],
+      "id": "c5a75632-9d04-4070-a58b-204cf2d66519",
+      "name": "Character Text Splitter"
+    },
+    {
+      "parameters": {
+        "modelName": "models/text-embedding-004"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        3264,
+        144
+      ],
+      "id": "faf9967b-d19d-4101-9ce8-58685b21185f",
+      "name": "Embeddings Google Gemini1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "X4ES1mblno9iCRdR",
+          "name": "Google Gemini(PaLM) Api Scrape"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "storone",
+        "description": "retrieve data similar to given chat and fast",
+        "topK": 5
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
+      "typeVersion": 1,
+      "position": [
+        1888,
+        2864
+      ],
+      "id": "c4cb1915-38f7-4d0a-912a-b7d031f24958",
+      "name": "Answer questions with a vector store"
+    },
+    {
+      "parameters": {
+        "content": "## vector embedded supabase from where ai agent takes info of the website it scraped\n",
+        "height": 780,
+        "width": 800,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1568,
+        2720
+      ],
+      "typeVersion": 1,
+      "id": "e0576acb-251c-473e-8afa-c8b016052bf0",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        208,
+        800
+      ],
+      "id": "0fe22657-1521-4ee3-9e0e-37955bd8e36a",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "content": "## to do list\n\n1. make sure chat is working \n\n2. add another manule trigger to insert pdf data from gdrive into the same data abse\n\n3.  add logs to save chats into googl sheet (name of google sheet to be created based on the company domain. date, time, qyestion , answer, latencey in seconds.",
+        "height": 520,
+        "width": 360,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        3888,
+        -256
+      ],
+      "typeVersion": 1,
+      "id": "061c6afc-4c27-4b06-8cd8-172f0ebdc076",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=write the context of  {{ $json.data.markdown }}\nfull context\nwrite everything in the context and everyy detail\nsay only context, No trash talk \nput every line description\nalso point out important information like mail company number and many more\nto the point answer only\n\nanalyse and summarize whole webpage best for llm chatbot\n** don't add photo url"
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        2512,
+        -48
+      ],
+      "id": "b7bfbcb2-ae15-4bad-a263-76c6d04e0777",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        2560,
+        144
+      ],
+      "id": "182528fb-7afa-4004-a111-327931960e34",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "X4ES1mblno9iCRdR",
+          "name": "Google Gemini(PaLM) Api Scrape"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        3344,
+        640
+      ],
+      "id": "4142715d-7180-47d3-a394-2143c4384a9e",
+      "name": "Wait",
+      "webhookId": "a4b48b04-70b7-491b-9aaf-60dd89aa6f45"
+    },
+    {
+      "parameters": {
+        "content": "## creates context of given url",
+        "height": 660,
+        "width": 300
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2480,
+        -256
+      ],
+      "typeVersion": 1,
+      "id": "caf656d3-9289-4e44-bc8b-b897f958a76a",
+      "name": "Sticky Note14"
+    },
+    {
+      "parameters": {
+        "content": "## convert json to string in order to insert context into chunk (match condition)",
+        "height": 660,
+        "width": 600
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        3072,
+        -256
+      ],
+      "typeVersion": 1,
+      "id": "4cfa5615-2099-433f-9e3e-c30edb4f7cb7",
+      "name": "Sticky Note17"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "DELETE FROM documents;\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -6256,
+        112
+      ],
+      "id": "9df9c67e-bb9f-418b-85db-bdcf6fdafa86",
+      "name": "delete data",
+      "credentials": {
+        "postgres": {
+          "id": "h3VjZfiiaTh1DqmM",
+          "name": "Supabase (gilad.barilan)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## wait node is used here in order to stop too many req to firecrawl\n",
+        "height": 560,
+        "width": 480
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        3152,
+        480
+      ],
+      "typeVersion": 1,
+      "id": "5443dfaa-a475-4bd3-a750-df4cdcfb92f2",
+      "name": "Sticky Note20"
+    },
+    {
+      "parameters": {
+        "content": "## gdrive folder \n\"stoeone\"on crowdwisdomtrading@gmail.com\n## maps out all sub folder name and id",
+        "height": 420,
+        "width": 360
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -5936,
+        -96
+      ],
+      "typeVersion": 1,
+      "id": "717d1624-0169-4ad7-a9be-132fe33ef037",
+      "name": "Sticky Note18"
+    },
+    {
+      "parameters": {
+        "content": "## distingush docx and pdf",
+        "height": 420,
+        "width": 360
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -4000,
+        -144
+      ],
+      "typeVersion": 1,
+      "id": "a2fe04d1-f4b5-4c94-a678-3284251d84a4",
+      "name": "Sticky Note21"
+    },
+    {
+      "parameters": {
+        "content": "## data chunks and embbed",
+        "height": 1100,
+        "width": 580
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -2048,
+        -416
+      ],
+      "typeVersion": 1,
+      "id": "8e931a5a-6805-4448-9b5c-b91c577606c7",
+      "name": "Sticky Note22"
+    },
+    {
+      "parameters": {
+        "tableName": {
+          "__rl": true,
+          "value": "storone",
+          "mode": "list",
+          "cachedResultName": "storone"
+        },
+        "options": {
+          "queryName": "match_documents"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1.1,
+      "position": [
+        1744,
+        3104
+      ],
+      "id": "3f3f235f-7128-46fc-b8be-4366c9a6288c",
+      "name": "Supabase Vector Store2",
+      "credentials": {
+        "supabaseApi": {
+          "id": "nctbHHadngsnBooT",
+          "name": "Storone- supabase"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/text-embedding-004"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1792,
+        3280
+      ],
+      "id": "deb673b9-8976-47a5-81d0-e27c0bb4126a",
+      "name": "Embeddings Google Gemini2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "X4ES1mblno9iCRdR",
+          "name": "Google Gemini(PaLM) Api Scrape"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Telegram Trigger').item.json.message.from.id }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        1328,
+        2480
+      ],
+      "id": "9bfe4f82-33fc-44e5-8fd1-e1b82cdf1561",
+      "name": "Postgres Chat Memory",
+      "credentials": {
+        "postgres": {
+          "id": "h3VjZfiiaTh1DqmM",
+          "name": "Supabase (gilad.barilan)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        2160,
+        3200
+      ],
+      "id": "d161300b-bc1c-4f73-a039-2d92d4637bed",
+      "name": "Google Gemini Chat Model2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "X4ES1mblno9iCRdR",
+          "name": "Google Gemini(PaLM) Api Scrape"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "typeVersion": 1,
+      "position": [
+        1440,
+        2480
+      ],
+      "id": "721bd6cd-03a3-4bf2-a9fe-31c1a9759586",
+      "name": "Think"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-docx-converter.docxToText",
+      "typeVersion": 1,
+      "position": [
+        -3168,
+        240
+      ],
+      "id": "3a76d1bf-26e1-4455-a6e8-7447f115f1cc",
+      "name": "DOCX to Text"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "=",
+        "returnAll": true,
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "1mZmeEnCpQf1vlLLp0D6kp-zHdtvO4Pye",
+            "mode": "id"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -5824,
+        112
+      ],
+      "id": "8530c0f5-e482-4cc2-99fc-4745af95a09d",
+      "name": "generate mainfolder id",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "WP5ZrebyOFSJ88iN",
+          "name": "Google Drive account (crowdwisdomtrading@gmail.com)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "=",
+        "returnAll": true,
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "={{ $json.id }}",
+            "mode": "id"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -4848,
+        112
+      ],
+      "id": "9d07a4d9-b690-4e89-a2f2-a0d0a6a3e21d",
+      "name": "maps subfolder",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "WP5ZrebyOFSJ88iN",
+          "name": "Google Drive account (crowdwisdomtrading@gmail.com)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3af613e5-0fe3-4c5e-94be-4af8944274dd",
+              "leftValue": "={{ $json.name }}",
+              "rightValue": ".pdf",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -3888,
+        0
+      ],
+      "id": "ceabeb05-c8f4-4f8d-8f19-40f32f5c550c",
+      "name": "sep pdf and docx workflow"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -3520,
+        -64
+      ],
+      "id": "e6960385-59af-4854-84c8-5f7030cfbc92",
+      "name": "download pdf",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "WP5ZrebyOFSJ88iN",
+          "name": "Google Drive account (crowdwisdomtrading@gmail.com)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -3504,
+        240
+      ],
+      "id": "f0bddbc8-96e9-4a22-aa87-381d552e0314",
+      "name": "download docx",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "WP5ZrebyOFSJ88iN",
+          "name": "Google Drive account (crowdwisdomtrading@gmail.com)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -3200,
+        -64
+      ],
+      "id": "e8308166-f793-4e52-a009-3c9ea58c5508",
+      "name": "Extract from data pdf"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ddda14f1-d94b-4cac-b11c-828d7b378429",
+              "name": "actual data",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2800,
+        0
+      ],
+      "id": "c44ff571-9ae9-4541-9bee-bcce15a9ad93",
+      "name": "set data"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c444fd6c-d45a-4a7b-acb5-678af87ed1ab",
+              "name": "context",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2224,
+        0
+      ],
+      "id": "84fe704b-c1c5-4ce0-b5a8-52ea27534e96",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "tableName": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "options": {
+          "queryName": "match_documents"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1,
+      "position": [
+        -1984,
+        0
+      ],
+      "id": "7d87a89f-f6c8-4b4a-99a3-cec3a3681b38",
+      "name": "Supabase Vector Store",
+      "credentials": {
+        "supabaseApi": {
+          "id": "nctbHHadngsnBooT",
+          "name": "Storone- supabase"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        -1840,
+        240
+      ],
+      "id": "b60b8f0b-e460-4558-842b-8157eb0ce7ae",
+      "name": "Default Data Loader1"
+    },
+    {
+      "parameters": {
+        "separator": ".",
+        "chunkSize": 5000
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        -1744,
+        448
+      ],
+      "id": "cb86e257-5e42-4642-973d-88570d6de069",
+      "name": "Character Text Splitter1"
+    },
+    {
+      "parameters": {
+        "modelName": "models/text-embedding-004"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -2000,
+        272
+      ],
+      "id": "b48e202f-ecb0-4eb5-bb7d-3a065b741c21",
+      "name": "Embeddings Google Gemini",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "X4ES1mblno9iCRdR",
+          "name": "Google Gemini(PaLM) Api Scrape"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash-exp",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -2480,
+        224
+      ],
+      "id": "9b3f69f0-08ab-4ee1-8f61-a06eb0729591",
+      "name": "Google Gemini Chat Model3",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "X4ES1mblno9iCRdR",
+          "name": "Google Gemini(PaLM) Api Scrape"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=write the context of  {{ $json['actual data'] }}\nfull context\nwrite everything in the context and everyy detail\nsay only context, No trash talk \nput every line description\nalso point out important information like mail company number and many more\nto the point answer only\n\nanalyse and summarize whole webpage best for llm chatbot\n** don't add photo url\n\ndon't say \nOkay, here's a breakdown of the provided text, formatted to be useful for an LLM chatbot, context:\n\nwrite every details in context"
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        -2576,
+        0
+      ],
+      "id": "89c930b5-9137-4b7f-b996-5cd8f9e49174",
+      "name": "context gen gdrive"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -5408,
+        112
+      ],
+      "id": "36d749b5-848b-495a-80fe-92fbf5e42c83",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "jsCode": "const filteredFiles = items\n  .filter(item => {\n    const name = item.json.name;\n    return name.endsWith('.docx') || name.endsWith('.pdf');\n  })\n  .map(item => item.json);\n\nreturn filteredFiles.map(file => ({ json: file }));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -4560,
+        112
+      ],
+      "id": "50692afe-ebc7-4506-a10e-88f05b395682",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -4240,
+        0
+      ],
+      "id": "c3440136-ed70-4816-8da2-4d4c58b0b7b0",
+      "name": "Loop Over Items1"
+    },
+    {
+      "parameters": {
+        "content": "## context is created",
+        "height": 1140,
+        "width": 580
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -2624,
+        -448
+      ],
+      "typeVersion": 1,
+      "id": "8779994b-d59f-4651-a4c3-fffc347b63a5",
+      "name": "Sticky Note24"
+    },
+    {
+      "parameters": {
+        "content": "## data is saved from gdrive",
+        "height": 700,
+        "width": 340
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -2960,
+        -224
+      ],
+      "typeVersion": 1,
+      "id": "dbd4779b-e66e-496d-a4bb-c04d11c355c8",
+      "name": "Sticky Note25"
+    },
+    {
+      "parameters": {
+        "content": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n## gdrive docx to text",
+        "height": 280,
+        "width": 580
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -3584,
+        208
+      ],
+      "typeVersion": 1,
+      "id": "29231e4f-e42d-4889-86c7-0dc50c2c796b",
+      "name": "Sticky Note26"
+    },
+    {
+      "parameters": {
+        "content": "## gdrive pdf to text",
+        "height": 280,
+        "width": 580
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -3600,
+        -160
+      ],
+      "typeVersion": 1,
+      "id": "53547828-fe39-4071-ab67-3b07ed1cb88b",
+      "name": "Sticky Note27"
+    },
+    {
+      "parameters": {
+        "content": "## iterate over all files",
+        "height": 300,
+        "width": 280
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -4320,
+        -80
+      ],
+      "typeVersion": 1,
+      "id": "6ffaab3d-7eb5-490f-8d32-ea243c199a90",
+      "name": "Sticky Note28"
+    },
+    {
+      "parameters": {
+        "content": "## saves name and id of all files in the gdrive folder",
+        "height": 600,
+        "width": 300
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -4656,
+        -144
+      ],
+      "typeVersion": 1,
+      "id": "ff03775b-5ec7-4377-bd10-db5eab7952f5",
+      "name": "Sticky Note29"
+    },
+    {
+      "parameters": {
+        "content": "## iterate over all folders",
+        "height": 300,
+        "width": 280
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -5488,
+        0
+      ],
+      "typeVersion": 1,
+      "id": "4d48eaa2-e68a-491c-84d5-bb28cde2e428",
+      "name": "Sticky Note30"
+    },
+    {
+      "parameters": {
+        "content": "## maps out all files id in given sub folder",
+        "height": 680,
+        "width": 300
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -4976,
+        -160
+      ],
+      "typeVersion": 1,
+      "id": "aab06cd1-a791-443e-bcde-1fe0d91551b1",
+      "name": "Sticky Note31"
+    },
+    {
+      "parameters": {
+        "content": "# scrape any website",
+        "height": 100,
+        "width": 360,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1504,
+        -640
+      ],
+      "typeVersion": 1,
+      "id": "330e2ddf-70fd-4518-9350-b7da3cd8768a",
+      "name": "Sticky Note32"
+    },
+    {
+      "parameters": {
+        "content": "# scrape gdrive data to supabase",
+        "height": 120,
+        "width": 580,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -3920,
+        -848
+      ],
+      "typeVersion": 1,
+      "id": "efc0eae9-1b8e-4c77-a4fa-b440b9a0ea4a",
+      "name": "Sticky Note33"
+    },
+    {
+      "parameters": {
+        "content": "# chatbot",
+        "height": 100,
+        "width": 220,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1552,
+        1552
+      ],
+      "typeVersion": 1,
+      "id": "219f7ef2-6944-40ad-b766-4192371579bd",
+      "name": "Sticky Note34"
+    },
+    {
+      "parameters": {
+        "content": "## delete prev data",
+        "height": 680,
+        "width": 260
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -6336,
+        -128
+      ],
+      "typeVersion": 1,
+      "id": "ede0eb9a-74ca-423d-959b-095b53d352f3",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -304,
+        2304
+      ],
+      "id": "0c0c45aa-cae6-478a-ab0b-a8c02aeab616",
+      "name": "Telegram Trigger",
+      "webhookId": "b686c310-cc0a-415b-a85f-d5edd2f9dc70",
+      "credentials": {
+        "telegramApi": {
+          "id": "S02qYFi8zLvsbsUf",
+          "name": "Telegram account - Storone bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').first().json.message.from.id}}",
+        "text": "={{ $('AI Agent').item.json.output }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2704,
+        2128
+      ],
+      "id": "4a3d9851-b6df-47ee-b038-fc83f45ee1b9",
+      "name": "Telegram1",
+      "webhookId": "6b73496f-ad06-4d2d-8f3b-a318bf543cdd",
+      "credentials": {
+        "telegramApi": {
+          "id": "S02qYFi8zLvsbsUf",
+          "name": "Telegram account - Storone bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## telegram bot send message ",
+        "height": 480,
+        "width": 460
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2512,
+        2000
+      ],
+      "typeVersion": 1,
+      "id": "ffac8ab5-f236-400c-9610-e03e1244c611",
+      "name": "Sticky Note10"
+    },
+    {
+      "parameters": {
+        "operation": "sendChatAction",
+        "chatId": "={{ $('Telegram Trigger').item.json.message.from.id }}"
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        992,
+        2304
+      ],
+      "id": "eb7ae36d-5c33-4894-9b27-9fc9908fd281",
+      "name": "Telegram2",
+      "webhookId": "f80d047e-0aa5-4a47-8589-be6d6c1d69f2",
+      "credentials": {
+        "telegramApi": {
+          "id": "S02qYFi8zLvsbsUf",
+          "name": "Telegram account - Storone bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "01be0c6f-d1eb-4c53-ab55-edcd70c10977",
+              "leftValue": "={{ $('Telegram Trigger').item.json.message.text }}",
+              "rightValue": "/start",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        368,
+        2304
+      ],
+      "id": "fcee1fe9-38b0-4ca1-892a-8e530d4018f0",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.from.id }}",
+        "text": "🤖 Welcome to Strone Company's Official Bot! Explore our services, get instant support, and stay updated—all in one place. 🚀",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        592,
+        2304
+      ],
+      "id": "a52aba1f-6930-4ab5-8279-588ec5f8b137",
+      "name": "Telegram",
+      "webhookId": "d6ff08e6-4ba8-4f49-a59a-4c5c1ee1474a",
+      "credentials": {
+        "telegramApi": {
+          "id": "S02qYFi8zLvsbsUf",
+          "name": "Telegram account - Storone bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## message trigger\n",
+        "height": 660,
+        "width": 460
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -448,
+        2032
+      ],
+      "typeVersion": 1,
+      "id": "0140d33e-6cf3-48e0-8509-9edb92fc53e2",
+      "name": "Sticky Note12"
+    },
+    {
+      "parameters": {
+        "content": "## generates welcome message for the user using firstime (/start message)",
+        "height": 660,
+        "width": 460
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        80,
+        2032
+      ],
+      "typeVersion": 1,
+      "id": "ad6b2dca-005f-4f2d-b7f2-d601fad0c1d2",
+      "name": "Sticky Note19"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1lJKAw6oktcBcwwM_6A_Z7IHisHGziA1J5hsrlPUb5bY",
+          "mode": "list",
+          "cachedResultName": "storone_chatbot_chats",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1lJKAw6oktcBcwwM_6A_Z7IHisHGziA1J5hsrlPUb5bY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 745540934,
+          "mode": "list",
+          "cachedResultName": "STORONE",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1lJKAw6oktcBcwwM_6A_Z7IHisHGziA1J5hsrlPUb5bY/edit#gid=745540934"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "currentDate"
+          ],
+          "schema": [
+            {
+              "id": "currentDate",
+              "displayName": "currentDate",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        3744,
+        2160
+      ],
+      "id": "23c50e42-d3c1-45fc-b1c4-6eab7ebfd7aa",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "akCyjWQmT5lTK2cr",
+          "name": "Google (gilad.barilan) Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dateTime",
+      "typeVersion": 2,
+      "position": [
+        3104,
+        2128
+      ],
+      "id": "a8805a32-406b-4e19-9527-81e027c3aae8",
+      "name": "Date & Time"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "DELETE FROM n8n_chat_histories;\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        464,
+        800
+      ],
+      "id": "ed53d009-ecb0-4c54-8b35-ca6d2eda6702",
+      "name": "delete data1",
+      "credentials": {
+        "postgres": {
+          "id": "h3VjZfiiaTh1DqmM",
+          "name": "Supabase (gilad.barilan)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0d189152-a348-4d06-86b1-770fd4df1f1d",
+              "name": "date",
+              "value": "={{ $json.currentDate }}",
+              "type": "string"
+            },
+            {
+              "id": "e3f755f6-c79e-4492-a63e-e46634d343ea",
+              "name": "name",
+              "value": "={{ $('Telegram1').item.json.result.chat.username }}",
+              "type": "string"
+            },
+            {
+              "id": "5f5fe795-2fdd-4a04-9429-312bf88aa4a5",
+              "name": "chat id",
+              "value": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+              "type": "string"
+            },
+            {
+              "id": "b2f5bf2c-18ea-4531-8b3f-8350ce91c8c8",
+              "name": "question",
+              "value": "={{ $('Telegram Trigger').item.json.message.text }}",
+              "type": "string"
+            },
+            {
+              "id": "926ce7d1-80c3-44ef-a89d-e4620df4364f",
+              "name": "answer",
+              "value": "={{ $('Telegram1').item.json.result.text }}",
+              "type": "string"
+            },
+            {
+              "id": "142aeb74-c232-40d5-a323-683034fcd8e7",
+              "name": "prompttokens",
+              "value": "={{ $('tokens').item.json.promptTokens }}",
+              "type": "string"
+            },
+            {
+              "id": "e1c5114e-146b-4409-ae86-0d30127e9bb2",
+              "name": "completion tokens",
+              "value": "={{ $('tokens').item.json.completionTokens }}",
+              "type": "string"
+            },
+            {
+              "id": "6e5a368d-10fa-4a4c-aee8-b61f0ab91779",
+              "name": "total tokens",
+              "value": "={{ $('tokens').item.json.totalTokens }}",
+              "type": "string"
+            },
+            {
+              "id": "e3963e82-2e99-43b3-b692-fd37ee6c9300",
+              "name": "latency",
+              "value": "={{ $('tokens').item.json.latency }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3552,
+        2160
+      ],
+      "id": "dcc5b5b0-a228-4535-a02a-f777f03a71f1",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "content": "## current time and date",
+        "height": 500,
+        "width": 320
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        3024,
+        1968
+      ],
+      "typeVersion": 1,
+      "id": "c61ed1fe-c0d0-4eab-af1b-bc8ecaeff3a0",
+      "name": "Sticky Note23"
+    },
+    {
+      "parameters": {
+        "content": "## saves\n1. time\n2. chatid\n3. username\n4. question\n5. answer\n\nhttps://docs.google.com/spreadsheets/d/1lJKAw6oktcBcwwM_6A_Z7IHisHGziA1J5hsrlPUb5bY/edit?gid=745540934#gid=745540934",
+        "height": 540,
+        "width": 500
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        3472,
+        1920
+      ],
+      "typeVersion": 1,
+      "id": "097b6510-df19-4447-b3b7-de34ec05aa19",
+      "name": "Sticky Note35"
+    },
+    {
+      "parameters": {
+        "content": "## freeup chatbot memory of supabase",
+        "height": 520,
+        "width": 780
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        48,
+        592
+      ],
+      "typeVersion": 1,
+      "id": "ad076f34-517c-449a-b81b-58c4e69e1770",
+      "name": "Sticky Note36"
+    },
+    {
+      "parameters": {
+        "content": "# chatbot memory management",
+        "height": 100,
+        "width": 540,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -2304,
+        1680
+      ],
+      "typeVersion": 1,
+      "id": "fcf3163c-ab3b-4bce-bfc0-0d794b63164d",
+      "name": "Sticky Note37"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "google/gemini-2.0-flash-001",
+          "mode": "list",
+          "cachedResultName": "google/gemini-2.0-flash-001"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1232,
+        2480
+      ],
+      "id": "f89895b5-d010-48c9-b187-44dea4fb7e75",
+      "name": "Gemini 2.5",
+      "credentials": {
+        "openAiApi": {
+          "id": "49RBKdnCG2WVjb2u",
+          "name": "Openrouter OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Initialize token counts\nlet promptTokens = 0;\nlet completionTokens = 0;\nlet totalTokens = 0;\nlet latency = 0;\n\n// Safely access the input JSON data\nconst data = $node[\"AI Agent\"].json;\n\n// Path to the token metadata in the JSON structure\nconst usagePath = data?.intermediateSteps?.[0]?.action?.messageLog?.[0]?.kwargs?.usage_metadata;\n\n// If the metadata exists, extract the token values\nif (usagePath) {\n    promptTokens = usagePath.input_tokens || 0;\n    completionTokens = usagePath.output_tokens || 0;\n    totalTokens = usagePath.total_tokens || 0;\n}\n\n// Optionally extract latency if available\nif (data.latency) {\n    latency = data.latency;\n}\n\n// Return the token counts and latency\nreturn {\n    promptTokens,\n    completionTokens,\n    totalTokens,\n    latency:   $input.first().json.latency\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2288,
+        2128
+      ],
+      "id": "c8d3269e-8d4e-4b57-b529-15805ceab4d2",
+      "name": "tokens"
+    },
+    {
+      "parameters": {
+        "content": "## tokens and latency generates of rag ai agent",
+        "height": 560,
+        "width": 400
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2064,
+        1952
+      ],
+      "typeVersion": 1,
+      "id": "0ad4ac92-6b5a-4061-a633-27b16dad3b97",
+      "name": "Sticky Note38"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9c1a0ddf-a594-4e8d-b590-c800ad9c2431",
+              "name": "startTime",
+              "value": "={{ new Date().getTime() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1200,
+        2208
+      ],
+      "id": "d98a52e3-4a91-4375-a5b7-5d2eaf41c09d",
+      "name": "startTime"
+    },
+    {
+      "parameters": {
+        "jsCode": "// End Node (JavaScript code)\nconst endTime = Date.now();\n\n// Fetch the start time from the previous node named \"Set Start Time\"\nconst startTime =$('startTime').first().json.startTime;\n\n// Calculate the latency in milliseconds\nconst latencyMs = endTime - startTime;\n\n// Return the latency value\nreturn {\n    latency: latencyMs + \" ms\"\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2112,
+        2128
+      ],
+      "id": "95433863-60db-4ee8-b6c0-479d12906730",
+      "name": "latency"
+    },
+    {
+      "parameters": {
+        "content": "##checks for reset s1 phrase",
+        "height": 560,
+        "width": 840
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -144,
+        1344
+      ],
+      "typeVersion": 1,
+      "id": "78c2154e-2ddc-4954-99e0-6bafdbea1f13",
+      "name": "Sticky Note39"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "6ec93dea-abea-4663-be19-6f2dbbe1cbc0",
+              "leftValue": "={{ $('Telegram Trigger').item.json.message.text }}",
+              "rightValue": "s1 reset",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "4a6d5290-d4d5-4035-a7bc-f2cc462a0c13",
+              "leftValue": "={{ $('Telegram Trigger').item.json.message.text }}",
+              "rightValue": "reset s1",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        1600
+      ],
+      "id": "e588e397-c7e0-4f1b-8070-cf3564138587",
+      "name": "If2"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        []
+      ]
+    },
+    "URL to SCRAP": {
+      "main": [
+        [
+          {
+            "node": "Site Map",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Site Map": {
+      "main": [
+        [
+          {
+            "node": "Edit links",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit links": {
+      "main": [
+        [
+          {
+            "node": "Split URLs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        []
+      ]
+    },
+    "Split URLs": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches": {
+      "main": [
+        [
+          {
+            "node": "Firecrawl scrap 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "markdown": {
+      "main": [
+        [
+          {
+            "node": "Supabase Vector Store1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Firecrawl scrap 1": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Supabase Vector Store1",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Google Gemini1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector Store1",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Vector Store1": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Answer questions with a vector store": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "delete data1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "markdown",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "delete data": {
+      "main": [
+        [
+          {
+            "node": "generate mainfolder id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Vector Store2": {
+      "ai_vectorStore": [
+        [
+          {
+            "node": "Answer questions with a vector store",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Google Gemini2": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector Store2",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Answer questions with a vector store",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Think": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "latency",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "generate mainfolder id": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "maps subfolder": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "sep pdf and docx workflow": {
+      "main": [
+        [
+          {
+            "node": "download pdf",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "download docx",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "download pdf": {
+      "main": [
+        [
+          {
+            "node": "Extract from data pdf",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "download docx": {
+      "main": [
+        [
+          {
+            "node": "DOCX to Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from data pdf": {
+      "main": [
+        [
+          {
+            "node": "set data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DOCX to Text": {
+      "main": [
+        [
+          {
+            "node": "set data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "set data": {
+      "main": [
+        [
+          {
+            "node": "context gen gdrive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Supabase Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader1": {
+      "ai_document": [
+        [
+          {
+            "node": "Supabase Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Character Text Splitter1": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader1",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Google Gemini": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "context gen gdrive",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "context gen gdrive": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Vector Store": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "maps subfolder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [
+          {
+            "node": "URL to SCRAP",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "sep pdf and docx workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram2": {
+      "main": [
+        [
+          {
+            "node": "startTime",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Telegram2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram": {
+      "main": [
+        [
+          {
+            "node": "Telegram2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram1": {
+      "main": [
+        [
+          {
+            "node": "Date & Time",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Date & Time": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "delete data1": {
+      "main": [
+        []
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        []
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini 2.5": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "tokens": {
+      "main": [
+        [
+          {
+            "node": "Telegram1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "startTime": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "latency": {
+      "main": [
+        [
+          {
+            "node": "tokens",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "delete data1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "437f9865-eef8-445e-b1fe-585f82d40027",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0700e48b03a0654cffdc33e40c6a58faaf369b7e0a2d9e7ab4fed1f410bed752"
+  },
+  "nodeGroups": [],
+  "id": "Tz4Vpck1XmnWHRXC",
+  "tags": [
+    {
+      "updatedAt": "2025-03-20T19:05:22.754Z",
+      "createdAt": "2025-03-20T19:05:22.754Z",
+      "id": "goYda5tkOZzMUn99",
+      "name": "working"
+    },
+    {
+      "updatedAt": "2025-04-26T14:49:49.352Z",
+      "createdAt": "2025-04-26T14:49:49.352Z",
+      "id": "kZvytPIixtKWy7GE",
+      "name": "Ankit"
+    },
+    {
+      "updatedAt": "2025-05-09T04:05:24.151Z",
+      "createdAt": "2025-05-09T04:05:24.151Z",
+      "id": "Jtk7fMyf2BU12H8G",
+      "name": "Supabase"
+    }
+  ]
+}
