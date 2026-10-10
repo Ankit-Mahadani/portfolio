@@ -1,0 +1,283 @@
+@import "tailwindcss";
+
+@theme {
+  --color-void: #faf8f5;
+  --color-surface: #ffffff;
+  --color-edge: #000000;
+  --color-chalk: #000000;
+  --color-dim: #374151;
+  --color-signal: #ffe600;
+  --color-ok: #a6ff00;
+  --color-warn: #ff5964;
+  --color-idle: #6b7280;
+
+  /* Neobrutalist saturated colors */
+  --color-neo-yellow: #ffe600;
+  --color-neo-cyan: #00f0ff;
+  --color-neo-pink: #ff66c4;
+  --color-neo-lime: #a6ff00;
+  --color-neo-coral: #ff5964;
+  --color-neo-purple: #c084fc;
+  --color-neo-cream: #faf8f5;
+  --color-neo-white: #ffffff;
+  --color-neo-black: #000000;
+
+  --font-display: var(--font-display), "Cabinet Grotesk", "Arial Black", sans-serif;
+  --font-body: var(--font-body), "Switzer", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-mono), "Martian Mono", "Courier New", monospace;
+
+  --ease-signature: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 150ms;
+  --duration-base: 400ms;
+  --duration-slow: 800ms;
+
+  --radius-panel: 0px;
+
+  --breakpoint-xs: 20rem;
+}
+
+:root {
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--color-void);
+  scroll-behavior: auto;
+}
+
+body {
+  background: var(--color-void);
+  color: var(--color-chalk);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+html.cursor-none-js,
+html.cursor-none-js body,
+html.cursor-none-js a,
+html.cursor-none-js button,
+html.cursor-none-js input,
+html.cursor-none-js [role="button"] {
+  cursor: none !important;
+}
+
+::selection {
+  background: var(--color-signal);
+  color: #000000;
+}
+
+:focus-visible {
+  outline: 3px solid #000000;
+  outline-offset: 3px;
+}
+
+/* Subtle risograph/paper grain overlay */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  opacity: 0.035;
+}
+
+.font-display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.full-bleed {
+  width: 100vw;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  max-width: 100vw;
+}
+
+.mask-line {
+  overflow: hidden;
+  display: block;
+}
+
+.mask-line > span {
+  display: inline-block;
+  will-change: transform;
+}
+
+/* Neobrutalism Utility Styles */
+.neo-box {
+  background-color: #ffffff;
+  border: 3px solid #000000;
+  box-shadow: 4px 4px 0px 0px #000000;
+}
+
+.neo-box-lg {
+  background-color: #ffffff;
+  border: 3px solid #000000;
+  box-shadow: 6px 6px 0px 0px #000000;
+}
+
+.neo-card {
+  background-color: #ffffff;
+  border: 3px solid #000000;
+  box-shadow: 5px 5px 0px 0px #000000;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.neo-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0px 0px #000000;
+}
+
+.neo-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 3px solid #000000;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 4px 4px 0px 0px #000000;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  user-select: none;
+}
+
+.neo-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px 0px #000000;
+}
+
+.neo-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0px 0px 0px 0px #000000;
+}
+
+.neo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 2px solid #000000;
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.65rem;
+  box-shadow: 2px 2px 0px 0px #000000;
+}
+
+/* Unique Non-Monotonous Neobrutalist Frame Backgrounds */
+.bg-pattern-dots {
+  background-image: radial-gradient(rgba(0, 0, 0, 0.12) 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+}
+
+.bg-pattern-grid {
+  background-image:
+    linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.bg-pattern-stripes {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(0, 0, 0, 0.035),
+    rgba(0, 0, 0, 0.035) 10px,
+    transparent 10px,
+    transparent 20px
+  );
+}
+
+.bg-pattern-blueprint {
+  background-image:
+    linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(to right, rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+  background-size: 80px 80px, 80px 80px, 16px 16px, 16px 16px;
+}
+
+.bg-pattern-columns {
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+  background-size: 64px 100%;
+}
+
+.bg-pattern-polka {
+  background-image: radial-gradient(rgba(0, 0, 0, 0.08) 2px, transparent 2px);
+  background-size: 22px 22px;
+}
+
+.bg-pattern-circuit {
+  background-image:
+    radial-gradient(circle at 10px 10px, rgba(0, 0, 0, 0.07) 2px, transparent 2px),
+    linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+  background-size: 36px 36px;
+}
+
+.bg-pattern-caution {
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(0, 0, 0, 0.04),
+    rgba(0, 0, 0, 0.04) 14px,
+    transparent 14px,
+    transparent 28px
+  );
+}
+
+@keyframes diagonalGridDrift {
+  0% {
+    background-position: 0px 0px;
+  }
+  100% {
+    background-position: -80px -80px;
+  }
+}
+
+.bg-pattern-diagonal-grid {
+  background-image:
+    linear-gradient(to right, rgba(0, 0, 0, 0.08) 1.5px, transparent 1.5px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.08) 1.5px, transparent 1.5px);
+  background-size: 80px 80px;
+  animation: diagonalGridDrift 3.5s linear infinite;
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 150ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.cursor-none-js,
+.cursor-none-js * {
+  cursor: none !important;
+}
+
+::view-transition-old(*),
+::view-transition-new(*) {
+  animation-duration: var(--duration-slow);
+  animation-timing-function: var(--ease-signature);
+}

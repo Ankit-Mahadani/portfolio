@@ -1,0 +1,58 @@
+---
+slug: darzi-resume-suite
+title: "Darzi: AI Resume Tailor Suite"
+kicker: A resume rewritten for the job posting, not for a template
+status: live
+start: 2025-01
+end: 2025-12
+role: Solo — product, prompts, deploy
+featured: true
+order: 1
+stack: [LLMs, Prompt Engineering, ATS Optimization, Web App]
+summary: >
+  A web app that rewrites a resume against a specific job description,
+  optimizing for the ATS filters that reject most applications unread.
+metrics:
+  - { value: "1", unit: "resume in", label: "one job description out" }
+  - { value: "ATS", unit: "optimized", label: "keyword and structure matched to the posting" }
+  - { value: "0", unit: "templates", label: "every output written fresh from context" }
+cover: { src: cover.jpg, alt: "Darzi web app showing a resume draft next to the job description it was tailored against", focal: "50% 40%" }
+gallery:
+  - { src: 01-input-flow.png, alt: "Darzi input screen with resume upload and job description paste fields", caption: "Two inputs: what you've done, and what they're asking for.", span: half, kind: ui }
+  - { src: 02-tailored-output.png, alt: "Side-by-side view of original resume bullet and Darzi's rewritten, keyword-matched version", caption: "Same experience, rewritten in the posting's language.", span: half, kind: screenshot }
+  - { src: 03-ats-score.png, alt: "ATS compatibility score panel showing keyword coverage before and after tailoring", caption: "The score that decides if a human ever sees the resume.", span: full, kind: ui }
+links: { live: "", repo: "", demo: "" }
+---
+
+The problem Darzi solves is upstream of interviews entirely: most resumes never reach a person. An ATS filter scores them against the job description first, and a strong candidate with a generic resume loses to a weaker one whose resume happens to say the right words. Darzi's whole job is closing that gap without asking anyone to write keyword-stuffed nonsense.
+
+## How a rewrite happens
+
+<Fig src="01-input-flow.png" alt="Darzi input screen with resume upload and job description paste fields" caption="Two inputs: what you've done, and what they're asking for." span="half" kind="ui" />
+
+You give it a resume and a job description. Darzi doesn't run a template over both — it reads the posting for the language, seniority signals, and required skills an ATS is actually scoring against, then rewrites each bullet to carry that language honestly, using only what's already true in the original resume.
+
+<Pull>It rewrites the words, never the facts. If the experience isn't in the original resume, Darzi won't invent it.</Pull>
+
+That constraint was non-negotiable from the start — a tailored resume that lies is worse than a generic one that's true, because it fails at the interview instead of at the filter.
+
+<Compare before="02a-original-bullet.png" after="02-tailored-output.png" beforeAlt="Original generic resume bullet point" afterAlt="Darzi's rewritten bullet point matched to the job description's language" />
+
+## Scoring against the filter
+
+<Fig src="03-ats-score.png" alt="ATS compatibility score panel showing keyword coverage before and after tailoring" caption="The score that decides if a human ever sees the resume." span="full" kind="ui" />
+
+The ATS score panel exists because "trust me, it's better now" isn't good enough — you should be able to see the keyword coverage move before you send the resume out, not find out weeks later why nothing landed.
+
+<Metric value="ATS" unit="optimized" label="scored against the actual posting, not a generic rubric" />
+
+## What's next
+
+Right now each tailoring pass is stateless — one resume, one posting, one output. The natural next step is a version that remembers which rewrites actually led to interviews, so the suggestions get sharper the more it's used.
+
+<Spec rows={[
+  ["Input", "Resume + job description"],
+  ["Rewriting", "LLM, constrained to source facts"],
+  ["Scoring", "ATS keyword & structure match"],
+  ["Output", "Tailored resume, per posting"],
+]} />

@@ -1,0 +1,267 @@
+# Ankit Mahadani — Portfolio Data
+
+> Extracted content from `index.html`, `ai-agents.html`, and `Ankit_Mahadani_Resume_FullPage.pdf`
+
+## Quick Links (from Resume)
+
+- **Portfolio:** https://ankitmahadani-portfolio.vercel.app
+- **LinkedIn:** https://www.linkedin.com/in/ankitmahadani/
+- **GitHub:** https://github.com/Ankit-Mahadani
+- **Email:** ankitmahadani181@gmail.com
+- **Phone:** +91-9434836393
+- **Location:** Durgapur, West Bengal, India
+
+---
+
+## Site Meta
+
+- **Title:** Ankit Mahadani - Data Scientist & ML Engineer
+- **Description:** Portfolio of Ankit Mahadani - Computer Science student specializing in Data Science, Machine Learning, and AI Solutions
+- **Logo:** ANKIT.DEV
+
+**Navigation:** HOME · ABOUT · SKILLS · PROJECTS · EXPERIENCE · CONTACT · AI_AGENTS (ai-agents.html)
+
+---
+
+## Hero Section
+
+- **Name:** ANKIT MAHADANI
+- **Subtitle:** DATA SCIENTIST • ML ENGINEER • AI DEVELOPER
+- **Description:** AI & Automation Engineer with hands-on experience building LLM-powered agents, RAG pipelines, and n8n workflow automations
+- **CTA Buttons:** VIEW PROJECTS · 📄 DOWNLOAD RESUME · GET IN TOUCH
+- **Resume link:** https://drive.google.com/uc?export=download&id=1tWw9r6jqGgLbpPE0j4QSL-saYaNo9_ia
+
+---
+
+## About Me
+
+I'm Ankit Mahadani, an AI & Automation Engineer pursuing Computer Science at VIT Bhopal (Expected 2028). I have hands-on experience building LLM-powered agents, RAG pipelines, and n8n workflow automations.
+
+I am proficient in TensorFlow, Scikit-Learn, GPT/Gemini, and REST APIs. I have a proven track record of reducing manual workload by 25–30% and scaling lead generation to 500+ contacts/week.
+
+My technical expertise spans across Data Science, Machine Learning, and backend architectures. I'm passionate about leveraging AI to build intelligent, scalable systems that solve real-world problems and drive operational efficiency.
+
+### Resume — Professional Summary
+
+AI & Automation Engineer with hands-on experience building LLM-powered agents, RAG pipelines, and n8n workflow automations. Proficient in TensorFlow, Scikit-Learn, GPT/Gemini, and REST APIs. Proven track record reducing manual workload by 25–30% and scaling lead generation to 500+ contacts/week. Pursuing B.Tech CSE at VIT Bhopal (Expected 2028).
+
+---
+
+## Skills
+
+### Core CS & Languages
+Python · SQL · Java · C++ · OOP · Data Structures & Algorithms · DBMS · Operating Systems · Computer Networks
+
+### Data Science
+EDA · Feature Engineering · Pandas · NumPy · Matplotlib · Seaborn
+
+### Machine Learning
+Scikit-Learn · TensorFlow · PyTorch · Random Forest · AdaBoost · Regression & Clustering · Model Training · Model Evaluation · Supervised Learning · Unsupervised Learning · Hyperparameter Tuning
+
+### Artificial Intelligence
+LLMs & Prompt Engineering · LangChain · RAG · Vector Databases · n8n · AI Agents
+
+### Backend & Cloud
+Flask · FastAPI · RESTful APIs · Docker · Linux · AWS/GCP · CI/CD
+
+### Tools & Databases
+MySQL & SQLite · Git & GitHub · Web Scraping · JSON · Canva
+
+### Soft Skills (from Resume)
+Leadership · Problem Solving · Time Management · Communication · Team Collaboration
+
+---
+
+## Projects
+
+### 1. Personal AI Assistant (Chat & Call) — LVL 5 · COMPLETED
+**Duration:** April 2025 – May 2025
+Built an AI assistant using n8n, LangChain/Gemini, Google Calendar API & SMTP/IMAP. Automates 85% of routine tasks and manages 100+ weekly events and reminders autonomously.
+
+- **Tech:** n8n, LangChain, Gemini, APIs
+- **Achievements:**
+  - Automates 85% of routine tasks
+  - Manages 100+ weekly events
+  - Calendar & Email Integration
+
+### 2. Hebrew AI Sales Agent (Voice & Text) — LVL 5 · COMPLETED
+**Duration:** September 2025 – January 2026
+Created a B2B sales agent integrating Telegram Bot API & Twilio to automate outreach and communication for 500+ leads/week, boosting efficiency by 30% and increasing conversions by 20%.
+
+- **Tech:** Telegram API, Twilio, AI Voice/Text, Automation
+- **Achievements:**
+  - 500+ leads automated weekly
+  - 30% efficiency boost
+  - 20% conversion increase
+
+### 3. Lung & Pancreas Cancer Detection — LVL 4 · COMPLETED
+**Duration:** July 2025 – September 2025
+Developed an AI-powered Flask application using DenseNet, TensorFlow, Keras, and OpenCV to classify CT/MRI/X-ray scans, achieving 94% model accuracy in detecting cancer conditions.
+
+- **Tech:** TensorFlow, DenseNet, Flask, OpenCV
+- **Achievements:**
+  - 94% detection accuracy
+  - CT/MRI/X-ray scan classification
+  - Deep Learning architecture
+
+### 4. Darzi: AI Resume Tailor Suite — LVL 4 · COMPLETED
+**Duration:** 2025
+Designed & deployed an AI-driven resume platform leveraging advanced language models to generate ATS-optimized resumes perfectly tailored to specific job descriptions.
+
+- **Tech:** LLMs, Prompt Engineering, Web App
+- **Achievements:**
+  - Automated resume tailoring
+  - ATS-optimization algorithms
+  - Advanced LLM integration
+
+---
+
+## Experience
+
+### AI Product & Automation Systems Engineer Intern — Saraswati Vidyamandir (SVM)
+**May 2026 - Present**
+
+- Optimized institute operations by building AI-powered automation systems for student management, parent communication, and staff coordination, reducing manual administrative workload by 30%.
+- Developed scalable workflow automations using n8n, Python, Node.js, REST APIs, and GPT/Gemini LLMs, improving operational efficiency and accelerating task execution across multiple internal processes.
+- Engineered mobile-friendly AI products and backend systems in collaboration with the founder, enhancing workflow reliability, improving user adoption for non-technical staff, and enabling faster system deployment cycles.
+
+**Skills:** n8n, Python, Node.js, GPT/Gemini, System Design
+
+### AI Agent Developer — CrowdWisdom Trading
+**April 2025 - April 2026**
+
+- Developed a scalable web scraping system aggregating data from 1,000+ websites, improving market intelligence coverage by 40% and enabling faster decision-making for trading strategies.
+- Built AI-powered Telegram & voice bots that automated outreach to 500+ B2B leads weekly, increasing qualified leads by 30% and reducing manual sales effort by 15 hours per week.
+- Automated backend workflows using n8n, Python, Node.js, REST APIs, and GPT/Gemini LLMs, reducing manual task overhead by 25% and boosting user engagement metrics by 25%.
+
+**Skills:** Web Scraping, AI Agents, n8n, LLMs, Automation
+
+---
+
+## Achievements
+
+| Achievement | Detail |
+|---|---|
+| Microsoft Club Hackathon | Winner |
+| DSA Problems Solved | 300 |
+| AI Internship Projects | Completed Successfully |
+| AI/ML Projects Completed | 6 |
+
+---
+
+## Education
+
+**B.Tech — Computer Science & Engineering**
+VIT Bhopal University, Bhopal, India
+**Duration:** September 2024 - September 2028 (Expected)
+
+Highlights: Data Science & ML Focus · AI Solutions · Problem Solving
+
+---
+
+## Certifications
+
+### 1. Google IT Automation with Python
+**Issuer:** Google (Coursera)
+Completed training in Python scripting, IT automation, system administration, and version control. Gained skills in troubleshooting, API integration, and improving operational efficiency.
+**Skills:** Python, Git, Automation, Linux
+
+### 2. GFG 160 DSA Certificate
+**Issuer:** GeeksforGeeks
+Completed intensive 160-day challenge in Data Structures & Algorithms. Enhanced problem-solving skills through consistent practice and mastery of core DSA concepts.
+**Skills:** Data Structures, Algorithms, Problem Solving
+
+### 3. Hackathon Winner Certificate
+**Issuer:** Microsoft Club Event
+Won a technical hackathon for innovative AI-based solution development. Demonstrated strong problem-solving and rapid prototyping skills.
+**Skills:** Hackathon, AI Solutions, Innovation, Prototyping
+
+### 4. MATLAB Onramp
+**Issuer:** MathWorks Training Services
+Successfully completed 100% of the self-paced MATLAB Onramp training course. Gained foundational knowledge in MATLAB programming, data analysis, visualization, and mathematical computing essential for engineering and scientific applications.
+**Skills:** MATLAB, Data Analysis, Visualization, Scientific Computing
+
+---
+
+## Contact
+
+| Channel | Value |
+|---|---|
+| Email | ankitmahadani181@gmail.com |
+| Phone | +91-9434836393 |
+| Location | Durgapur, West Bengal, India |
+| Portfolio | [ankitmahadani-portfolio.vercel.app](https://ankitmahadani-portfolio.vercel.app) |
+| GitHub | [Ankit-Mahadani](https://github.com/Ankit-Mahadani) |
+| LinkedIn | [ankitmahadani](https://www.linkedin.com/in/ankitmahadani/) |
+| LeetCode | [AnkitMAHADANI](https://leetcode.com/u/AnkitMAHADANI/) |
+| GeeksforGeeks | [ankitmahadani](https://www.geeksforgeeks.org/profile/ankitmahadani) |
+| Codeforces | [ankitmahadani181](https://codeforces.com/profile/ankitmahadani181) |
+
+**Interests:** Data Science · Machine Learning · Deep Learning · AI Solutions · Hackathons
+
+---
+
+## Footer
+
+© 2026 Ankit Mahadani. Built with ❤ and retro vibes
+
+---
+
+## AI Agents Page (ai-agents.html)
+
+### Hero
+**AI AGENT ARCHITECTURE**
+Showcasing production-ready LLM-powered agents, scalable RAG pipelines, and automated n8n workflows that drive operational efficiency and intelligent decision-making.
+
+### Agent 1: Personal AI Assistant (Chat & Call)
+An autonomous AI assistant engineered to manage daily operations, handle communications, and organize schedules with high reliability.
+
+- Automates 85% of routine administrative tasks autonomously.
+- Manages and schedules 100+ weekly events and reminders.
+- Integrates seamlessly with Google Calendar API and SMTP/IMAP protocols.
+- Built on an advanced LangChain and Gemini foundational core.
+
+**Tech Stack:** n8n Workflow, LangChain, Gemini LLM, Google Calendar API, SMTP/IMAP
+
+### Agent 2: Hebrew AI Sales Agent (Voice & Text)
+A B2B sales automation agent designed to scale outreach, engage prospects, and drive conversions through intelligent multi-channel communication.
+
+- Automates personalized outreach and follow-ups for 500+ B2B leads weekly.
+- Integrates with Telegram Bot API and Twilio for cross-platform voice and text capabilities.
+- Boosted operational efficiency by 30% while reducing manual sales effort.
+- Increased successful conversions by 20% through timely, intelligent follow-ups.
+
+**Workflow Diagram:**
+```
+[⚡ Telegram Trigger]      [🧠 Gemini 2.5 Agent]      [💬 Telegram Reply]
+[🌐 Firecrawl Scraper] →  [🗄️ Supabase Vector DB]  →  [📊 Google Sheets Log]
+```
+
+**Tech Stack:** Telegram API, Twilio Voice API, AI Conversational Logic, Sales Automation
+
+### Agent 3: AI CRM Automation Agents
+Intelligent agent workflows integrated directly into CRM systems for dynamic lead qualification and task management orchestration.
+
+- Scalable automation pipelines handling data aggregation and lead qualification.
+- Reduced manual task overhead across the team by 25%.
+- Enhanced business productivity through smart, automated task routing and follow-ups.
+- Deep integrations via robust REST APIs and GPT/Gemini analysis engines.
+
+**Tech Stack:** n8n, GPT/Gemini Models, CRM REST APIs, Python Scripts
+
+---
+
+## Themes Available
+
+Retro · Cyberpunk · Vaporwave · Matrix · Gameboy
+
+## Interactive Features
+
+- Terminal Intro Boot Sequence overlay
+- 3D Canvas Background (Three.js)
+- Particle Cursor Trail
+- Interactive Terminal Modal (Ctrl+`)
+- Sound Toggle
+- Achievement Notifications
+- Scroll Progress Bar
+- GeeksforGeeks live coding stats widget (`#gfg-stats`)

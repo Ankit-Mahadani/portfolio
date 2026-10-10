@@ -1,0 +1,201 @@
+---
+slug: neuva-lang
+title: Neuva
+kicker: An open-source ML programming language — no boilerplate, no imports, just the model
+status: shipped
+start: 2026-09
+end: 2026-10
+role: Solo — language design, compiler, PyPI release
+featured: true
+order: 1
+stack: [Python, PyTorch, Lark, NumPy, Pandas, scikit-learn, ONNX]
+summary: >
+  A working ML programming language built from scratch in 34 days — custom lexer,
+  Lark Earley parser, tree-walking interpreter, and a PyTorch training backend.
+  Trains real neural networks with 5 lines of code instead of 30.
+metrics:
+  - { value: "0.32", unit: "loss", label: "converged loss using custom loss function in pure Neuva" }
+  - { value: "54", unit: "tests", label: "passing across lexer, parser, AST, interpreter" }
+  - { value: "34", unit: "days", label: "solo public build — 1 commit per day" }
+  - { value: "13", unit: "examples", label: "all runnable out of the box" }
+cover: { src: neuva-hero.png, alt: "Neuva language hero — circuit-art logo with tagline and metadata badges", focal: "50% 50%" }
+gallery:
+  - { src: neuva-hero.png, alt: "Neuva website hero showing the circuit-art NEUVA wordmark, tagline 'A programming language built purely for Machine Learning', and metadata badges for version, license, Python, PyTorch, tests and PRs", caption: "Neuva — a language built purely for ML.", span: bleed, kind: screenshot }
+  - { src: playground-customloss.png, alt: "Neuva web playground showing custom loss function definition and real-time training of a neural regressor", caption: "Neuva web playground — defining custom loss functions and training live in the browser.", span: full, aspect: "1024 / 544", fit: contain, kind: screenshot }
+  - { src: vscode-spam.png, alt: "VS Code running spam_classifier.nva binary classification with terminal output", caption: "Binary Spam Classifier — 10 feature inputs, 100% test accuracy in 20 epochs.", span: half, aspect: "800 / 978", fit: contain, kind: screenshot }
+  - { src: vscode-houseprice.png, alt: "VS Code running house_price.nva multi-layer regression with terminal output", caption: "House Price Predictor — 3-layer deep regression with MSE loss convergence.", span: half, aspect: "796 / 1024", fit: contain, kind: screenshot }
+  - { src: pip-install.png, alt: "Terminal output for pip install neuva-lang from PyPI", caption: "pip install neuva-lang — binary wheel release distribution on PyPI.", span: full, aspect: "792 / 283", fit: contain, kind: screenshot }
+  - { src: playground-mobile.png, alt: "Neuva mobile web playground interface running multi-class classification", caption: "Mobile playground — responsive in-browser execution.", span: half, aspect: "402 / 876", fit: contain, kind: screenshot }
+  - { src: vscode-cnn.png, alt: "VS Code editor with a CNN classifier written in Neuva (.nva file) and terminal showing a successful run", caption: "CNN classifier — convolutional model compiled and trained with Neuva.", span: half, aspect: "800 / 980", fit: contain, kind: screenshot }
+links: { live: "https://ankit-mahadani.github.io/neuva/", repo: "https://github.com/Ankit-Mahadani/neuva", demo: "https://pypi.org/project/neuva-lang/" }
+---
+
+Most ML language projects are demos — syntax toys that print "hello world" and stub out the hard parts. Neuva is not that. It trains real PyTorch models, detects CUDA, runs mini-batch training loops, and saves weights to disk. The language is the interface; the execution is real.
+
+## Why build a new language
+
+Every ML project starts with the same 30-line PyTorch boilerplate: import torch, define a class, write `__init__`, write `forward`, write the training loop, handle the device, shuffle the data. None of that is the interesting part. Neuva eliminates all of it.
+
+<Pull>Five lines to define, train, and evaluate a neural network — not a mock, not a wrapper around scikit-learn, actual PyTorch under the hood.</Pull>
+
+The goal wasn't to wrap PyTorch in a pretty API. It was to design a language where ML concepts are first-class syntax — `model`, `layer`, `train`, `predict`, `save` are keywords, not function calls on imported modules. The compiler handles everything else.
+
+<CodeCompare
+  leftTitle="PyTorch Boilerplate"
+  leftBadge="~35 lines"
+  leftCode={`import torch
+import torch.nn as nn
+import torch.optim as optim
+from torch.utils.data import DataLoader, TensorDataset
+
+# 1. Architecture definition
+class Regressor(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Linear(8, 32),
+            nn.ReLU(),
+            nn.Linear(32, 16),
+            nn.ReLU(),
+            nn.Linear(16, 1)
+        )
+    def forward(self, x):
+        return self.net(x)
+
+# 2. Hardware + Model initialization
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model = Regressor().to(device)
+optimizer = optim.Adam(model.parameters(), lr=0.001)
+
+# 3. Custom penalty loss
+def my_loss(pred, target):
+    return nn.functional.mse_loss(pred, target) * 1.2
+
+# 4. Manual Mini-batch Training Loop
+for epoch in range(15):
+    epoch_loss = 0.0
+    for batch_x, batch_y in loader:
+        batch_x, batch_y = batch_x.to(device), batch_y.to(device)
+        optimizer.zero_grad()
+        preds = model(batch_x)
+        loss = my_loss(preds, batch_y)
+        loss.backward()
+        optimizer.step()
+        epoch_loss += loss.item()`}
+  rightTitle="Neuva Language"
+  rightBadge="5 lines"
+  rightCode={`# 1. Architecture definition
+model Regressor {
+    layer dense(8 -> 32, relu)
+    layer dense(32 -> 16, relu)
+    layer dense(16 -> 1, linear)
+}
+
+# 2. Custom penalty loss in-language
+fn my_loss(pred, target) {
+    return mse(pred, target) * 1.2
+}
+
+# 3. Data prep, GPU auto-detection & training
+let data = load("housing.csv").normalize()
+let train_data, test_data = data.split(0.8)
+
+train Regressor on train_data for 15 epochs, lr = 0.001, loss = my_loss
+
+predict Regressor on test_data
+print Regressor`}
+/>
+
+## How it works
+
+Neuva has a full compiler pipeline: a hand-written tokenizer feeds a Lark Earley parser that builds a typed AST, which a tree-walking interpreter evaluates. The interpreter maps each AST node to PyTorch operations at runtime — `layer dense(8 -> 32, relu)` becomes `nn.Linear(8, 32)` plus `F.relu`, stitched together into an `nn.Sequential` model.
+
+<Trace steps={[
+  { label: "Tokenize", detail: "Hand-written lexer — full terminal set, Rust-style error messages" },
+  { label: "Parse", detail: "Lark Earley parser builds a typed AST from .nva source" },
+  { label: "Interpret", detail: "Tree-walking interpreter evaluates the AST node-by-node" },
+  { label: "Compile model", detail: "layer nodes map to nn.Linear, nn.Conv2d, nn.Dropout — assembled into nn.Sequential" },
+  { label: "Train", detail: "Mini-batch loop with shuffled indices, average loss per epoch, automatic GPU/CPU detection" },
+  { label: "Evaluate", detail: "predict and evaluate built-ins run inference on test splits" },
+]} />
+
+<Fig src="vscode-cnn.png" alt="VS Code editor with a CNN classifier written in Neuva and terminal output" caption="A CNN classifier — the whole model in a .nva file." maxWidth="760px" aspect="800 / 980" fit="contain" kind="screenshot" />
+
+## The language & custom loss
+
+Neuva reads like English pseudocode, compiles like a real language. Type inference handles the common case; explicit annotations are available when you need them. You can define custom functions — including custom loss functions with mathematical penalties — and pass them directly to the training engine:
+
+```
+# Define a loss function in Neuva itself and use it during training
+model Regressor {
+    layer dense(8 -> 32, relu)
+    layer dense(32 -> 16, relu)
+    layer dense(16 -> 1, linear)
+}
+
+fn my_loss(pred, target) {
+    # Penalize errors a bit more than plain MSE
+    return mse(pred, target) * 1.2
+}
+
+let data = load("housing.csv")
+let data = data.normalize()
+let train_data, test_data = data.split(0.8)
+
+train Regressor on train_data for 15 epochs, lr = 0.001, loss = my_loss
+
+predict Regressor on test_data
+print Regressor
+```
+
+That's a multi-layer neural regressor with a custom mathematical loss function written directly in Neuva syntax — no PyTorch loss subclassing, no manual gradient wiring. The equivalent PyTorch is ~40 lines.
+
+<Fig src="playground-customloss.png" alt="Neuva web playground running a Regressor model with custom loss function, showing epoch loss convergence and model summary" caption="Web playground — custom loss function and real-time training directly in the browser." maxWidth="860px" aspect="1024 / 544" fit="contain" kind="screenshot" />
+
+## Real-world models: classification & regression
+
+Neuva handles common ML workflows with dedicated keywords and clean runtime summaries. Two runnable examples from the test suite:
+
+<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 my-10">
+  <Fig src="vscode-spam.png" alt="Binary Spam Classifier in Neuva" caption="Spam Classifier — 10-feature binary classification." aspect="800 / 978" fit="contain" kind="screenshot" />
+  <Fig src="vscode-houseprice.png" alt="House Price Predictor in Neuva" caption="House Price Predictor — 3-layer deep regression." aspect="796 / 1024" fit="contain" kind="screenshot" />
+</div>
+
+## What shipped
+
+Seven phases, 34 days of daily commits:
+
+<Trace steps={[
+  { label: "Language design", detail: "Syntax, keywords, grammar spec" },
+  { label: "Lexer", detail: "Full tokenizer with clean error reporting" },
+  { label: "Parser", detail: "Lark Earley grammar, full AST" },
+  { label: "Interpreter", detail: "Tree-walker with scoped variables, 54 tests passing" },
+  { label: "PyTorch backend", detail: "dense, conv, pool, dropout, flatten — GPU detection + mini-batch training" },
+  { label: "PyPI release", detail: "pip install neuva-lang — v1.2.0 on PyPI" },
+  { label: "Web playground", detail: "Browser-based REPL at ankit-mahadani.github.io/neuva" },
+]} />
+
+<Fig src="pip-install.png" alt="Terminal showing pip install neuva-lang" caption="pip install neuva-lang — distributed directly via PyPI wheel packages." maxWidth="720px" aspect="792 / 283" fit="contain" kind="screenshot" />
+
+<Metric value="15" unit="epochs" label="loss convergence with custom penalty function in pure Neuva" />
+
+## Responsive web playground
+
+For users testing Neuva on smaller screens or mobile devices, the web playground adapts dynamically to retain full editor and execution capabilities:
+
+<Fig src="playground-mobile.png" alt="Neuva mobile web playground interface" caption="Neuva web playground — responsive mobile interface." maxWidth="360px" aspect="402 / 876" fit="contain" kind="screenshot" />
+
+## What's next
+
+The roadmap post-1.0 includes a VS Code extension with syntax highlighting, an ONNX export path (`export MyNet to "model.onnx"`) for production deployment, and a standard library of common datasets. The language is intentionally minimal right now — every feature that gets added has to pay its weight in reduced boilerplate.
+
+<Spec rows={[
+  ["Version", "1.2.0"],
+  ["Install", "pip install neuva-lang"],
+  ["Python", "≥ 3.10"],
+  ["Backend", "PyTorch ≥ 2.0"],
+  ["Parser", "Lark Earley"],
+  ["License", "AGPL-3.0"],
+  ["Playground", "ankit-mahadani.github.io/neuva"],
+  ["Repo", "github.com/Ankit-Mahadani/neuva"],
+]} />

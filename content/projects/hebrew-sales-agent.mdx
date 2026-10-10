@@ -1,0 +1,79 @@
+---
+slug: hebrew-sales-agent
+title: Hebrew AI Sales Agent
+kicker: Voice and text B2B outreach, in Hebrew, at scale
+status: live
+start: 2025-09
+end: 2026-01
+role: Solo — architecture, build, deploy
+featured: true
+order: 4
+stack: [n8n, Telegram Bot API, Twilio, Gemini 2.5, Supabase pgvector, Firecrawl, Google Sheets]
+summary: >
+  A B2B outreach agent that talks to leads over Telegram and voice in Hebrew,
+  qualifies them against a live knowledge base, and logs every conversation.
+metrics:
+  - { value: "500+", unit: "leads/wk", label: "outreach handled without manual dialing" }
+  - { value: "30", unit: "%", label: "efficiency gain for the sales team" }
+  - { value: "20", unit: "%", label: "lift in successful conversions" }
+cover: { src: cover.jpg, alt: "Telegram conversation in Hebrew between a lead and the sales agent, with a call-back offer", focal: "50% 30%" }
+gallery:
+  - { src: 01-pipeline-diagram.png, alt: "Pipeline diagram: Telegram trigger and Firecrawl scraper into Gemini agent and Supabase vector store, out to Telegram reply and Sheets log", caption: "Two inputs, one reasoning core, two outputs — the whole agent.", span: bleed, kind: diagram }
+  - { src: 02-telegram-hebrew.png, alt: "Telegram thread in Hebrew showing the agent qualifying a lead and offering a callback", caption: "Qualification happens inline, in the lead's language.", span: half, kind: screenshot }
+  - { src: 03-supabase-vectors.png, alt: "Supabase table view of embedded product and pricing documents used for retrieval", caption: "The agent answers from a live document store, not a static script.", span: half, kind: screenshot }
+  - { src: 04-twilio-call-log.png, alt: "Twilio call log showing outbound voice calls with duration and outcome", caption: "Voice follow-ups for leads that go quiet on text.", span: half, kind: screenshot }
+  - { src: 05-sheets-dashboard.png, alt: "Google Sheets dashboard tracking weekly lead volume and conversion rate", caption: "The number the sales team actually checks every Monday.", span: half, kind: ui }
+links: { live: "", repo: "", demo: "" }
+---
+
+The brief here came from a real bottleneck: a sales team that needed to reach 500+ B2B leads a week in Hebrew, and no realistic amount of manual dialing was going to hit that number. So the agent had to do two things a script can't — read documents to answer real questions, and know when to pick up the phone instead of sending another text.
+
+## Two channels, one brain
+
+<Fig src="01-pipeline-diagram.png" alt="Pipeline diagram: Telegram trigger and Firecrawl scraper into Gemini agent and Supabase vector store, out to Telegram reply and Sheets log" caption="Two inputs, one reasoning core, two outputs — the whole agent." span="bleed" kind="diagram" />
+
+Telegram carries the first touch and most of the back-and-forth; Twilio voice picks up leads that stop responding on text. Both routes feed the same Gemini 2.5 reasoning core, so a lead never gets a different personality depending on which channel they answered on.
+
+<Trace steps={[
+  { label: "Ingest", detail: "Firecrawl keeps product and pricing docs current" },
+  { label: "Embed", detail: "Documents chunked and stored in Supabase pgvector" },
+  { label: "Converse", detail: "Gemini 2.5 retrieves context, replies in Hebrew" },
+  { label: "Escalate", detail: "Quiet leads get a Twilio voice follow-up" },
+  { label: "Log", detail: "Every touch written to Sheets for the sales team" },
+]} />
+
+## Answering from a live source
+
+<Pull>A lead asking about pricing gets the current price, not whatever was true when the prompt was written.</Pull>
+
+The knowledge base is the part that made this a real sales tool instead of a chatbot with a good opening line. Firecrawl keeps product and pricing pages current, Supabase pgvector stores the embeddings, and every reply is grounded in retrieval rather than memorized text — so when pricing changes, the agent's answers change with it, automatically.
+
+<Gallery items={[
+  { src: "02-telegram-hebrew.png", alt: "Telegram thread in Hebrew showing the agent qualifying a lead and offering a callback", caption: "Qualification happens inline, in the lead's language.", span: "half", kind: "screenshot" },
+  { src: "03-supabase-vectors.png", alt: "Supabase table view of embedded product and pricing documents used for retrieval", caption: "The agent answers from a live document store, not a static script.", span: "half", kind: "screenshot" },
+]} />
+
+## When text isn't enough
+
+Some leads go quiet on Telegram but will pick up a phone. Twilio handles that escalation — a voice call in Hebrew, same qualification logic, logged the same way as a text conversation.
+
+<Fig src="04-twilio-call-log.png" alt="Twilio call log showing outbound voice calls with duration and outcome" caption="Voice follow-ups for leads that go quiet on text." span="half" kind="screenshot" />
+
+## The numbers that mattered
+
+<Metric value="500+" unit="leads/wk" label="reached without manual dialing" />
+<Metric value="30" unit="%" label="efficiency gain for the sales team" />
+<Metric value="20" unit="%" label="lift in successful conversions" />
+
+Every conversation lands in a shared Sheets log — not for vanity metrics, but because the sales team needed a number they could check every Monday without asking me for a report.
+
+<Fig src="05-sheets-dashboard.png" alt="Google Sheets dashboard tracking weekly lead volume and conversion rate" caption="The number the sales team actually checks every Monday." span="full" kind="ui" />
+
+<Spec rows={[
+  ["Text channel", "Telegram Bot API"],
+  ["Voice channel", "Twilio Voice"],
+  ["Reasoning", "Gemini 2.5"],
+  ["Retrieval", "Supabase pgvector"],
+  ["Freshness", "Firecrawl, scheduled re-crawl"],
+  ["Reporting", "Google Sheets, live log"],
+]} />

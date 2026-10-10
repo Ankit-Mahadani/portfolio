@@ -1,0 +1,62 @@
+---
+slug: cancer-detection
+title: Lung & Pancreas Cancer Detection
+kicker: A second read on a scan, in under a second
+status: shipped
+start: 2025-07
+end: 2025-09
+role: Solo — model, pipeline, app
+featured: true
+order: 3
+stack: [TensorFlow, Keras, DenseNet, OpenCV, Flask]
+summary: >
+  A Flask app that classifies CT, MRI, and X-ray scans for lung and pancreas
+  cancer indicators, built to give a fast, consistent second opinion.
+metrics:
+  - { value: "94", unit: "%", label: "detection accuracy on held-out scans" }
+  - { value: "3", unit: "modalities", label: "CT, MRI, and X-ray, one pipeline" }
+  - { value: "<1", unit: "s", label: "inference time per scan" }
+cover: { src: cover.jpg, alt: "Grid of CT scan slices with model-highlighted regions of interest", focal: "50% 50%" }
+gallery:
+  - { src: 01-architecture.png, alt: "DenseNet architecture diagram with preprocessing and classification stages labelled", caption: "DenseNet backbone, three modalities, one output head.", span: bleed, kind: diagram }
+  - { src: 02-preprocessing.png, alt: "Before and after view of CT scan preprocessing with OpenCV normalization", caption: "Normalization removes scanner-specific noise before the model ever sees a slice.", span: half, kind: photo }
+  - { src: 03-confusion-matrix.png, alt: "Confusion matrix for the classifier across benign, malignant, and unclear classes", caption: "Where the 6% of misses cluster.", span: half, kind: diagram }
+  - { src: 04-flask-ui.png, alt: "Flask web app upload interface with prediction and confidence score", caption: "Upload, classify, confidence score — nothing else on the screen.", span: full, kind: ui }
+links: { live: "", repo: "", demo: "" }
+---
+
+This one started from a simple frustration: radiologists reading dozens of scans a day don't need another dashboard, they need a fast, boring second opinion that's right often enough to trust. So the whole app is one screen — upload a scan, get a classification and a confidence score.
+
+## The model
+
+DenseNet was the right backbone for this specifically because of how it reuses features across layers — useful when the differences between a benign shadow and a malignant one are subtle and low-contrast, which is most of the time in lung and pancreas imaging.
+
+<Fig src="01-architecture.png" alt="DenseNet architecture diagram with preprocessing and classification stages labelled" caption="DenseNet backbone, three modalities, one output head." span="bleed" kind="diagram" />
+
+<Pull>The hard part wasn't the model. It was making three imaging modalities look like the same input to it.</Pull>
+
+CT, MRI, and X-ray scans don't share a scale, contrast profile, or noise pattern. Before any of them reach the DenseNet backbone, OpenCV normalizes intensity, crops to the region of interest, and resizes to a common input shape — the preprocessing pipeline is arguably where more of the accuracy actually came from than the model architecture itself.
+
+<Compare before="02a-raw-scan.png" after="02-preprocessing.png" beforeAlt="Raw CT scan slice with scanner noise and inconsistent contrast" afterAlt="Preprocessed CT scan slice after OpenCV normalization" />
+
+## Where it's right, and wrong
+
+At 94% accuracy on held-out scans, the honest framing is a second reader, not a replacement — the 6% it misses cluster in a specific place: early-stage, low-contrast cases where even a second human read is genuinely hard.
+
+<Fig src="03-confusion-matrix.png" alt="Confusion matrix for the classifier across benign, malignant, and unclear classes" caption="Where the 6% of misses cluster." span="half" kind="diagram" />
+
+<Metric value="94" unit="%" label="accuracy across CT, MRI, and X-ray scans" />
+
+## Shipping it as a tool
+
+A model in a notebook doesn't help anyone, so the last stage was wrapping it in a Flask app simple enough that the interface itself can't introduce error: upload a scan, wait under a second, read a confidence score. No settings, no modes, nothing to misconfigure.
+
+<Fig src="04-flask-ui.png" alt="Flask web app upload interface with prediction and confidence score" caption="Upload, classify, confidence score — nothing else on the screen." span="full" kind="ui" />
+
+<Spec rows={[
+  ["Backbone", "DenseNet-121, fine-tuned"],
+  ["Preprocessing", "OpenCV normalize + crop + resize"],
+  ["Framework", "TensorFlow / Keras"],
+  ["Serving", "Flask, single endpoint"],
+  ["Inference", "< 1s per scan, CPU"],
+]} />
