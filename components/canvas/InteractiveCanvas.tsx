@@ -11,6 +11,7 @@ import { ContactCard } from "./ContactCard";
 import { ContributionsCard } from "./ContributionsCard";
 import { StatsCard } from "./StatsCard";
 import { lofiAudio } from "./LofiAudio";
+import { CanvasTipsAndTutorial } from "./CanvasTipsAndTutorial";
 
 export type CardData = {
   id: string;
@@ -949,6 +950,9 @@ export function InteractiveCanvas() {
           +
         </button>
       </aside>
+
+      {/* CONTINUOUS ROTATING TIPS & FIRST-SESSION TUTORIAL */}
+      <CanvasTipsAndTutorial onSpawnCard={spawnOrToggleCard} />
     </div>
   );
 }
