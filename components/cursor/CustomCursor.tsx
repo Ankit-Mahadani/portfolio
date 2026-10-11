@@ -121,14 +121,14 @@ export function CustomCursor() {
         }}
       >
         <div
-          className="rounded-full blur-2xl pointer-events-none"
+          className="rounded-full blur-2xl pointer-events-none opacity-80"
           style={{
             width: "320px",
             height: "320px",
             marginLeft: "-160px",
             marginTop: "-160px",
             background:
-              "radial-gradient(circle, rgba(255, 230, 0, 0.6) 0%, rgba(255, 220, 0, 0.35) 32%, rgba(255, 230, 0, 0.14) 58%, rgba(255, 230, 0, 0.03) 78%, transparent 100%)",
+              "radial-gradient(circle, rgba(255, 235, 59, 0.45) 0%, rgba(255, 230, 0, 0.22) 32%, rgba(255, 230, 0, 0.08) 55%, transparent 75%)",
           }}
         />
       </div>
