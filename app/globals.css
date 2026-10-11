@@ -292,3 +292,125 @@ div[data-nextjs-toast] {
   pointer-events: none !important;
   visibility: hidden !important;
 }
+
+/* =========================================
+   DARK THEME NEOBRUTALISM
+   ========================================= */
+html.dark {
+  color-scheme: dark;
+  --color-void: #0d0d10;
+  --color-surface: #17171c;
+  --color-edge: #ffffff;
+  --color-chalk: #f4f4f5;
+  --color-dim: #a1a1aa;
+}
+
+html.dark body {
+  background-color: #0d0d10 !important;
+  color: #f4f4f5 !important;
+}
+
+html.dark header,
+html.dark nav,
+html.dark section,
+html.dark footer,
+html.dark main {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+/* Background overrides */
+html.dark .bg-\[\#faf8f5\],
+html.dark .bg-\[\#FAF8F5\],
+html.dark .bg-\[\#f6f5f0\],
+html.dark .bg-void {
+  background-color: #0d0d10 !important;
+}
+
+html.dark header.bg-\[\#FAF8F5\]\/90 {
+  background-color: rgba(13, 13, 16, 0.92) !important;
+  border-bottom-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+html.dark .bg-white,
+html.dark .bg-white\/70,
+html.dark .bg-white\/80,
+html.dark .bg-white\/90,
+html.dark .bg-white\/95,
+html.dark .bg-white\/40 {
+  background-color: #17171c !important;
+  color: #f4f4f5 !important;
+}
+
+/* Text overrides */
+html.dark .text-black {
+  color: #f4f4f5 !important;
+}
+
+html.dark .text-black\/90,
+html.dark .text-black\/85,
+html.dark .text-black\/80 {
+  color: rgba(244, 244, 245, 0.9) !important;
+}
+
+html.dark .text-black\/75,
+html.dark .text-black\/70,
+html.dark .text-black\/60 {
+  color: rgba(244, 244, 245, 0.72) !important;
+}
+
+html.dark .text-black\/50,
+html.dark .text-black\/40,
+html.dark .text-black\/30,
+html.dark .text-black\/25,
+html.dark .text-black\/20 {
+  color: rgba(244, 244, 245, 0.45) !important;
+}
+
+/* Borders in dark mode */
+html.dark .border-black {
+  border-color: #3f3f46 !important;
+}
+
+html.dark .border-black\/10,
+html.dark .border-black\/15,
+html.dark .border-black\/20,
+html.dark .border-black\/25,
+html.dark .border-black\/30,
+html.dark .border-black\/40 {
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+/* Neobrutalist shadows in dark mode */
+html.dark [class*="shadow-\["][class*="_#000\]"] {
+  box-shadow: 4px 4px 0px #000000 !important;
+}
+
+/* Bright colorful neobrutalist accent badges keep bold black text */
+html.dark .bg-\[\#ffe600\],
+html.dark .bg-\[\#a6ff00\],
+html.dark .bg-\[\#00f0ff\],
+html.dark .bg-\[\#ff66c4\],
+html.dark .bg-\[\#ff5964\] {
+  color: #000000 !important;
+}
+
+html.dark .bg-\[\#ffe600\] *,
+html.dark .bg-\[\#a6ff00\] *,
+html.dark .bg-\[\#00f0ff\] *,
+html.dark .bg-\[\#ff66c4\] *,
+html.dark .bg-\[\#ff5964\] * {
+  color: #000000 !important;
+}
+
+/* Grid backgrounds in dark mode */
+html.dark .bg-pattern-grid {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
+
+html.dark .bg-pattern-diagonal-grid {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.08) 1.5px, transparent 1.5px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 1.5px, transparent 1.5px);
+}

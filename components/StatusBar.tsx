@@ -14,6 +14,38 @@ const NAV_LINKS = [
 
 export function StatusBar() {
   const [active, setActive] = useState("hero");
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("theme");
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      if (saved === "dark" || (!saved && prefersDark)) {
+        setTheme("dark");
+        document.documentElement.classList.add("dark");
+      } else {
+        setTheme("light");
+        document.documentElement.classList.remove("dark");
+      }
+    } catch {
+      // ignore
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const next = theme === "light" ? "dark" : "light";
+    setTheme(next);
+    try {
+      localStorage.setItem("theme", next);
+    } catch {
+      // ignore
+    }
+    if (next === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  };
 
   useEffect(() => {
     const sections = ["hero", "about", "manifest", "work", "experience", "signals", "contact"];
@@ -63,13 +95,17 @@ export function StatusBar() {
           })}
         </nav>
 
-        {/* Live indicator / Sun icon */}
-        <span
-          title="Online // Ready"
-          className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-black bg-white font-mono text-sm text-black shadow-[2px_2px_0px_#000]"
+        {/* Interactive Theme Toggle Button */}
+        <button
+          onClick={toggleTheme}
+          type="button"
+          aria-label={theme === "light" ? "Switch to dark theme" : "Switch to light theme"}
+          title={theme === "light" ? "Switch to dark theme" : "Switch to light theme"}
+          data-cursor="THEME"
+          className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-black bg-white font-mono text-sm text-black shadow-[2px_2px_0px_#000] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-[#ffe600] hover:shadow-[3px_3px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 cursor-pointer"
         >
-          ☼
-        </span>
+          {theme === "light" ? "☼" : "☾"}
+        </button>
 
         {/* Résumé PDF pill button */}
         <a
