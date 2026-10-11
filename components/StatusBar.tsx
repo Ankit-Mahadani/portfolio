@@ -19,8 +19,7 @@ export function StatusBar() {
   useEffect(() => {
     try {
       const saved = localStorage.getItem("theme");
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      if (saved === "dark" || (!saved && prefersDark)) {
+      if (saved === "dark") {
         setTheme("dark");
         document.documentElement.classList.add("dark");
       } else {
