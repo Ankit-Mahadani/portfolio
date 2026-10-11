@@ -24,7 +24,7 @@ export type CardData = {
   zIndex: number;
 };
 
-// All cards start CLOSED so the canvas is completely empty first!
+// All cards start CLOSED so the canvas is completely clean and empty first!
 const INITIAL_CARDS: CardData[] = [
   {
     id: "about",
@@ -118,15 +118,28 @@ export function InteractiveCanvas() {
   // Cards State
   const [cards, setCards] = useState<CardData[]>(INITIAL_CARDS);
   const [topZ, setTopZ] = useState(25);
-  const [showTip, setShowTip] = useState(false);
   const [isSoundPlaying, setIsSoundPlaying] = useState(false);
-  const [gridTheme, setGridTheme] = useState<"dots" | "grid" | "blueprint">("dots");
+  const [gridTheme, setGridTheme] = useState<"cream" | "grid" | "blueprint" | "dark">("cream");
+
+  // Active Top Bar Dropdown
+  const [openDropdown, setOpenDropdown] = useState<"goto" | "arrange" | "theme" | "sound" | null>(null);
 
   // Dragging Card State
   const [draggingCardId, setDraggingCardId] = useState<string | null>(null);
   const cardDragStartRef = useRef({ mouseX: 0, mouseY: 0, cardX: 0, cardY: 0 });
 
-  // Center on card or on (0, 0)
+  // Dismiss open dropdowns when clicking outside
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (!(e.target as HTMLElement).closest(".top-bar-dropdown")) {
+        setOpenDropdown(null);
+      }
+    };
+    window.addEventListener("mousedown", handleOutsideClick);
+    return () => window.removeEventListener("mousedown", handleOutsideClick);
+  }, []);
+
+  // Center on card or coordinate
   const centerOn = useCallback(
     (targetX: number, targetY: number, newZoom = 0.9) => {
       if (typeof window === "undefined") return;
@@ -161,7 +174,7 @@ export function InteractiveCanvas() {
     setCards((prev) => prev.map((c) => (c.id === id ? { ...c, isOpen: false } : c)));
   };
 
-  // Spawn or toggle card from bottom dock
+  // Spawn or toggle card from bottom dock / Go to menu
   const spawnOrToggleCard = (id: string) => {
     setCards((prev) => {
       const card = prev.find((c) => c.id === id);
@@ -176,7 +189,6 @@ export function InteractiveCanvas() {
           ? (-pan.y + window.innerHeight / 2) / zoom - 140
           : 0;
 
-        // Subtle random offset so sequential cards don't overlap exactly
         const jitterX = (Math.random() - 0.5) * 60;
         const jitterY = (Math.random() - 0.5) * 60;
 
@@ -196,7 +208,7 @@ export function InteractiveCanvas() {
             : c
         );
       } else {
-        // If already open, close it (or bring to front if not currently top)
+        // If already open and top, toggle close; else bring to front
         if (card.zIndex === topZ) {
           return prev.map((c) => (c.id === id ? { ...c, isOpen: false } : c));
         } else {
@@ -213,7 +225,7 @@ export function InteractiveCanvas() {
     (id: string) => {
       const card = cards.find((c) => c.id === id);
       if (!card) return;
-      bringToFront(id);
+      spawnOrToggleCard(id);
       centerOn(card.x + card.width / 2, card.y + 100, 1.0);
     },
     [cards, centerOn]
@@ -234,7 +246,6 @@ export function InteractiveCanvas() {
               : { ...c, isOpen: false }
           )
         );
-        setShowTip(true);
       }
     }
   }, [requestedCard]);
@@ -309,25 +320,41 @@ export function InteractiveCanvas() {
     };
   }, [isPanning, draggingCardId, zoom]);
 
-  // Top Toolbar actions
+  // Top Toolbar actions: Fit All
   const handleFitAll = () => {
     if (typeof window === "undefined") return;
     setPan({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
     setZoom(0.85);
+    setOpenDropdown(null);
   };
 
+  // Minimise all
   const handleMinimiseAll = () => {
     const openCards = cards.filter((c) => c.isOpen);
     const allMin = openCards.every((c) => c.isMinimized);
     setCards((prev) =>
       prev.map((c) => (c.isOpen ? { ...c, isMinimized: !allMin } : c))
     );
+    setOpenDropdown(null);
   };
 
-  const handleClearAll = () => {
-    setCards((prev) => prev.map((c) => ({ ...c, isOpen: false })));
+  // Randomize cards positions
+  const handleRandomize = () => {
+    setCards((prev) =>
+      prev.map((c) =>
+        c.isOpen
+          ? {
+              ...c,
+              x: Math.round((Math.random() - 0.5) * 800),
+              y: Math.round((Math.random() - 0.5) * 600),
+            }
+          : c
+      )
+    );
+    setOpenDropdown(null);
   };
 
+  // Arrange: Grid
   const handleArrangeGrid = () => {
     const openCards = cards.filter((c) => c.isOpen);
     if (openCards.length === 0) return;
@@ -351,8 +378,59 @@ export function InteractiveCanvas() {
         };
       })
     );
+    setOpenDropdown(null);
   };
 
+  // Arrange: Radial Orbit
+  const handleArrangeOrbit = () => {
+    const openCards = cards.filter((c) => c.isOpen);
+    if (openCards.length === 0) return;
+
+    const total = openCards.length;
+    let index = 0;
+    setCards((prev) =>
+      prev.map((c) => {
+        if (!c.isOpen) return c;
+        const angle = (index / total) * 2 * Math.PI - Math.PI / 2;
+        index++;
+        return {
+          ...c,
+          x: Math.round(Math.cos(angle) * 380 - c.width / 2),
+          y: Math.round(Math.sin(angle) * 280 - 100),
+          isMinimized: false,
+        };
+      })
+    );
+    setOpenDropdown(null);
+  };
+
+  // Arrange: Deal All Cards
+  const handleDealAll = () => {
+    const cols = 3;
+    const spacingX = 400;
+    const spacingY = 320;
+
+    let nextZ = topZ;
+    setCards((prev) =>
+      prev.map((c, idx) => {
+        nextZ++;
+        const cardX = (idx % cols - 1) * spacingX - 30;
+        const cardY = (Math.floor(idx / cols) - 1) * spacingY;
+        return {
+          ...c,
+          isOpen: true,
+          isMinimized: false,
+          x: cardX,
+          y: cardY,
+          zIndex: nextZ,
+        };
+      })
+    );
+    setTopZ(nextZ);
+    handleFitAll();
+  };
+
+  // Toggle Sound
   const toggleSound = () => {
     const s = lofiAudio.toggle();
     setIsSoundPlaying(s);
@@ -360,89 +438,259 @@ export function InteractiveCanvas() {
 
   const anyCardsOpen = cards.some((c) => c.isOpen);
 
+  // Background style based on theme
+  const getCanvasBg = () => {
+    switch (gridTheme) {
+      case "grid":
+        return {
+          bgColor: "bg-[#faf8f5]",
+          bgImage:
+            "linear-gradient(to right, rgba(0, 0, 0, 0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(0, 0, 0, 0.08) 1px, transparent 1px)",
+          bgSize: `${36 * zoom}px ${36 * zoom}px`,
+          opacity: "opacity-60",
+        };
+      case "blueprint":
+        return {
+          bgColor: "bg-[#101b2b]",
+          bgImage:
+            "linear-gradient(to right, rgba(0, 240, 255, 0.12) 1px, transparent 1px), linear-gradient(to bottom, rgba(0, 240, 255, 0.12) 1px, transparent 1px)",
+          bgSize: `${40 * zoom}px ${40 * zoom}px`,
+          opacity: "opacity-85",
+        };
+      case "dark":
+        return {
+          bgColor: "bg-[#141416]",
+          bgImage: "radial-gradient(rgba(255, 255, 255, 0.15) 1.5px, transparent 1.5px)",
+          bgSize: `${32 * zoom}px ${32 * zoom}px`,
+          opacity: "opacity-60",
+        };
+      default:
+        // Warm cream dots (reference default)
+        return {
+          bgColor: "bg-[#f6f5f0]",
+          bgImage: "radial-gradient(rgba(0, 0, 0, 0.15) 1.5px, transparent 1.5px)",
+          bgSize: `${32 * zoom}px ${32 * zoom}px`,
+          opacity: "opacity-60",
+        };
+    }
+  };
+
+  const currentBg = getCanvasBg();
+
   return (
     <div
       onMouseDown={handleCanvasMouseDown}
-      className={`fixed inset-0 overflow-hidden select-none bg-[#f6f5f0] ${
+      className={`fixed inset-0 overflow-hidden select-none ${currentBg.bgColor} ${
         isPanning ? "cursor-grabbing" : "cursor-grab"
       }`}
     >
       {/* Interactive Background Grid */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-60"
+        className={`pointer-events-none absolute inset-0 ${currentBg.opacity}`}
         style={{
-          backgroundImage:
-            gridTheme === "dots"
-              ? "radial-gradient(rgba(0, 0, 0, 0.14) 1.5px, transparent 1.5px)"
-              : "linear-gradient(to right, rgba(0, 0, 0, 0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(0, 0, 0, 0.08) 1px, transparent 1px)",
-          backgroundSize: `${32 * zoom}px ${32 * zoom}px`,
+          backgroundImage: currentBg.bgImage,
+          backgroundSize: currentBg.bgSize,
           backgroundPosition: `${pan.x}px ${pan.y}px`,
         }}
       />
 
-      {/* TOP FLOATING CONTROLS DOCK */}
+      {/* TOP FLOATING CONTROLS DOCK (Matching Reference Image) */}
       <header className="fixed top-4 inset-x-0 z-50 flex justify-center px-4 pointer-events-none">
-        <div className="pointer-events-auto flex items-center gap-1 sm:gap-2 rounded-2xl border-2 border-black bg-white/95 px-3 py-1.5 shadow-[4px_4px_0px_#000] backdrop-blur-md">
+        <div className="top-bar-dropdown pointer-events-auto flex items-center rounded-full border border-black/15 bg-white/95 px-4 py-1.5 shadow-[0_4px_24px_rgba(0,0,0,0.06)] backdrop-blur-md">
+          {/* 1. Fit all */}
           <button
             onClick={handleFitAll}
-            className="rounded-lg px-2.5 py-1 font-mono text-[11px] font-bold text-black hover:bg-black/5 active:bg-black/10 transition-colors"
+            className="rounded-full px-3 py-1 font-sans text-[13px] font-medium text-black/85 hover:text-black hover:bg-black/5 transition-colors"
           >
             Fit all
           </button>
 
-          {anyCardsOpen && (
-            <>
-              <button
-                onClick={handleMinimiseAll}
-                className="rounded-lg px-2.5 py-1 font-mono text-[11px] font-bold text-black hover:bg-black/5 active:bg-black/10 transition-colors hidden sm:block"
-              >
-                Minimise all
-              </button>
-              <button
-                onClick={handleArrangeGrid}
-                className="rounded-lg px-2.5 py-1 font-mono text-[11px] font-bold text-black hover:bg-black/5 transition-colors"
-              >
-                Arrange
-              </button>
-              <button
-                onClick={handleClearAll}
-                className="rounded-lg px-2.5 py-1 font-mono text-[11px] font-bold text-red-600 hover:bg-red-50 transition-colors"
-                title="Clear all cards from canvas"
-              >
-                Clear
-              </button>
-              <div className="h-4 w-px bg-black/15" />
-            </>
-          )}
-
-          {/* Theme switcher */}
+          {/* 2. Minimise all */}
           <button
-            onClick={() => setGridTheme((t) => (t === "dots" ? "grid" : "dots"))}
-            className="rounded-lg px-2 py-1 font-mono text-[11px] font-bold text-black hover:bg-black/5"
-            title="Toggle canvas grid"
+            onClick={handleMinimiseAll}
+            className="rounded-full px-3 py-1 font-sans text-[13px] font-medium text-black/85 hover:text-black hover:bg-black/5 transition-colors"
           >
-            ☼ Theme
+            Minimise all
           </button>
 
-          {/* Back to main site */}
+          {/* 3. Go to ▾ Dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => setOpenDropdown((cur) => (cur === "goto" ? null : "goto"))}
+              className={`rounded-full px-3 py-1 font-sans text-[13px] font-medium transition-colors flex items-center gap-1.5 ${
+                openDropdown === "goto" ? "bg-black/10 text-black" : "text-black/85 hover:text-black hover:bg-black/5"
+              }`}
+            >
+              <span>Go to</span>
+              <span className="text-[10px] text-black/50">▾</span>
+            </button>
+
+            {openDropdown === "goto" && (
+              <div className="absolute left-0 top-full mt-2 w-48 rounded-2xl border border-black/15 bg-white p-1.5 shadow-[0_12px_32px_rgba(0,0,0,0.12)] z-[100] flex flex-col gap-0.5">
+                {cards.map((c) => (
+                  <button
+                    key={c.id}
+                    onClick={() => {
+                      focusCard(c.id);
+                      setOpenDropdown(null);
+                    }}
+                    className="flex items-center justify-between rounded-xl px-3 py-1.5 text-xs font-medium text-black/80 hover:bg-black/5 hover:text-black text-left transition-colors"
+                  >
+                    <span>{c.title}</span>
+                    {c.isOpen && <span className="h-1.5 w-1.5 rounded-full bg-black/40" />}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* 4. Random */}
+          <button
+            onClick={handleRandomize}
+            className="rounded-full px-3 py-1 font-sans text-[13px] font-medium text-black/85 hover:text-black hover:bg-black/5 transition-colors"
+          >
+            Random
+          </button>
+
+          {/* 5. Arrange ▾ Dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => setOpenDropdown((cur) => (cur === "arrange" ? null : "arrange"))}
+              className={`rounded-full px-3 py-1 font-sans text-[13px] font-medium transition-colors flex items-center gap-1.5 ${
+                openDropdown === "arrange" ? "bg-black/10 text-black" : "text-black/85 hover:text-black hover:bg-black/5"
+              }`}
+            >
+              <span>Arrange</span>
+              <span className="text-[10px] text-black/50">▾</span>
+            </button>
+
+            {openDropdown === "arrange" && (
+              <div className="absolute left-0 top-full mt-2 w-44 rounded-2xl border border-black/15 bg-white p-1.5 shadow-[0_12px_32px_rgba(0,0,0,0.12)] z-[100] flex flex-col gap-0.5">
+                <button
+                  onClick={handleArrangeGrid}
+                  className="rounded-xl px-3 py-1.5 text-xs font-medium text-black/80 hover:bg-black/5 hover:text-black text-left transition-colors"
+                >
+                  ▦ Grid Layout
+                </button>
+                <button
+                  onClick={handleArrangeOrbit}
+                  className="rounded-xl px-3 py-1.5 text-xs font-medium text-black/80 hover:bg-black/5 hover:text-black text-left transition-colors"
+                >
+                  ⭕ Radial Orbit
+                </button>
+                <button
+                  onClick={handleDealAll}
+                  className="rounded-xl px-3 py-1.5 text-xs font-medium text-black/80 hover:bg-black/5 hover:text-black text-left transition-colors"
+                >
+                  🎲 Deal All Cards
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Hairline Divider Rule */}
+          <div className="h-4 w-px bg-black/15 mx-1" />
+
+          {/* 6. ☼ Theme ▾ Dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => setOpenDropdown((cur) => (cur === "theme" ? null : "theme"))}
+              className={`rounded-full px-3 py-1 font-sans text-[13px] font-medium transition-colors flex items-center gap-1.5 ${
+                openDropdown === "theme" ? "bg-black/10 text-black" : "text-black/85 hover:text-black hover:bg-black/5"
+              }`}
+            >
+              <span>☼ Theme</span>
+              <span className="text-[10px] text-black/50">▾</span>
+            </button>
+
+            {openDropdown === "theme" && (
+              <div className="absolute left-0 top-full mt-2 w-40 rounded-2xl border border-black/15 bg-white p-1.5 shadow-[0_12px_32px_rgba(0,0,0,0.12)] z-[100] flex flex-col gap-0.5">
+                <button
+                  onClick={() => {
+                    setGridTheme("cream");
+                    setOpenDropdown(null);
+                  }}
+                  className={`rounded-xl px-3 py-1.5 text-xs font-medium text-left transition-colors ${
+                    gridTheme === "cream" ? "bg-black/10 font-bold" : "text-black/80 hover:bg-black/5"
+                  }`}
+                >
+                  ⚪ Warm Cream
+                </button>
+                <button
+                  onClick={() => {
+                    setGridTheme("grid");
+                    setOpenDropdown(null);
+                  }}
+                  className={`rounded-xl px-3 py-1.5 text-xs font-medium text-left transition-colors ${
+                    gridTheme === "grid" ? "bg-black/10 font-bold" : "text-black/80 hover:bg-black/5"
+                  }`}
+                >
+                  ▦ Technical Grid
+                </button>
+                <button
+                  onClick={() => {
+                    setGridTheme("blueprint");
+                    setOpenDropdown(null);
+                  }}
+                  className={`rounded-xl px-3 py-1.5 text-xs font-medium text-left transition-colors ${
+                    gridTheme === "blueprint" ? "bg-black/10 font-bold" : "text-black/80 hover:bg-black/5"
+                  }`}
+                >
+                  🔷 Blueprint Blue
+                </button>
+                <button
+                  onClick={() => {
+                    setGridTheme("dark");
+                    setOpenDropdown(null);
+                  }}
+                  className={`rounded-xl px-3 py-1.5 text-xs font-medium text-left transition-colors ${
+                    gridTheme === "dark" ? "bg-black/10 font-bold" : "text-black/80 hover:bg-black/5"
+                  }`}
+                >
+                  ⬛ Midnight Dark
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* 7. The site */}
           <Link
             href="/"
-            className="rounded-lg border-2 border-black bg-[#ffe600] px-3 py-1 font-mono text-[11px] font-black uppercase text-black shadow-[1px_1px_0px_#000] hover:bg-yellow-400 transition-colors"
+            className="rounded-full px-3 py-1 font-sans text-[13px] font-medium text-black/85 hover:text-black hover:bg-black/5 transition-colors"
           >
-            The site &rarr;
+            The site
           </Link>
 
-          {/* Sound / Lofi Toggle */}
-          <button
-            onClick={toggleSound}
-            className={`rounded-lg px-2 py-1 font-mono text-[11px] font-bold transition-colors ${
-              isSoundPlaying
-                ? "bg-[#a6ff00] text-black border border-black"
-                : "text-black/70 hover:bg-black/5"
-            }`}
-          >
-            {isSoundPlaying ? "🔊 Sound On" : "🔇 Sound"}
-          </button>
+          {/* 8. 🔈 Sound ▾ Dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => setOpenDropdown((cur) => (cur === "sound" ? null : "sound"))}
+              className={`rounded-full px-3 py-1 font-sans text-[13px] font-medium transition-colors flex items-center gap-1.5 ${
+                openDropdown === "sound" || isSoundPlaying
+                  ? "bg-black/10 text-black font-semibold"
+                  : "text-black/85 hover:text-black hover:bg-black/5"
+              }`}
+            >
+              <span>{isSoundPlaying ? "🔊 Sound" : "🔈 Sound"}</span>
+              <span className="text-[10px] text-black/50">▾</span>
+            </button>
+
+            {openDropdown === "sound" && (
+              <div className="absolute right-0 top-full mt-2 w-48 rounded-2xl border border-black/15 bg-white p-2 shadow-[0_12px_32px_rgba(0,0,0,0.12)] z-[100] flex flex-col gap-1.5">
+                <div className="px-2 py-1 text-[11px] font-mono text-black/50 uppercase">
+                  Generative Lofi Synth
+                </div>
+                <button
+                  onClick={toggleSound}
+                  className={`w-full rounded-xl px-3 py-2 text-xs font-bold text-center border-2 border-black transition-all shadow-[2px_2px_0px_#000] ${
+                    isSoundPlaying ? "bg-[#a6ff00] text-black" : "bg-[#ffe600] text-black"
+                  }`}
+                >
+                  {isSoundPlaying ? "⏸️ Pause Music" : "▶️ Play Ambient Lofi"}
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </header>
 
@@ -549,30 +797,6 @@ export function InteractiveCanvas() {
               )}
             </div>
           ))}
-
-        {/* FLOATING TIP CARD */}
-        {showTip && anyCardsOpen && (
-          <div
-            className="absolute pointer-events-auto rounded-xl border-3 border-black bg-white p-4 shadow-[6px_6px_0px_#000] select-none"
-            style={{ left: -140, top: 440, width: 340, zIndex: 30 }}
-          >
-            <div className="flex items-center justify-between mb-2">
-              <span className="rounded border border-black bg-[#ffe600] px-2 py-0.5 font-mono text-[10px] font-black uppercase text-black">
-                TIP
-              </span>
-              <button
-                onClick={() => setShowTip(false)}
-                className="font-mono text-[10px] font-bold text-black/50 hover:text-black underline"
-              >
-                Dismiss
-              </button>
-            </div>
-            <h4 className="font-display text-sm font-black text-black">Drag &amp; Move</h4>
-            <p className="mt-1 font-sans text-xs text-black/75 leading-relaxed">
-              Drag any card by its header to position it. Pan the canvas by dragging the background!
-            </p>
-          </div>
-        )}
       </div>
 
       {/* BOTTOM FLOATING DOCK TOOLBAR */}
