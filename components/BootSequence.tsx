@@ -3,96 +3,119 @@
 import { useEffect, useState } from "react";
 import { reducedMotionNow } from "@/lib/motion";
 
-const KEY = "run-rail-booted";
-const MAX_MS = 800;
+const GREETINGS = [
+  { text: "Hello", lang: "English" },
+  { text: "नमस्ते", lang: "Hindi" },
+  { text: "নমস্কার", lang: "Bengali" },
+  { text: "こんにちは", lang: "Japanese" },
+  { text: "안녕하세요", lang: "Korean" },
+  { text: "你好", lang: "Chinese" },
+  { text: "Bonjour", lang: "French" },
+  { text: "Hola", lang: "Spanish" },
+  { text: "Ciao", lang: "Italian" },
+  { text: "Olá", lang: "Portuguese" },
+];
+
+const STEP_INTERVAL_MS = 190;
 
 export function BootSequence() {
-  const [show, setShow] = useState(false);
-  const [count, setCount] = useState(0);
-  const [done, setDone] = useState(false);
+  const [index, setIndex] = useState(0);
+  const [isExiting, setIsExiting] = useState(false);
+  const [isDone, setIsDone] = useState(false);
 
   useEffect(() => {
-    let alreadyBooted = true;
-    try {
-      alreadyBooted = sessionStorage.getItem(KEY) === "1";
-    } catch {
-      alreadyBooted = false;
-    }
-
-    if (alreadyBooted || reducedMotionNow()) {
-      setDone(true);
+    if (reducedMotionNow()) {
+      setIsDone(true);
       return;
     }
 
-    setShow(true);
-    const start = performance.now();
-    let raf = 0;
+    // Lock page scroll during the intro
+    document.body.style.overflow = "hidden";
 
-    const tick = (now: number) => {
-      const elapsed = Math.min(now - start, MAX_MS);
-      setCount(Math.round((elapsed / MAX_MS) * 100));
-      if (elapsed >= MAX_MS) {
-        finish();
-        return;
-      }
-      raf = requestAnimationFrame(tick);
-    };
-
-    const finish = () => {
-      try {
-        sessionStorage.setItem(KEY, "1");
-      } catch {
-        /* harmless */
-      }
-      setCount(100);
-      window.setTimeout(() => setDone(true), 200);
-    };
-
-    const skip = () => {
-      cancelAnimationFrame(raf);
-      finish();
-    };
-
-    window.addEventListener("keydown", skip, { once: true });
-    window.addEventListener("pointerdown", skip, { once: true });
-    raf = requestAnimationFrame(tick);
+    // Cycle through greetings
+    const interval = setInterval(() => {
+      setIndex((prev) => {
+        if (prev < GREETINGS.length - 1) {
+          return prev + 1;
+        } else {
+          clearInterval(interval);
+          // Wait slightly on the last word, then slide curtain up
+          setTimeout(() => {
+            setIsExiting(true);
+          }, 240);
+          return prev;
+        }
+      });
+    }, STEP_INTERVAL_MS);
 
     return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("keydown", skip);
-      window.removeEventListener("pointerdown", skip);
+      clearInterval(interval);
+      document.body.style.overflow = "";
     };
   }, []);
 
-  if (!show || done) return null;
+  // Unlock scroll when exit animation completes
+  const handleTransitionEnd = () => {
+    if (isExiting) {
+      document.body.style.overflow = "";
+      setIsDone(true);
+    }
+  };
+
+  if (isDone) return null;
+
+  const current = GREETINGS[index]!;
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-[#faf8f5] p-4 transition-opacity duration-200"
-      style={{ opacity: count >= 100 ? 0 : 1 }}
-      role="status"
-      aria-label="Loading"
+      onTransitionEnd={handleTransitionEnd}
+      aria-hidden="true"
+      className="fixed inset-0 z-[999999] flex flex-col justify-between bg-[#111113] p-8 sm:p-12 text-white select-none pointer-events-auto"
+      style={{
+        transform: isExiting ? "translateY(-100%)" : "translateY(0%)",
+        transition: "transform 0.85s cubic-bezier(0.77, 0, 0.175, 1)",
+        willChange: "transform",
+      }}
     >
-      <div className="relative w-full max-w-sm border-4 border-black bg-white p-6 sm:p-8 shadow-[8px_8px_0px_#000] text-center">
-        <span className="absolute -top-3.5 left-4 -rotate-2 border-2 border-black bg-[#ff66c4] px-2.5 py-0.5 font-mono text-[10px] font-black uppercase text-black shadow-[2px_2px_0px_#000]">
-          INIT // KERNEL
-        </span>
+      {/* Background Dot Grid */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-25"
+        style={{
+          backgroundImage: "radial-gradient(rgba(255, 255, 255, 0.2) 1.5px, transparent 1.5px)",
+          backgroundSize: "28px 28px",
+        }}
+      />
 
-        <h3 className="font-mono text-sm font-black uppercase tracking-wider text-black mt-1">
-          BOOTING ANKIT.DEV
-        </h3>
+      {/* Top Header Label */}
+      <div className="relative z-10 flex items-center justify-between font-mono text-[11px] font-bold uppercase tracking-widest text-white/50">
+        <div className="flex items-center gap-2">
+          <span className="h-2 w-2 rounded-full bg-[#ffe600] animate-ping" />
+          <span>PORTFOLIO // 2026</span>
+        </div>
+        <span>ANKIT MAHADANI</span>
+      </div>
 
-        <div className="mt-4 h-6 w-full border-3 border-black bg-[#faf8f5] p-0.5 shadow-[2px_2px_0px_#000]">
-          <div
-            className="h-full bg-[#ffe600] border-r-2 border-black transition-all duration-75"
-            style={{ width: `${count}%` }}
-          />
+      {/* Center Multilingual Greeting Typography */}
+      <div className="relative z-10 flex flex-col items-center justify-center my-auto">
+        <div className="flex items-center justify-center">
+          <span className="h-3 w-3 sm:h-4 sm:w-4 rounded-full bg-[#ffe600] mr-4 sm:mr-6 animate-pulse" />
+          <h1 className="font-display text-5xl sm:text-7xl md:text-8xl font-black text-white tracking-tight leading-none min-h-[1.2em] flex items-center">
+            {current.text}
+          </h1>
         </div>
 
-        <div className="mt-3 flex items-center justify-between font-mono text-xs font-black text-black">
-          <span>LOADING MODULES</span>
-          <span className="tabular-nums">{count}%</span>
+        {/* Language Subtitle */}
+        <div className="mt-4 flex items-center gap-2">
+          <span className="rounded-full border border-white/20 bg-white/10 px-3 py-0.5 font-mono text-xs font-bold uppercase tracking-wider text-white/70">
+            {current.lang}
+          </span>
         </div>
+      </div>
+
+      {/* Bottom Footer Details */}
+      <div className="relative z-10 flex items-center justify-between font-mono text-[11px] font-semibold text-white/40 uppercase">
+        <span>AI &amp; AUTOMATION SYSTEMS</span>
+        <span>LOADING EXPERIENCE...</span>
       </div>
     </div>
   );
