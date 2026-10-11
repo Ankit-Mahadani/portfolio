@@ -24,15 +24,16 @@ export type CardData = {
   zIndex: number;
 };
 
+// All cards start CLOSED so the canvas is completely empty first!
 const INITIAL_CARDS: CardData[] = [
   {
     id: "about",
     title: "About",
     headerColor: "bg-[#ffe600]",
-    x: 420,
-    y: -80,
+    x: 180,
+    y: -100,
     width: 360,
-    isOpen: true,
+    isOpen: false,
     isMinimized: false,
     zIndex: 10,
   },
@@ -43,7 +44,7 @@ const INITIAL_CARDS: CardData[] = [
     x: -360,
     y: -100,
     width: 380,
-    isOpen: true,
+    isOpen: false,
     isMinimized: false,
     zIndex: 11,
   },
@@ -51,10 +52,10 @@ const INITIAL_CARDS: CardData[] = [
     id: "toolbox",
     title: "Toolbox",
     headerColor: "bg-[#00f0ff]",
-    x: -80,
-    y: -360,
+    x: -160,
+    y: -260,
     width: 440,
-    isOpen: true,
+    isOpen: false,
     isMinimized: false,
     zIndex: 9,
   },
@@ -62,10 +63,10 @@ const INITIAL_CARDS: CardData[] = [
     id: "arcade",
     title: "Arcade",
     headerColor: "bg-[#a6ff00]",
-    x: -360,
-    y: 200,
+    x: -190,
+    y: -120,
     width: 380,
-    isOpen: true,
+    isOpen: false,
     isMinimized: false,
     zIndex: 15,
   },
@@ -76,7 +77,7 @@ const INITIAL_CARDS: CardData[] = [
     x: 80,
     y: -140,
     width: 320,
-    isOpen: true,
+    isOpen: false,
     isMinimized: false,
     zIndex: 12,
   },
@@ -84,10 +85,10 @@ const INITIAL_CARDS: CardData[] = [
     id: "contributions",
     title: "Contributions",
     headerColor: "bg-[#86efac]",
-    x: 60,
-    y: 200,
+    x: -190,
+    y: 120,
     width: 380,
-    isOpen: true,
+    isOpen: false,
     isMinimized: false,
     zIndex: 8,
   },
@@ -95,10 +96,10 @@ const INITIAL_CARDS: CardData[] = [
     id: "stats",
     title: "Stats",
     headerColor: "bg-[#c084fc]",
-    x: 460,
-    y: 220,
+    x: 160,
+    y: 120,
     width: 340,
-    isOpen: true,
+    isOpen: false,
     isMinimized: false,
     zIndex: 7,
   },
@@ -117,7 +118,7 @@ export function InteractiveCanvas() {
   // Cards State
   const [cards, setCards] = useState<CardData[]>(INITIAL_CARDS);
   const [topZ, setTopZ] = useState(25);
-  const [showTip, setShowTip] = useState(true);
+  const [showTip, setShowTip] = useState(false);
   const [isSoundPlaying, setIsSoundPlaying] = useState(false);
   const [gridTheme, setGridTheme] = useState<"dots" | "grid" | "blueprint">("dots");
 
@@ -155,16 +156,54 @@ export function InteractiveCanvas() {
     );
   };
 
-  // Toggle card open
-  const toggleOpen = (id: string) => {
+  // Close card
+  const closeCard = (id: string) => {
+    setCards((prev) => prev.map((c) => (c.id === id ? { ...c, isOpen: false } : c)));
+  };
+
+  // Spawn or toggle card from bottom dock
+  const spawnOrToggleCard = (id: string) => {
     setCards((prev) => {
       const card = prev.find((c) => c.id === id);
       if (!card) return prev;
+
       if (!card.isOpen) {
-        bringToFront(id);
-        return prev.map((c) => (c.id === id ? { ...c, isOpen: true, isMinimized: false } : c));
+        // Calculate viewport center in canvas coordinates so card spawns right in front of the user!
+        const viewCenterX = typeof window !== "undefined"
+          ? (-pan.x + window.innerWidth / 2) / zoom - card.width / 2
+          : 0;
+        const viewCenterY = typeof window !== "undefined"
+          ? (-pan.y + window.innerHeight / 2) / zoom - 140
+          : 0;
+
+        // Subtle random offset so sequential cards don't overlap exactly
+        const jitterX = (Math.random() - 0.5) * 60;
+        const jitterY = (Math.random() - 0.5) * 60;
+
+        const nextZ = topZ + 1;
+        setTopZ(nextZ);
+
+        return prev.map((c) =>
+          c.id === id
+            ? {
+                ...c,
+                isOpen: true,
+                isMinimized: false,
+                x: Math.round(viewCenterX + jitterX),
+                y: Math.round(viewCenterY + jitterY),
+                zIndex: nextZ,
+              }
+            : c
+        );
       } else {
-        return prev.map((c) => (c.id === id ? { ...c, isOpen: false } : c));
+        // If already open, close it (or bring to front if not currently top)
+        if (card.zIndex === topZ) {
+          return prev.map((c) => (c.id === id ? { ...c, isOpen: false } : c));
+        } else {
+          const nextZ = topZ + 1;
+          setTopZ(nextZ);
+          return prev.map((c) => (c.id === id ? { ...c, zIndex: nextZ, isMinimized: false } : c));
+        }
       }
     });
   };
@@ -180,17 +219,22 @@ export function InteractiveCanvas() {
     [cards, centerOn]
   );
 
-  // Initial load: handle requested card parameter (e.g. ?card=arcade)
+  // Initial load: if user specified ?card=arcade, only open the arcade card centered!
   useEffect(() => {
     if (typeof window !== "undefined") {
       const cx = window.innerWidth / 2;
       const cy = window.innerHeight / 2;
+      setPan({ x: cx, y: cy });
+
       if (requestedCard === "arcade") {
-        setPan({ x: cx - -170 * 0.9, y: cy - 250 * 0.9 });
-        setZoom(0.95);
-        bringToFront("arcade");
-      } else {
-        setPan({ x: cx, y: cy });
+        setCards((prev) =>
+          prev.map((c) =>
+            c.id === "arcade"
+              ? { ...c, isOpen: true, isMinimized: false, x: -190, y: -140, zIndex: 30 }
+              : { ...c, isOpen: false }
+          )
+        );
+        setShowTip(true);
       }
     }
   }, [requestedCard]);
@@ -209,7 +253,6 @@ export function InteractiveCanvas() {
 
   // Canvas Pan Handlers
   const handleCanvasMouseDown = (e: React.MouseEvent) => {
-    // Only pan if clicking canvas background
     if ((e.target as HTMLElement).closest(".canvas-card")) return;
     setIsPanning(true);
     panStartRef.current = { x: e.clientX - pan.x, y: e.clientY - pan.y };
@@ -270,35 +313,43 @@ export function InteractiveCanvas() {
   const handleFitAll = () => {
     if (typeof window === "undefined") return;
     setPan({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
-    setZoom(0.75);
+    setZoom(0.85);
   };
 
   const handleMinimiseAll = () => {
-    const allMin = cards.every((c) => c.isMinimized);
-    setCards((prev) => prev.map((c) => ({ ...c, isMinimized: !allMin })));
-  };
-
-  const handleRandomize = () => {
+    const openCards = cards.filter((c) => c.isOpen);
+    const allMin = openCards.every((c) => c.isMinimized);
     setCards((prev) =>
-      prev.map((c) => ({
-        ...c,
-        x: Math.round((Math.random() - 0.5) * 800),
-        y: Math.round((Math.random() - 0.5) * 600),
-      }))
+      prev.map((c) => (c.isOpen ? { ...c, isMinimized: !allMin } : c))
     );
   };
 
+  const handleClearAll = () => {
+    setCards((prev) => prev.map((c) => ({ ...c, isOpen: false })));
+  };
+
   const handleArrangeGrid = () => {
-    const cols = 3;
-    const spacingX = 420;
+    const openCards = cards.filter((c) => c.isOpen);
+    if (openCards.length === 0) return;
+
+    const cols = Math.min(3, openCards.length);
+    const spacingX = 400;
     const spacingY = 320;
+
+    let index = 0;
     setCards((prev) =>
-      prev.map((c, i) => ({
-        ...c,
-        x: (i % cols - 1) * spacingX - 60,
-        y: Math.floor(i / cols - 1) * spacingY,
-        isMinimized: false,
-      }))
+      prev.map((c) => {
+        if (!c.isOpen) return c;
+        const cardX = (index % cols - (cols - 1) / 2) * spacingX;
+        const cardY = (Math.floor(index / cols) - 0.5) * spacingY;
+        index++;
+        return {
+          ...c,
+          x: Math.round(cardX),
+          y: Math.round(cardY),
+          isMinimized: false,
+        };
+      })
     );
   };
 
@@ -306,6 +357,8 @@ export function InteractiveCanvas() {
     const s = lofiAudio.toggle();
     setIsSoundPlaying(s);
   };
+
+  const anyCardsOpen = cards.some((c) => c.isOpen);
 
   return (
     <div
@@ -336,48 +389,31 @@ export function InteractiveCanvas() {
           >
             Fit all
           </button>
-          <button
-            onClick={handleMinimiseAll}
-            className="rounded-lg px-2.5 py-1 font-mono text-[11px] font-bold text-black hover:bg-black/5 active:bg-black/10 transition-colors hidden sm:block"
-          >
-            Minimise all
-          </button>
 
-          <div className="h-4 w-px bg-black/15" />
-
-          {/* Go To Selector */}
-          <select
-            onChange={(e) => {
-              if (e.target.value) focusCard(e.target.value);
-            }}
-            defaultValue=""
-            className="rounded-lg border border-black/20 bg-transparent px-2 py-0.5 font-mono text-[11px] font-bold text-black outline-none cursor-pointer"
-          >
-            <option value="" disabled>
-              Go to...
-            </option>
-            {cards.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.title}
-              </option>
-            ))}
-          </select>
-
-          <button
-            onClick={handleRandomize}
-            className="rounded-lg px-2.5 py-1 font-mono text-[11px] font-bold text-black hover:bg-black/5 transition-colors hidden md:block"
-          >
-            Random
-          </button>
-
-          <button
-            onClick={handleArrangeGrid}
-            className="rounded-lg px-2.5 py-1 font-mono text-[11px] font-bold text-black hover:bg-black/5 transition-colors"
-          >
-            Arrange
-          </button>
-
-          <div className="h-4 w-px bg-black/15" />
+          {anyCardsOpen && (
+            <>
+              <button
+                onClick={handleMinimiseAll}
+                className="rounded-lg px-2.5 py-1 font-mono text-[11px] font-bold text-black hover:bg-black/5 active:bg-black/10 transition-colors hidden sm:block"
+              >
+                Minimise all
+              </button>
+              <button
+                onClick={handleArrangeGrid}
+                className="rounded-lg px-2.5 py-1 font-mono text-[11px] font-bold text-black hover:bg-black/5 transition-colors"
+              >
+                Arrange
+              </button>
+              <button
+                onClick={handleClearAll}
+                className="rounded-lg px-2.5 py-1 font-mono text-[11px] font-bold text-red-600 hover:bg-red-50 transition-colors"
+                title="Clear all cards from canvas"
+              >
+                Clear
+              </button>
+              <div className="h-4 w-px bg-black/15" />
+            </>
+          )}
 
           {/* Theme switcher */}
           <button
@@ -435,9 +471,18 @@ export function InteractiveCanvas() {
           <span className="mt-1 font-mono text-[10px] font-semibold text-black/40 uppercase tracking-widest">
             DURGAPUR, INDIA
           </span>
+
+          {/* Clean Invitation Hint when canvas is empty */}
+          {!anyCardsOpen && (
+            <div className="mt-6 flex flex-col items-center gap-2">
+              <span className="rounded-full border-2 border-black bg-white px-4 py-1.5 font-mono text-xs font-bold text-black shadow-[3px_3px_0px_#000] animate-bounce">
+                👇 Click any tab in the bottom dock to insert cards
+              </span>
+            </div>
+          )}
         </div>
 
-        {/* DRAGGABLE CARDS */}
+        {/* DRAGGABLE CARDS (Only rendered when open!) */}
         {cards
           .filter((c) => c.isOpen)
           .map((card) => (
@@ -480,10 +525,10 @@ export function InteractiveCanvas() {
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      toggleOpen(card.id);
+                      closeCard(card.id);
                     }}
                     className="flex h-5 w-5 items-center justify-center rounded border border-black bg-white font-mono text-xs font-bold text-black hover:bg-[#ff5964] hover:text-white"
-                    title="Close"
+                    title="Remove from canvas"
                   >
                     ✕
                   </button>
@@ -506,7 +551,7 @@ export function InteractiveCanvas() {
           ))}
 
         {/* FLOATING TIP CARD */}
-        {showTip && (
+        {showTip && anyCardsOpen && (
           <div
             className="absolute pointer-events-auto rounded-xl border-3 border-black bg-white p-4 shadow-[6px_6px_0px_#000] select-none"
             style={{ left: -140, top: 440, width: 340, zIndex: 30 }}
@@ -522,9 +567,9 @@ export function InteractiveCanvas() {
                 Dismiss
               </button>
             </div>
-            <h4 className="font-display text-sm font-black text-black">Getting crowded?</h4>
+            <h4 className="font-display text-sm font-black text-black">Drag &amp; Move</h4>
             <p className="mt-1 font-sans text-xs text-black/75 leading-relaxed">
-              Drag any card by its header. Pan with your mouse, zoom with your wheel, or try Arrange in the top bar!
+              Drag any card by its header to position it. Pan the canvas by dragging the background!
             </p>
           </div>
         )}
@@ -535,80 +580,94 @@ export function InteractiveCanvas() {
         <div className="pointer-events-auto flex items-center gap-2 rounded-2xl border-3 border-black bg-white/95 p-2 shadow-[6px_6px_0px_#000] backdrop-blur-md">
           {/* Card Icon Toggles */}
           <button
-            onClick={() => {
-              toggleOpen("about");
-              focusCard("about");
-            }}
-            className="flex h-10 w-10 items-center justify-center rounded-xl border-2 border-black bg-[#ffe600] shadow-[1px_1px_0px_#000] hover:-translate-y-1 hover:shadow-[3px_3px_0px_#000] transition-all"
-            title="About Card"
+            onClick={() => spawnOrToggleCard("about")}
+            className={`relative flex h-10 w-10 items-center justify-center rounded-xl border-2 border-black bg-[#ffe600] shadow-[1px_1px_0px_#000] hover:-translate-y-1 hover:shadow-[3px_3px_0px_#000] transition-all ${
+              cards.find((c) => c.id === "about")?.isOpen ? "ring-2 ring-black" : ""
+            }`}
+            title="Insert About Card"
           >
             👤
+            {cards.find((c) => c.id === "about")?.isOpen && (
+              <span className="absolute -bottom-1 h-1.5 w-1.5 rounded-full bg-black" />
+            )}
           </button>
 
           <button
-            onClick={() => {
-              toggleOpen("work");
-              focusCard("work");
-            }}
-            className="flex h-10 w-10 items-center justify-center rounded-xl border-2 border-black bg-[#a6ff00] shadow-[1px_1px_0px_#000] hover:-translate-y-1 hover:shadow-[3px_3px_0px_#000] transition-all"
-            title="Work & Projects"
+            onClick={() => spawnOrToggleCard("work")}
+            className={`relative flex h-10 w-10 items-center justify-center rounded-xl border-2 border-black bg-[#a6ff00] shadow-[1px_1px_0px_#000] hover:-translate-y-1 hover:shadow-[3px_3px_0px_#000] transition-all ${
+              cards.find((c) => c.id === "work")?.isOpen ? "ring-2 ring-black" : ""
+            }`}
+            title="Insert Work Card"
           >
             💼
+            {cards.find((c) => c.id === "work")?.isOpen && (
+              <span className="absolute -bottom-1 h-1.5 w-1.5 rounded-full bg-black" />
+            )}
           </button>
 
           <button
-            onClick={() => {
-              toggleOpen("toolbox");
-              focusCard("toolbox");
-            }}
-            className="flex h-10 w-10 items-center justify-center rounded-xl border-2 border-black bg-[#00f0ff] shadow-[1px_1px_0px_#000] hover:-translate-y-1 hover:shadow-[3px_3px_0px_#000] transition-all"
-            title="Toolbox & Skills"
+            onClick={() => spawnOrToggleCard("toolbox")}
+            className={`relative flex h-10 w-10 items-center justify-center rounded-xl border-2 border-black bg-[#00f0ff] shadow-[1px_1px_0px_#000] hover:-translate-y-1 hover:shadow-[3px_3px_0px_#000] transition-all ${
+              cards.find((c) => c.id === "toolbox")?.isOpen ? "ring-2 ring-black" : ""
+            }`}
+            title="Insert Toolbox Card"
           >
             🛠️
+            {cards.find((c) => c.id === "toolbox")?.isOpen && (
+              <span className="absolute -bottom-1 h-1.5 w-1.5 rounded-full bg-black" />
+            )}
           </button>
 
           <button
-            onClick={() => {
-              toggleOpen("contact");
-              focusCard("contact");
-            }}
-            className="flex h-10 w-10 items-center justify-center rounded-xl border-2 border-black bg-[#93c5fd] shadow-[1px_1px_0px_#000] hover:-translate-y-1 hover:shadow-[3px_3px_0px_#000] transition-all"
-            title="Contact"
+            onClick={() => spawnOrToggleCard("contact")}
+            className={`relative flex h-10 w-10 items-center justify-center rounded-xl border-2 border-black bg-[#93c5fd] shadow-[1px_1px_0px_#000] hover:-translate-y-1 hover:shadow-[3px_3px_0px_#000] transition-all ${
+              cards.find((c) => c.id === "contact")?.isOpen ? "ring-2 ring-black" : ""
+            }`}
+            title="Insert Contact Card"
           >
             ✉️
+            {cards.find((c) => c.id === "contact")?.isOpen && (
+              <span className="absolute -bottom-1 h-1.5 w-1.5 rounded-full bg-black" />
+            )}
           </button>
 
           <button
-            onClick={() => {
-              toggleOpen("contributions");
-              focusCard("contributions");
-            }}
-            className="flex h-10 w-10 items-center justify-center rounded-xl border-2 border-black bg-[#86efac] shadow-[1px_1px_0px_#000] hover:-translate-y-1 hover:shadow-[3px_3px_0px_#000] transition-all"
-            title="GitHub Contributions"
+            onClick={() => spawnOrToggleCard("contributions")}
+            className={`relative flex h-10 w-10 items-center justify-center rounded-xl border-2 border-black bg-[#86efac] shadow-[1px_1px_0px_#000] hover:-translate-y-1 hover:shadow-[3px_3px_0px_#000] transition-all ${
+              cards.find((c) => c.id === "contributions")?.isOpen ? "ring-2 ring-black" : ""
+            }`}
+            title="Insert GitHub Contributions Card"
           >
             🟩
+            {cards.find((c) => c.id === "contributions")?.isOpen && (
+              <span className="absolute -bottom-1 h-1.5 w-1.5 rounded-full bg-black" />
+            )}
           </button>
 
           <button
-            onClick={() => {
-              toggleOpen("arcade");
-              focusCard("arcade");
-            }}
-            className="flex h-10 w-10 items-center justify-center rounded-xl border-2 border-black bg-[#ffe600] shadow-[1px_1px_0px_#000] hover:-translate-y-1 hover:shadow-[3px_3px_0px_#000] transition-all"
-            title="🕹️ Arcade Games"
+            onClick={() => spawnOrToggleCard("arcade")}
+            className={`relative flex h-10 w-10 items-center justify-center rounded-xl border-2 border-black bg-[#ffe600] shadow-[1px_1px_0px_#000] hover:-translate-y-1 hover:shadow-[3px_3px_0px_#000] transition-all ${
+              cards.find((c) => c.id === "arcade")?.isOpen ? "ring-2 ring-black" : ""
+            }`}
+            title="Insert 🕹️ Arcade Games Card"
           >
             🕹️
+            {cards.find((c) => c.id === "arcade")?.isOpen && (
+              <span className="absolute -bottom-1 h-1.5 w-1.5 rounded-full bg-black" />
+            )}
           </button>
 
           <button
-            onClick={() => {
-              toggleOpen("stats");
-              focusCard("stats");
-            }}
-            className="flex h-10 w-10 items-center justify-center rounded-xl border-2 border-black bg-[#c084fc] shadow-[1px_1px_0px_#000] hover:-translate-y-1 hover:shadow-[3px_3px_0px_#000] transition-all"
-            title="Stats"
+            onClick={() => spawnOrToggleCard("stats")}
+            className={`relative flex h-10 w-10 items-center justify-center rounded-xl border-2 border-black bg-[#c084fc] shadow-[1px_1px_0px_#000] hover:-translate-y-1 hover:shadow-[3px_3px_0px_#000] transition-all ${
+              cards.find((c) => c.id === "stats")?.isOpen ? "ring-2 ring-black" : ""
+            }`}
+            title="Insert Stats Card"
           >
             📊
+            {cards.find((c) => c.id === "stats")?.isOpen && (
+              <span className="absolute -bottom-1 h-1.5 w-1.5 rounded-full bg-black" />
+            )}
           </button>
 
           <button
