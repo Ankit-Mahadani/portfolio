@@ -5,6 +5,7 @@ import { RunRail, type RailProject } from "@/components/RunRail";
 import { Experience } from "@/components/Experience";
 import { Signals } from "@/components/Signals";
 import { Contact } from "@/components/Contact";
+import { CanvasTeaser } from "@/components/CanvasTeaser";
 import { Footer } from "@/components/Footer";
 import { getAllProjects, assetExists } from "@/lib/content";
 
@@ -37,6 +38,7 @@ export default function Home() {
       <Experience />
       <Signals />
       <Contact />
+      <CanvasTeaser />
       <Footer />
     </div>
   );

@@ -49,10 +49,10 @@ export function Hero() {
             </span>
           </a>
 
-          {/* Secondary Dashed Pill Badge */}
-          <Link
-            href="/work/neuva-lang"
-            data-cursor="NEUVA"
+          {/* Secondary Dashed Pill Badge (Scrolls to Canvas Teaser) */}
+          <a
+            href="#canvas-teaser"
+            data-cursor="CANVAS"
             className="inline-flex items-center gap-2.5 rounded-full border-2 border-dashed border-black/40 bg-white/70 px-4 py-2 font-mono text-xs font-bold text-black shadow-[1px_1px_0px_#000] transition-all hover:border-black hover:bg-white hover:shadow-[3px_3px_0px_#000]"
           >
             <span className="h-2 w-2 rounded-full border border-black bg-[#ffe600]" aria-hidden="true" />
@@ -60,7 +60,7 @@ export function Hero() {
             <span className="rounded-full border border-black bg-[#ffe600] px-2 py-0.5 text-[10px] font-black uppercase text-black shadow-[1px_1px_0px_#000]">
               highly recommended
             </span>
-          </Link>
+          </a>
         </div>
       </div>
     </section>
