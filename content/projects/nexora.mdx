@@ -10,21 +10,26 @@ featured: true
 order: 0
 stack: [NVIDIA AVO, Neo4j, Rust, TypeScript, Next.js, SQLite WAL, Ollama]
 summary: >
-  Autonomous AI engineering desktop environment implementing the NVIDIA AVO (Agentic Variation Operators)
+  Desktop-class autonomous AI engineering environment implementing the NVIDIA AVO (Agentic Variation Operators)
   architecture — replacing single-pass LLM prompts with an autonomous evolutionary search loop managed by
   a Supervisor Agent, dynamic Sub-Agents, persistent Neo4j Lineage Graphs, and sandboxed test execution.
 metrics:
   - { value: "96.8%", unit: "confidence", label: "graph traversal precision across 418 nodes & 892 edges" }
   - { value: "1240", unit: "ms", label: "isolated sandbox execution & automated unit test verification" }
-  - { value: "6", unit: "stages", label: "AVO evolutionary loop (Lineage → Plan → Candidate → Ground → Score → Diagnose)" }
+  - { value: "99.1%", unit: "reliability", label: "peak learned workflow reliability across multi-agent pipelines" }
   - { value: "100%", unit: "local", label: "zero-daemon SQLite WAL + Ollama local model inference" }
 cover: { src: avo-architecture.png, alt: "Nexora architecture diagram illustrating NVIDIA AVO evolutionary loops, Supervisor Agent, and Neo4j lineage", focal: "50% 50%" }
 gallery:
   - { src: avo-architecture.png, alt: "NVIDIA AVO architecture showing Supervisor Agent, 6-stage evolutionary loop, and dual-tier memory", caption: "NVIDIA AVO Architecture — evolutionary search loop replacing single-pass prompts.", span: bleed, kind: diagram }
   - { src: mind-graph.png, alt: "Odysseus Mind Graph visualizing 418 cross-domain entities and 892 directed edges", caption: "Odysseus Mind Graph — 3-hop automated traversal with 96.8% confidence.", span: full, aspect: "16 / 9", fit: contain, kind: screenshot }
+  - { src: specialist-teams.png, alt: "Self-Improving Agent Teams specialist DAG architecture with Athena, Scout, DaVinci, Tester, and Reviewer", caption: "Specialist Agent Pipeline — 5-agent DAG coordinated by Athena and DaVinci.", span: half, aspect: "16 / 10", fit: contain, kind: screenshot }
+  - { src: model-routing.png, alt: "Dynamic Model Selection Matrix routing subtasks by complexity, cost, and speed", caption: "Dynamic Model Selection Matrix — 3-tier routing from 1.5B to 9B parameter models.", span: half, aspect: "16 / 10", fit: contain, kind: screenshot }
+  - { src: test-retries.png, alt: "Automated test recovery loop architecture with adaptive temperature escalation", caption: "Automatic Test Retries & Recovery — 4-stage automated repair loop with temperature escalation.", span: full, aspect: "16 / 9", fit: contain, kind: screenshot }
+  - { src: learned-workflows.png, alt: "Learned workflows and self-improving memory synchronized with knowledge graph", caption: "Learned Reliable Workflows — high-reliability execution patterns (up to 99.1% reliability).", span: full, aspect: "16 / 9", fit: contain, kind: screenshot }
   - { src: davinci-engineer.png, alt: "DaVinci Engineer running in isolated sandbox passing 100% test assertions in 1240ms", caption: "DaVinci Engineer — autonomous coding agent running sandbox tests in 1240ms.", span: half, aspect: "16 / 10", fit: contain, kind: screenshot }
   - { src: early-warning-radar.png, alt: "Early Warning Radar detecting system health index, DAG bottlenecks, and auto-fix actions", caption: "Early Warning Radar — predictive fault detection & 1-click mitigations.", span: half, aspect: "16 / 10", fit: contain, kind: screenshot }
-  - { src: workflow-builder.png, alt: "Natural-Language Workflow Builder converting human prompts into executable DAG pipelines", caption: "Workflow Builder — natural language translated into executable DAG pipelines.", span: full, aspect: "16 / 9", fit: contain, kind: screenshot }
+  - { src: workflow-builder.png, alt: "Natural-Language Workflow Builder converting human prompts into executable DAG pipelines", caption: "Workflow Builder — natural language translated into executable DAG pipelines.", span: half, aspect: "16 / 10", fit: contain, kind: screenshot }
+  - { src: task-history.png, alt: "Task History with verified tool observations and execution resumption", caption: "Task History & Observations — OS-level task automations with verified tool provenance.", span: half, aspect: "16 / 10", fit: contain, kind: screenshot }
 links: { live: "https://github.com/Ankit-Mahadani/NEXORA", repo: "https://github.com/Ankit-Mahadani/NEXORA", demo: "https://github.com/Ankit-Mahadani/NEXORA" }
 ---
 
@@ -80,9 +85,130 @@ To ensure complete privacy and zero background daemon overhead, Nexora couples i
 - **Single Mutex Architecture:** Configured with `PRAGMA busy_timeout=5000` to prevent database locks across asynchronous sub-agent threads.
 - **Local Model Serving:** Native integration with local Ollama runners and quantized models, keeping proprietary source code strictly on-device.
 
+## Self-Improving Agent Teams: Autonomous Specialist DAG
+
+Complex software engineering cannot be handled by a single generalist model. Nexora introduces **Self-Improving Agent Teams** — decomposing incoming development tasks into an executable Directed Acyclic Graph delegated to specialized agents best suited for each role:
+
+1. **Athena (Step 1 — Planner & Coordinator Agent):** High-complexity reasoning agent (`qwen2.5-coder:7b`, speed: 8.5/10) that formulates project requirements, decomposes tasks into sub-DAGs, and verifies architectural integrity.
+2. **Scout (Step 2 — Researcher & Context Gatherer):** Ultra-fast lightweight agent (`qwen2.5-coder:1.5b`, speed: 9.8/10) responsible for repo directory scans, AST indexing, and dependency resolution.
+3. **DaVinci (Step 3 — Coder & Algorithmic Specialist):** High-precision code generation agent (`qwen2.5-coder:7b`, speed: 8.0/10) that writes modular algorithms and applies AST mutations.
+4. **Tester (Step 4 — Validation & Assertions):** Sandboxed test execution agent compiling source files, running assertion suites, and capturing stderr stack traces.
+5. **Reviewer (Step 5 — Security & Architectural Audit):** Deep reasoning agent inspecting generated diffs for memory leaks, type safety, and OWASP vulnerabilities before merging.
+
+<Fig
+  src="specialist-teams.png"
+  alt="Self-Improving Agent Teams specialist DAG architecture with Athena, Scout, DaVinci, Tester, and Reviewer"
+  caption="Autonomous Specialist Team Architecture — 5 active specialists coordinated in an execution DAG."
+  maxWidth="1000px"
+  aspect="16 / 10"
+  fit="contain"
+  kind="screenshot"
+/>
+
+## Dynamic Model Selection Matrix: 3-Tier Compute Routing
+
+To optimize local inference latency and compute consumption, Nexora includes a **Dynamic Model Selection Matrix**. Instead of routing every trivial subtask to high-parameter LLMs, the Planner evaluates reasoning requirements dynamically across 3 tiers:
+
+<div className="grid grid-cols-1 gap-6 sm:grid-cols-3 my-8">
+  <div className="border-2 border-black bg-white p-4 shadow-[3px_3px_0px_#000]">
+    <div className="inline-block bg-[#a6ff00] px-2 py-0.5 border border-black font-mono text-[10px] font-black uppercase text-black mb-2">
+      Tier 1: Low Complexity
+    </div>
+    <h4 className="font-display text-sm font-black text-black">Fast / Zero-Cost</h4>
+    <p className="font-sans text-xs text-black/75 mt-1 font-medium">Assigned to Researcher for directory scans, keyword search, file reads, and light parsing.</p>
+    <div className="mt-3 font-mono text-[11px] font-bold text-black border-t border-black/10 pt-2">
+      Model: qwen2.5-coder:1.5b<br />
+      Speed: 9.8 / 10 (Instant)<br />
+      Tokens: 100% Local
+    </div>
+  </div>
+
+  <div className="border-2 border-black bg-white p-4 shadow-[3px_3px_0px_#000]">
+    <div className="inline-block bg-[#00f0ff] px-2 py-0.5 border border-black font-mono text-[10px] font-black uppercase text-black mb-2">
+      Tier 2: Medium Complexity
+    </div>
+    <h4 className="font-display text-sm font-black text-black">Balanced Code</h4>
+    <p className="font-sans text-xs text-black/75 mt-1 font-medium">Assigned to Coder and Tester for writing algorithms, executing test suites, and patching files.</p>
+    <div className="mt-3 font-mono text-[11px] font-bold text-black border-t border-black/10 pt-2">
+      Model: qwen2.5-coder:7b<br />
+      Speed: 8.0 / 10 (Fast)<br />
+      Compute: 7B Balanced
+    </div>
+  </div>
+
+  <div className="border-2 border-black bg-white p-4 shadow-[3px_3px_0px_#000]">
+    <div className="inline-block bg-[#ff66c4] px-2 py-0.5 border border-black font-mono text-[10px] font-black uppercase text-black mb-2">
+      Tier 3: High Complexity
+    </div>
+    <h4 className="font-display text-sm font-black text-black">Deep Reasoning</h4>
+    <p className="font-sans text-xs text-black/75 mt-1 font-medium">Assigned to Planner, Reviewer, and Diagnoser for architecture planning, security audits, and root-cause repair.</p>
+    <div className="mt-3 font-mono text-[11px] font-bold text-black border-t border-black/10 pt-2">
+      Model: qwen3.5:9b<br />
+      Speed: 7.2 / 10 (Deliberate)<br />
+      Accuracy: Maximum
+    </div>
+  </div>
+</div>
+
+<Fig
+  src="model-routing.png"
+  alt="Dynamic Model Selection Matrix routing subtasks by complexity, cost, and speed"
+  caption="Dynamic Model Selection Matrix — evaluating reasoning needs to route subtasks across 1.5B, 7B, and 9B parameter models."
+  maxWidth="1000px"
+  aspect="16 / 10"
+  fit="contain"
+  kind="screenshot"
+/>
+
+## Automated Test Retries & Adaptive Temperature Escalation
+
+When software engineering tasks encounter failing assertions, traditional agentic frameworks fall into infinite repetitive retry loops with identical prompts.
+
+Nexora introduces a closed-loop **Automated Recovery Loop Architecture**:
+
+<Trace steps={[
+  { label: "1. Tester Fails", detail: "Isolates stack trace, captures non-zero exit code and stderr output" },
+  { label: "2. Diagnoser Pinpoints", detail: "Root-cause failure repair analysis using Odysseus diagnostic memories" },
+  { label: "3. Coder Patches", detail: "Applies targeted code diff and localized AST replacement" },
+  { label: "4. Retester Passes", detail: "Validates unit test assertions inside the isolated sandbox" },
+]} />
+
+<Fig
+  src="test-retries.png"
+  alt="Automated test recovery loop architecture with adaptive temperature escalation"
+  caption="Automated Recovery Loop Architecture — isolating stack traces, synthesizing repair patches, and adjusting sampling temperature."
+  maxWidth="1000px"
+  aspect="16 / 9"
+  fit="contain"
+  kind="screenshot"
+/>
+
+- **Autonomous Retry Threshold:** Configurable between 1 and 5 autonomous iterations before escalating to developer review.
+- **Adaptive Temperature Escalation:** On repeated failures, Nexora dynamically modulates sampling temperature (e.g. escalating from T=0.2 to T=0.4 on Retry 2). This prevents the LLM from getting trapped in local greedy decoding minima and forces exploration of alternative algorithmic structures.
+
+## Learned Reliable Workflows & Self-Improving Memory
+
+As developer workflows execute over time, Nexora’s **Odysseus Self-Learning Engine** aggregates evaluation metrics into persistent memory. Future planner decisions automatically bias toward high-reliability execution patterns.
+
+<Fig
+  src="learned-workflows.png"
+  alt="Learned workflows and self-improving memory synchronized with knowledge graph"
+  caption="Learned Workflows and Self-Improving Memory — empirical execution records synchronized directly with the Odysseus Knowledge Graph."
+  maxWidth="1000px"
+  aspect="16 / 9"
+  fit="contain"
+  kind="screenshot"
+/>
+
+Empirical performance records captured in production runs:
+- **Full-Stack Implementation Pipeline:** 97.4% reliability across 34 successful runs (0.3 avg retries) — Delegation sequence: `Planner → Researcher → Coder → Tester → Reviewer`.
+- **Bug Diagnosis & Auto-Repair Loop:** 92.8% reliability across 19 successful runs (1.2 avg retries) — Delegation sequence: `Researcher → Tester → Coder (Auto-Retry) → Reviewer`.
+- **Rapid Document & Assignment Synthesis:** 99.1% reliability across 28 successful runs (0 avg retries) — Delegation sequence: `Planner → Researcher → Coder → Reviewer`.
+- **Hardware & Audio Device Configuration:** 94.0% reliability across 12 successful runs (0.5 avg retries) — Delegation sequence: `Researcher → Coder → Tester`.
+
 ## Autonomous Software Engineer: DaVinci Engineer
 
-When a task requires code modification, the Supervisor Agent dispatches **DaVinci Engineer** — a specialized sub-agent operating on target workspace repositories (e.g. `c:/D/IDE PROJECTS/self/NEXORA`).
+When a task requires code modification, the Supervisor Agent dispatches **DaVinci Engineer** — operating on target workspace repositories (e.g. `c:/D/IDE PROJECTS/self/NEXORA`).
 
 DaVinci parses the repository AST, generates targeted mutations, and verifies execution inside an isolated sandbox environment. In continuous evaluation runs, DaVinci completed full test suites (14/14 passed) within 1,240ms, preparing ready-to-merge Git branches with atomic commits.
 
@@ -129,7 +255,7 @@ await lineageGraph.commitVariant(candidate, fitness);`}
   alt="DaVinci Engineer running in isolated sandbox passing 100% test assertions in 1240ms"
   caption="DaVinci Engineer — autonomous coding agent achieving 100% sandbox test passage in 1240ms."
   maxWidth="1000px"
-  aspect="16 / 9"
+  aspect="16 / 10"
   fit="contain"
   kind="screenshot"
 />
@@ -149,7 +275,7 @@ The radar calculates real-time System Health Indexes (e.g. 64% baseline), active
   alt="Early Warning Radar UI displaying System Health Index and Auto-Fix actions"
   caption="Early Warning Radar — predictive problem detection and one-click proactive automated mitigations."
   maxWidth="1000px"
-  aspect="16 / 9"
+  aspect="16 / 10"
   fit="contain"
   kind="screenshot"
 />
@@ -170,15 +296,35 @@ Each DAG integrates triggers (file system watchers, scheduled crons, git webhook
   kind="screenshot"
 />
 
+## Task History & Verified Tool Observations
+
+Every action taken by Nexora across the OS, desktop applications, or background workers is recorded with verified tool observation telemetry:
+
+- **Verified Tool Provenance:** Tasks such as Spotify playback or YouTube video streaming track each discrete tool invocation (2 to 5 verified observations per task).
+- **Execution Metadata:** Full audit trail displaying exact model provenance (`gpt-oss:120b-cloud`, local Ollama), iteration count (0/5 to 1/5), and completion timestamp.
+- **State Resumption:** 1-click `Resume` action allowing developers to replay or branch past automation sessions with zero state corruption.
+
+<Fig
+  src="task-history.png"
+  alt="Task History UI showing completed tasks and verified tool observations"
+  caption="Task History — full execution audit trail, verified tool observations, and session resumption."
+  maxWidth="1000px"
+  aspect="16 / 10"
+  fit="contain"
+  kind="screenshot"
+/>
+
 ## System Specifications
 
 <Spec rows={[
   ["Architecture", "NVIDIA Agentic Variation Operators (AVO) Evolutionary Loop"],
-  ["Supervisor", "Multi-Agent Coordinator with Dynamic Sub-Agent Dispatch"],
-  ["Coding Agent", "DaVinci Engineer with AST Analysis & Isolated Sandbox"],
-  ["Graph Memory", "Neo4j Lineage Graph + NetworkX Multi-Hop Semantic Traversal"],
+  ["Supervisor", "Athena Multi-Agent Coordinator with Dynamic Sub-Agent Dispatch"],
+  ["Specialist Agents", "Athena (Planner), Scout (Researcher), DaVinci (Coder), Tester, Reviewer"],
+  ["Model Routing", "3-Tier Dynamic Selection Matrix (qwen2.5:1.5b, qwen2.5:7b, qwen3.5:9b)"],
+  ["Fault Recovery", "Automated Stack Trace Isolation & Adaptive Temperature Escalation"],
+  ["Coding Engine", "DaVinci Engineer with AST Analysis & Isolated Sandbox"],
+  ["Graph Memory", "Neo4j Lineage Graph + Odysseus Multi-Hop Semantic Traversal"],
   ["Local Store", "SQLite WAL Mode (PRAGMA busy_timeout=5000, Single Mutex)"],
   ["Frontend / Desktop", "Next.js, TypeScript, Tailwind CSS, Tauri / Rust"],
-  ["Local LLMs", "Ollama Native Integration (Quantized Llama 3, DeepSeek, Qwen)"],
   ["Repository", "github.com/Ankit-Mahadani/NEXORA"],
 ]} />

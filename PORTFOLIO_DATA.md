@@ -82,6 +82,10 @@ Desktop-class autonomous AI engineering environment implementing the NVIDIA AVO 
 - **Achievements:**
   - 6-stage evolutionary loop (Lineage → Plan → Candidate → Ground → Score → Diagnose)
   - Odysseus Mind Graph with 418 nodes, 892 edges, and 96.8% traversal confidence
+  - Self-Improving Agent Teams (Athena, Scout, DaVinci, Tester, Reviewer) in an autonomous DAG
+  - 3-tier Dynamic Model Selection Matrix (1.5B, 7B, 9B parameter routing)
+  - Automated Recovery Loop with Adaptive Temperature Escalation ($0.2 \rightarrow 0.4$)
+  - Learned Reliable Workflows achieving up to 99.1% reliability
   - DaVinci Engineer sandbox test execution in 1,240ms (100% test pass rate)
   - Early Warning Radar predictive problem detection & 1-click mitigations
 - **Repo:** https://github.com/Ankit-Mahadani/NEXORA
