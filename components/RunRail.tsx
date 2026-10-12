@@ -69,7 +69,7 @@ export function RunRail({ projects }: { projects: RailProject[] }) {
   }, [min, max]);
 
   const reduced = usePrefersReducedMotion();
-  const [activeIndex, setActiveIndex] = useState(bars.length - 1);
+  const [activeIndex, setActiveIndex] = useState(0);
   const [focusIndex, setFocusIndex] = useState<number | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
@@ -77,12 +77,26 @@ export function RunRail({ projects }: { projects: RailProject[] }) {
   const playheadRef = useRef<HTMLDivElement>(null);
   const barRefs = useRef<Array<HTMLElement | null>>([]);
 
+  const lanes = useMemo(() => {
+    const laneAssignments: number[] = [];
+    let lane0End = 0;
+    bars.forEach((b) => {
+      let l = 0;
+      if (b.leftPct < lane0End) {
+        l = 1;
+      } else {
+        lane0End = b.leftPct + b.widthPct + 2;
+      }
+      laneAssignments.push(l);
+    });
+    return laneAssignments;
+  }, [bars]);
+
   useEffect(() => {
     if (reducedMotionNow()) return;
     const pin = pinRef.current;
-    const axis = axisRef.current;
     const playhead = playheadRef.current;
-    if (!pin || !axis || !playhead) return;
+    if (!pin || !playhead) return;
 
     const { gsap, ScrollTrigger } = getGsap();
     const mm = gsap.matchMedia();
@@ -95,21 +109,14 @@ export function RunRail({ projects }: { projects: RailProject[] }) {
         pin: true,
         scrub: 1,
         onUpdate: (self) => {
-          const monthPos = min + self.progress * span;
-          gsap.set(playhead, { left: `${self.progress * 100}%` });
+          const projIndex = Math.min(bars.length - 1, Math.floor(self.progress * bars.length));
+          setActiveIndex(projIndex);
 
-          let nearest = 0;
-          let best = Infinity;
-          bars.forEach((b, i) => {
-            const s = monthIndexOf(b.start);
-            const e = monthIndexOf(b.end);
-            const dist = monthPos < s ? s - monthPos : monthPos > e ? monthPos - e : 0;
-            if (dist < best) {
-              best = dist;
-              nearest = i;
-            }
-          });
-          setActiveIndex(nearest);
+          const currentBar = bars[projIndex];
+          if (currentBar && playhead) {
+            const targetLeft = currentBar.leftPct + currentBar.widthPct / 2;
+            gsap.to(playhead, { left: `${targetLeft}%`, duration: 0.2, overwrite: "auto" });
+          }
         },
       });
 
@@ -117,7 +124,7 @@ export function RunRail({ projects }: { projects: RailProject[] }) {
     });
 
     return () => mm.revert();
-  }, [bars, min, span]);
+  }, [bars]);
 
   useEffect(() => {
     const onScroll = () => {
@@ -141,8 +148,9 @@ export function RunRail({ projects }: { projects: RailProject[] }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const active = bars[activeIndex]!;
   const router = useRouter();
+  const active = bars[activeIndex] ?? bars[0];
+  if (!active) return null;
 
   const openProject = (slug: string) => {
     const nav = () => router.push(`/work/${slug}`);
@@ -183,6 +191,47 @@ export function RunRail({ projects }: { projects: RailProject[] }) {
                   <span className="border-2 border-black bg-white px-2.5 py-0.5 font-mono text-xs font-black uppercase text-black shadow-[2px_2px_0px_#000]">
                     {active.start} &rarr; {active.end === "now" ? "PRESENT" : active.end}
                   </span>
+                  <div className="flex items-center gap-1.5 ml-auto">
+                    <button
+                      type="button"
+                      onClick={() => moveFocus(-1)}
+                      disabled={activeIndex === 0}
+                      aria-label="Previous project"
+                      className="border-2 border-black bg-white px-2 py-0.5 font-mono text-xs font-black text-black shadow-[2px_2px_0px_#000] hover:bg-[#ffe600] disabled:opacity-40 disabled:hover:bg-white active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
+                    >
+                      &larr; PREV
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => moveFocus(1)}
+                      disabled={activeIndex === bars.length - 1}
+                      aria-label="Next project"
+                      className="border-2 border-black bg-white px-2 py-0.5 font-mono text-xs font-black text-black shadow-[2px_2px_0px_#000] hover:bg-[#ffe600] disabled:opacity-40 disabled:hover:bg-white active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
+                    >
+                      NEXT &rarr;
+                    </button>
+                  </div>
+                </div>
+
+                {/* Direct project quick-select tabs */}
+                <div className="mt-3 flex flex-wrap items-center gap-1.5 max-w-xl">
+                  {bars.map((b, i) => (
+                    <button
+                      key={b.slug}
+                      type="button"
+                      onClick={() => {
+                        setActiveIndex(i);
+                        setFocusIndex(i);
+                      }}
+                      className={`border-2 border-black px-2 py-0.5 font-mono text-[10px] font-black uppercase transition-all shadow-[1px_1px_0px_#000] ${
+                        i === activeIndex
+                          ? "bg-[#ffe600] -translate-y-0.5 shadow-[2px_2px_0px_#000]"
+                          : "bg-white hover:bg-black/5"
+                      }`}
+                    >
+                      0{i + 1} {b.title}
+                    </button>
+                  ))}
                 </div>
 
                 <h2 className="font-display mt-3 text-[clamp(2.5rem,4.5vw,4.5rem)] font-black uppercase leading-none text-black tracking-tight">
@@ -286,7 +335,7 @@ export function RunRail({ projects }: { projects: RailProject[] }) {
                 style={{ left: "0%" }}
               />
             </div>
-            <div className="relative mt-4 h-20">
+            <div className="relative mt-4 h-24">
               {bars.map((bar, i) => (
                 <button
                   key={bar.slug}
@@ -314,21 +363,23 @@ export function RunRail({ projects }: { projects: RailProject[] }) {
                   aria-current={i === activeIndex}
                   aria-label={`${bar.title}, ${STATUS_LABEL[bar.status]}, ${bar.start} to ${bar.end}`}
                   data-cursor="OPEN"
-                  className="absolute top-0 flex flex-col items-start gap-1.5 text-left transition-all"
+                  className="absolute flex flex-col items-start gap-1 text-left transition-all"
                   style={{
                     left: `${bar.leftPct}%`,
                     width: `${bar.widthPct}%`,
-                    opacity: reduced ? 1 : i === activeIndex ? 1 : 0.4,
+                    top: `${(lanes[i] ?? 0) * 36}px`,
+                    opacity: reduced ? 1 : i === activeIndex ? 1 : 0.45,
+                    zIndex: i === activeIndex ? 20 : 10,
                   }}
                 >
                   <span
                     className={`block w-full border-2 border-black transition-all ${
                       i === activeIndex
-                        ? "h-8 bg-[#ffe600] shadow-[3px_3px_0px_#000]"
+                        ? "h-7 bg-[#ffe600] shadow-[3px_3px_0px_#000]"
                         : "h-5 bg-white shadow-[2px_2px_0px_#000]"
                     }`}
                   />
-                  <span className="truncate font-mono text-[10px] font-bold uppercase text-black">
+                  <span className="truncate font-mono text-[10px] font-bold uppercase text-black max-w-[120px]">
                     {bar.slug}
                   </span>
                 </button>
