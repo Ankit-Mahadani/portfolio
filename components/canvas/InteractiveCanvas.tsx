@@ -229,7 +229,7 @@ export function InteractiveCanvas() {
       spawnOrToggleCard(id);
       centerOn(card.x + card.width / 2, card.y + 100, 1.0);
     },
-    [cards, centerOn]
+    [cards, centerOn, spawnOrToggleCard]
   );
 
   // Initial load: if user specified ?card=arcade, only open the arcade card centered!

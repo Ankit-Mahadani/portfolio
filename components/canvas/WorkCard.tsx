@@ -2,6 +2,14 @@ import Link from "next/link";
 
 const PROJECTS = [
   {
+    slug: "nexora",
+    title: "Nexora",
+    desc: "Autonomous AI engineering platform with NVIDIA AVO evolutionary loop",
+    tag: "LIVE",
+    year: "2026",
+    color: "bg-[#00f0ff]",
+  },
+  {
     slug: "neuva-lang",
     title: "Neuva",
     desc: "Python library for custom neural network loss & regression",
@@ -42,7 +50,7 @@ export function WorkCard() {
         <span className="font-mono text-[10px] font-black uppercase text-black/60">
           Featured Projects &amp; Libraries
         </span>
-        <span className="font-mono text-[10px] font-bold text-black/50">4 projects</span>
+        <span className="font-mono text-[10px] font-bold text-black/50">5 projects</span>
       </div>
 
       <div className="flex flex-col gap-2.5">

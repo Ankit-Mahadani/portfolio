@@ -118,7 +118,7 @@ export function CanvasTipsAndTutorial({
             {/* Header step counter */}
             <div className="flex items-center justify-between border-b-2 border-black/10 pb-3">
               <span className="rounded-full border border-black bg-[#ffe600] px-3 py-0.5 font-mono text-[11px] font-black uppercase text-black">
-                {currentStep.badge} // {currentStep.step}
+                {currentStep.badge}{" // "}{currentStep.step}
               </span>
               <button
                 onClick={handleFinishTutorial}

@@ -74,6 +74,18 @@ Leadership · Problem Solving · Time Management · Communication · Team Collab
 
 ## Projects
 
+### 0. Nexora: Autonomous AI Engineering & NVIDIA AVO Platform — FLAGSHIP · LIVE
+**Duration:** August 2026 – Present
+Desktop-class autonomous AI engineering environment implementing the NVIDIA AVO (Agentic Variation Operators) architecture — replacing linear single-pass LLM prompts with an autonomous evolutionary search loop managed by a Supervisor Agent, dynamic Sub-Agents (DaVinci Engineer), persistent Neo4j Lineage Graph, and zero-daemon SQLite WAL storage.
+
+- **Tech:** NVIDIA AVO, Neo4j, Rust, TypeScript, Next.js, SQLite WAL, Ollama
+- **Achievements:**
+  - 6-stage evolutionary loop (Lineage → Plan → Candidate → Ground → Score → Diagnose)
+  - Odysseus Mind Graph with 418 nodes, 892 edges, and 96.8% traversal confidence
+  - DaVinci Engineer sandbox test execution in 1,240ms (100% test pass rate)
+  - Early Warning Radar predictive problem detection & 1-click mitigations
+- **Repo:** https://github.com/Ankit-Mahadani/NEXORA
+
 ### 1. Personal AI Assistant (Chat & Call) — LVL 5 · COMPLETED
 **Duration:** April 2025 – May 2025
 Built an AI assistant using n8n, LangChain/Gemini, Google Calendar API & SMTP/IMAP. Automates 85% of routine tasks and manages 100+ weekly events and reminders autonomously.

@@ -1,0 +1,184 @@
+---
+slug: nexora
+title: Nexora
+kicker: Autonomous AI Engineering Desktop & NVIDIA AVO Platform
+status: live
+start: 2026-08
+end: now
+role: Solo Architect & Systems Engineer
+featured: true
+order: 0
+stack: [NVIDIA AVO, Neo4j, Rust, TypeScript, Next.js, SQLite WAL, Ollama]
+summary: >
+  Autonomous AI engineering desktop environment implementing the NVIDIA AVO (Agentic Variation Operators)
+  architecture — replacing single-pass LLM prompts with an autonomous evolutionary search loop managed by
+  a Supervisor Agent, dynamic Sub-Agents, persistent Neo4j Lineage Graphs, and sandboxed test execution.
+metrics:
+  - { value: "96.8%", unit: "confidence", label: "graph traversal precision across 418 nodes & 892 edges" }
+  - { value: "1240", unit: "ms", label: "isolated sandbox execution & automated unit test verification" }
+  - { value: "6", unit: "stages", label: "AVO evolutionary loop (Lineage → Plan → Candidate → Ground → Score → Diagnose)" }
+  - { value: "100%", unit: "local", label: "zero-daemon SQLite WAL + Ollama local model inference" }
+cover: { src: avo-architecture.png, alt: "Nexora architecture diagram illustrating NVIDIA AVO evolutionary loops, Supervisor Agent, and Neo4j lineage", focal: "50% 50%" }
+gallery:
+  - { src: avo-architecture.png, alt: "NVIDIA AVO architecture showing Supervisor Agent, 6-stage evolutionary loop, and dual-tier memory", caption: "NVIDIA AVO Architecture — evolutionary search loop replacing single-pass prompts.", span: bleed, kind: diagram }
+  - { src: mind-graph.png, alt: "Odysseus Mind Graph visualizing 418 cross-domain entities and 892 directed edges", caption: "Odysseus Mind Graph — 3-hop automated traversal with 96.8% confidence.", span: full, aspect: "16 / 9", fit: contain, kind: screenshot }
+  - { src: davinci-engineer.png, alt: "DaVinci Engineer running in isolated sandbox passing 100% test assertions in 1240ms", caption: "DaVinci Engineer — autonomous coding agent running sandbox tests in 1240ms.", span: half, aspect: "16 / 10", fit: contain, kind: screenshot }
+  - { src: early-warning-radar.png, alt: "Early Warning Radar detecting system health index, DAG bottlenecks, and auto-fix actions", caption: "Early Warning Radar — predictive fault detection & 1-click mitigations.", span: half, aspect: "16 / 10", fit: contain, kind: screenshot }
+  - { src: workflow-builder.png, alt: "Natural-Language Workflow Builder converting human prompts into executable DAG pipelines", caption: "Workflow Builder — natural language translated into executable DAG pipelines.", span: full, aspect: "16 / 9", fit: contain, kind: screenshot }
+links: { live: "https://github.com/Ankit-Mahadani/NEXORA", repo: "https://github.com/Ankit-Mahadani/NEXORA", demo: "https://github.com/Ankit-Mahadani/NEXORA" }
+---
+
+Standard AI coding assistants rely on linear, single-pass prompts: you provide context, the LLM emits a completion, and if syntax breaks or edge cases fail, the agent has no grounded memory of what went wrong or how past attempts diverged.
+
+Nexora rebuilds agentic software engineering from the ground up by implementing the **NVIDIA AVO (Agentic Variation Operators)** architecture. Instead of blind prompt chains, Nexora treats software synthesis as an **autonomous evolutionary search loop** — navigating a multi-candidate hypothesis space managed by a Supervisor Agent, specialized Sub-Agents, isolated sandboxed execution, and a persistent Neo4j Lineage Graph.
+
+## The NVIDIA AVO Architecture
+
+At the core of Nexora is an evolutionary optimization cycle. When tasked with a feature implementation, architectural refactor, or bug triage, the **Supervisor Agent** formulates variation operators (mutation and crossover) across code variants rather than outputting a single irreversible patch.
+
+<Pull>Replaces standard single-pass LLM prompts with an evolutionary search loop: Lineage → Plan → Candidate → Ground → Score → Diagnose.</Pull>
+
+<Trace steps={[
+  { label: "1. Lineage", detail: "Loads parent variant lineage from Neo4j, inspecting parent diffs, fitness scores, and past diagnostic notes" },
+  { label: "2. Plan", detail: "Supervisor Agent computes mutation/crossover hypotheses targeting identified bottlenecks and test gaps" },
+  { label: "3. Candidate", detail: "Dynamic Sub-Agents (e.g., DaVinci Engineer) synthesize isolated code mutations and AST patches" },
+  { label: "4. Ground", detail: "Grounds candidate syntax against local workspace files, SQLite WAL state, and environment dependencies" },
+  { label: "5. Score", detail: "Executes unit tests and type checks in an isolated sandbox, calculating deterministic fitness scores" },
+  { label: "6. Diagnose", detail: "Critic Agent inspects failures and compiler errors, generating structured diagnostics to seed the next generation" },
+]} />
+
+<Fig
+  src="avo-architecture.png"
+  alt="Nexora NVIDIA AVO Architecture Flowchart"
+  caption="NVIDIA AVO Architecture — Supervisor Agent, 6-stage evolutionary loop, and dual-tier memory (Neo4j Graph + SQLite WAL)."
+  maxWidth="1000px"
+  aspect="16 / 9"
+  fit="contain"
+  kind="diagram"
+/>
+
+## Odysseus Mind Graph: Knowledge Graph Intelligence
+
+Engineering decisions cannot live in transient 8k token windows. Nexora maintains a comprehensive semantic topology of the developer's entire workspace called the **Odysseus Mind Graph**.
+
+The Mind Graph maps cross-domain entities across files, architectural decisions, task definitions, git commits, and memory nodes. Using automated 3-hop traversals, sub-agents reason across interdependent components with 96.8% retrieval confidence before touching code.
+
+<Fig
+  src="mind-graph.png"
+  alt="Odysseus Mind Graph UI showing 418 nodes and 892 edges"
+  caption="Odysseus Mind Graph — 418 cross-domain entities connected by 892 directed edges with 3-hop automated traversal."
+  maxWidth="1000px"
+  aspect="16 / 9"
+  fit="contain"
+  kind="screenshot"
+/>
+
+### Zero-Daemon Local Storage & SQLite WAL
+
+To ensure complete privacy and zero background daemon overhead, Nexora couples its Neo4j lineage engine with a bulletproof local SQLite storage layer:
+- **Write-Ahead Logging (WAL):** High-throughput concurrent reads and writes with zero lock contention.
+- **Single Mutex Architecture:** Configured with `PRAGMA busy_timeout=5000` to prevent database locks across asynchronous sub-agent threads.
+- **Local Model Serving:** Native integration with local Ollama runners and quantized models, keeping proprietary source code strictly on-device.
+
+## Autonomous Software Engineer: DaVinci Engineer
+
+When a task requires code modification, the Supervisor Agent dispatches **DaVinci Engineer** — a specialized sub-agent operating on target workspace repositories (e.g. `c:/D/IDE PROJECTS/self/NEXORA`).
+
+DaVinci parses the repository AST, generates targeted mutations, and verifies execution inside an isolated sandbox environment. In continuous evaluation runs, DaVinci completed full test suites (14/14 passed) within 1,240ms, preparing ready-to-merge Git branches with atomic commits.
+
+<CodeCompare
+  leftTitle="Standard Linear LLM Prompting"
+  leftBadge="Single-Pass Failure Prone"
+  leftCode={`// 1. Single prompt sent to model
+const response = await llm.complete({
+  prompt: "Fix memory leak in worker thread and update tests"
+});
+
+// 2. Blind overwrite of file
+await fs.writeFile("src/worker.rs", response.code);
+
+// 3. Manual user test failure
+// If compiler errors or test fails:
+// User must copy-paste terminal error back into prompt.
+// LLM forgets prior mutations and hallucinates new bugs.`}
+  rightTitle="Nexora AVO Evolutionary Loop"
+  rightBadge="Ground & Score Loop"
+  rightCode={`// 1. Supervisor queries lineage parent
+const parent = await lineageGraph.getNode("feat-worker-v3");
+
+// 2. AVO Mutation Operator generated
+const candidate = await supervisor.spawnOperator({
+  parent,
+  op: "MUTATE_SUBROUTINE",
+  target: "worker::event_loop"
+});
+
+// 3. Isolated Sandbox Grounding & Fitness
+const { passed, durationMs, fitness } = await sandbox.evaluate({
+  diff: candidate.diff,
+  testSuite: "cargo test --test worker_leak",
+  timeoutMs: 3000
+}); // => 100% tests passed in 1240ms
+
+// 4. Update Neo4j Lineage Graph
+await lineageGraph.commitVariant(candidate, fitness);`}
+/>
+
+<Fig
+  src="davinci-engineer.png"
+  alt="DaVinci Engineer running in isolated sandbox passing 100% test assertions in 1240ms"
+  caption="DaVinci Engineer — autonomous coding agent achieving 100% sandbox test passage in 1240ms."
+  maxWidth="1000px"
+  aspect="16 / 9"
+  fit="contain"
+  kind="screenshot"
+/>
+
+## Early Warning Radar: Predictive Problem Detection
+
+Rather than waiting for build pipelines to crash or production servers to trigger alerts, Nexora includes an **Early Warning Radar** that continuously assesses system health.
+
+The radar calculates real-time System Health Indexes (e.g. 64% baseline), actively monitoring:
+- **Deadlock Vulnerabilities:** Analyzing concurrent worker threads and mutex contention patterns.
+- **DAG Bottlenecks:** Identifying stalled dependencies in multi-agent pipeline queues.
+- **Memory Pressure:** Tracking token embedding spikes and vector cache footprints.
+- **1-Click Mitigations:** Surfacing proactive automated actions such as thread pool auto-tuning, lineage tree pruning, and WAL index reindexing.
+
+<Fig
+  src="early-warning-radar.png"
+  alt="Early Warning Radar UI displaying System Health Index and Auto-Fix actions"
+  caption="Early Warning Radar — predictive problem detection and one-click proactive automated mitigations."
+  maxWidth="1000px"
+  aspect="16 / 9"
+  fit="contain"
+  kind="screenshot"
+/>
+
+## Natural-Language Workflow Builder
+
+Developers can compose sophisticated multi-agent pipelines without writing custom coordination code. Nexora’s **Workflow Builder** compiles natural-language prompts directly into executable Directed Acyclic Graphs (DAGs).
+
+Each DAG integrates triggers (file system watchers, scheduled crons, git webhooks), conditional evaluation branches, and autonomous actions across DaVinci Engineer, Odysseus Mind Graph, and external notifications.
+
+<Fig
+  src="workflow-builder.png"
+  alt="Natural-Language Workflow Builder translating prompt into executable DAG"
+  caption="Workflow Builder — Prompt-to-Executable DAG pipeline with triggers, conditional routing, and automated execution."
+  maxWidth="1000px"
+  aspect="16 / 9"
+  fit="contain"
+  kind="screenshot"
+/>
+
+## System Specifications
+
+<Spec rows={[
+  ["Architecture", "NVIDIA Agentic Variation Operators (AVO) Evolutionary Loop"],
+  ["Supervisor", "Multi-Agent Coordinator with Dynamic Sub-Agent Dispatch"],
+  ["Coding Agent", "DaVinci Engineer with AST Analysis & Isolated Sandbox"],
+  ["Graph Memory", "Neo4j Lineage Graph + NetworkX Multi-Hop Semantic Traversal"],
+  ["Local Store", "SQLite WAL Mode (PRAGMA busy_timeout=5000, Single Mutex)"],
+  ["Frontend / Desktop", "Next.js, TypeScript, Tailwind CSS, Tauri / Rust"],
+  ["Local LLMs", "Ollama Native Integration (Quantized Llama 3, DeepSeek, Qwen)"],
+  ["Repository", "github.com/Ankit-Mahadani/NEXORA"],
+]} />
