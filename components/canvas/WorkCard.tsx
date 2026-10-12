@@ -17,30 +17,6 @@ const PROJECTS = [
     year: "2026",
     color: "bg-[#a6ff00]",
   },
-  {
-    slug: "darzi-resume-suite",
-    title: "Darzi Resume Suite",
-    desc: "Multi-agent RAG system for tailored resume generation",
-    tag: "LIVE",
-    year: "2026",
-    color: "bg-[#00f0ff]",
-  },
-  {
-    slug: "hebrew-sales-agent",
-    title: "Hebrew Sales Agent",
-    desc: "Autonomous conversational agent handling 500+ leads/wk",
-    tag: "PROD",
-    year: "2025",
-    color: "bg-[#ff66c4]",
-  },
-  {
-    slug: "cancer-detection",
-    title: "Histopathologic Cancer Detection",
-    desc: "DenseNet deep learning classifier achieving 94% accuracy",
-    tag: "MODEL",
-    year: "2025",
-    color: "bg-[#ffe600]",
-  },
 ];
 
 export function WorkCard() {
@@ -50,7 +26,7 @@ export function WorkCard() {
         <span className="font-mono text-[10px] font-black uppercase text-black/60">
           Featured Projects &amp; Libraries
         </span>
-        <span className="font-mono text-[10px] font-bold text-black/50">5 projects</span>
+        <span className="font-mono text-[10px] font-bold text-black/50">2 projects</span>
       </div>
 
       <div className="flex flex-col gap-2.5">

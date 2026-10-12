@@ -74,7 +74,7 @@ Leadership · Problem Solving · Time Management · Communication · Team Collab
 
 ## Projects
 
-### 0. Nexora: Autonomous AI Engineering & NVIDIA AVO Platform — FLAGSHIP · LIVE
+### 1. Nexora: Autonomous AI Engineering & NVIDIA AVO Platform — FLAGSHIP · LIVE
 **Duration:** August 2026 – Present
 Desktop-class autonomous AI engineering environment implementing the NVIDIA AVO (Agentic Variation Operators) architecture — replacing linear single-pass LLM prompts with an autonomous evolutionary search loop managed by a Supervisor Agent, dynamic Sub-Agents (DaVinci Engineer), persistent Neo4j Lineage Graph, and zero-daemon SQLite WAL storage.
 
@@ -84,50 +84,23 @@ Desktop-class autonomous AI engineering environment implementing the NVIDIA AVO 
   - Odysseus Mind Graph with 418 nodes, 892 edges, and 96.8% traversal confidence
   - Self-Improving Agent Teams (Athena, Scout, DaVinci, Tester, Reviewer) in an autonomous DAG
   - 3-tier Dynamic Model Selection Matrix (1.5B, 7B, 9B parameter routing)
-  - Automated Recovery Loop with Adaptive Temperature Escalation ($0.2 \rightarrow 0.4$)
+  - Automated Recovery Loop with Adaptive Temperature Escalation (0.2 → 0.4)
   - Learned Reliable Workflows achieving up to 99.1% reliability
   - DaVinci Engineer sandbox test execution in 1,240ms (100% test pass rate)
   - Early Warning Radar predictive problem detection & 1-click mitigations
 - **Repo:** https://github.com/Ankit-Mahadani/NEXORA
 
-### 1. Personal AI Assistant (Chat & Call) — LVL 5 · COMPLETED
-**Duration:** April 2025 – May 2025
-Built an AI assistant using n8n, LangChain/Gemini, Google Calendar API & SMTP/IMAP. Automates 85% of routine tasks and manages 100+ weekly events and reminders autonomously.
+### 2. Neuva: Open-Source Machine Learning Programming Language — SHIPPED
+**Duration:** September 2026 – October 2026
+An open-source ML programming language built from scratch in 34 days — custom lexer, Lark Earley parser, tree-walking interpreter, and PyTorch training backend. Trains real neural networks with 5 lines of code instead of 30.
 
-- **Tech:** n8n, LangChain, Gemini, APIs
+- **Tech:** Python, PyTorch, Lark, NumPy, Pandas, scikit-learn, ONNX
 - **Achievements:**
-  - Automates 85% of routine tasks
-  - Manages 100+ weekly events
-  - Calendar & Email Integration
-
-### 2. Hebrew AI Sales Agent (Voice & Text) — LVL 5 · COMPLETED
-**Duration:** September 2025 – January 2026
-Created a B2B sales agent integrating Telegram Bot API & Twilio to automate outreach and communication for 500+ leads/week, boosting efficiency by 30% and increasing conversions by 20%.
-
-- **Tech:** Telegram API, Twilio, AI Voice/Text, Automation
-- **Achievements:**
-  - 500+ leads automated weekly
-  - 30% efficiency boost
-  - 20% conversion increase
-
-### 3. Lung & Pancreas Cancer Detection — LVL 4 · COMPLETED
-**Duration:** July 2025 – September 2025
-Developed an AI-powered Flask application using DenseNet, TensorFlow, Keras, and OpenCV to classify CT/MRI/X-ray scans, achieving 94% model accuracy in detecting cancer conditions.
-
-- **Tech:** TensorFlow, DenseNet, Flask, OpenCV
-- **Achievements:**
-  - 94% detection accuracy
-  - CT/MRI/X-ray scan classification
-  - Deep Learning architecture
-
-### 4. Darzi: AI Resume Tailor Suite — LVL 4 · COMPLETED
-**Duration:** 2025
-Designed & deployed an AI-driven resume platform leveraging advanced language models to generate ATS-optimized resumes perfectly tailored to specific job descriptions.
-
-- **Tech:** LLMs, Prompt Engineering, Web App
-- **Achievements:**
-  - Automated resume tailoring
-  - ATS-optimization algorithms
+  - 0.32 converged loss using custom mathematical loss functions in pure Neuva
+  - 54 passing tests across lexer, parser, AST, interpreter
+  - 34 days solo public build with daily releases
+  - PyPI release (`pip install neuva-lang` v1.2.0) & browser REPL
+- **Links:** https://ankit-mahadani.github.io/neuva/ · https://github.com/Ankit-Mahadani/neuva
   - Advanced LLM integration
 
 ---
