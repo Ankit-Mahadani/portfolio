@@ -30,6 +30,7 @@ gallery:
   - { src: early-warning-radar.png, alt: "Early Warning Radar detecting system health index, DAG bottlenecks, and auto-fix actions", caption: "Early Warning Radar — predictive fault detection & 1-click mitigations.", span: half, aspect: "16 / 10", fit: contain, kind: screenshot }
   - { src: workflow-builder.png, alt: "Natural-Language Workflow Builder converting human prompts into executable DAG pipelines", caption: "Workflow Builder — natural language translated into executable DAG pipelines.", span: half, aspect: "16 / 10", fit: contain, kind: screenshot }
   - { src: task-history.png, alt: "Task History with verified tool observations and execution resumption", caption: "Task History & Observations — OS-level task automations with verified tool provenance.", span: half, aspect: "16 / 10", fit: contain, kind: screenshot }
+  - { src: workspace-assistant.png, alt: "Nexora live Workspace and Assistant with Supervisor Execution Plan and Observable Evidence side-panel", caption: "Live Workspace & Observable Evidence — real-time AVO variation loop with 100% verified tool evaluation.", span: full, aspect: "16 / 9", fit: contain, kind: screenshot }
 links: { live: "https://github.com/Ankit-Mahadani/NEXORA", repo: "https://github.com/Ankit-Mahadani/NEXORA", demo: "https://github.com/Ankit-Mahadani/NEXORA" }
 ---
 
@@ -308,6 +309,25 @@ Every action taken by Nexora across the OS, desktop applications, or background 
   src="task-history.png"
   alt="Task History UI showing completed tasks and verified tool observations"
   caption="Task History — full execution audit trail, verified tool observations, and session resumption."
+  maxWidth="1000px"
+  aspect="16 / 10"
+  fit="contain"
+  kind="screenshot"
+/>
+
+## Live Workspace & Observable Evidence Engine
+
+The primary developer interaction loop occurs directly in the **Workspace & Assistant** interface, which surfaces the full autonomous lifecycle and its deterministic operating state in real time:
+
+- **Live AVO Variation Loop Tracker:** Tracks real-time evolutionary search progression across all 6 stages (`1. Inspect`, `2. Plan Variation`, `3. Implement`, `4. Ground`, `5. Score & Evaluate`, `6. Diagnose`), including direct inspection of the live Neo4j lineage tree (`View Persistent Graph (Neo4j)`).
+- **Supervisor Execution Plan:** Decomposes natural-language user objectives into explicit sub-plans categorized by `TOOL_EXECUTION` and `EVALUATION`.
+- **Observable Evidence Panel:** Every OS and desktop command executed by sub-agents emits structured telemetry events with execution durations, exit codes, and output payloads.
+- **Evidence Evaluation Engine:** Automatically verifies that operations satisfy user requests, scoring execution accuracy (100% passed across recorded tool runs) before committing task completion to memory.
+
+<Fig
+  src="workspace-assistant.png"
+  alt="Nexora live Workspace and Assistant with Supervisor Execution Plan and Observable Evidence side-panel"
+  caption="Live Workspace & Observable Evidence — real-time AVO variation loop tracking and 100% verified tool evaluation."
   maxWidth="1000px"
   aspect="16 / 10"
   fit="contain"
